@@ -5,7 +5,7 @@
 
 ### Jacobi iteration method
 
-Data structure: std::vector (is it simple to export in vtk fromat?)
+Data structure: std::vector (is it simple to export in vtk format?)
 
 Serial solver (local solver)
 

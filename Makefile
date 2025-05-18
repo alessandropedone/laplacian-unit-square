@@ -1,7 +1,7 @@
 # Compiler flags
 CXX      ?= g++
-CXXFLAGS ?= -std=c++20 -Wall -O3 # -g --coverage -pedantic
-CPPFLAGS ?= -I include -I include/impl -I json/single_include # Include flags
+CXXFLAGS ?= -std=c++20 -Wall -O2 # -g --coverage -pedantic
+CPPFLAGS ?= -I include #-I include/impl -I json/single_include # Include flags
 
 # Linker flags
 LDFLAGS ?=
@@ -13,7 +13,7 @@ SRC_DIR = src
 SRCS 	= $(shell find $(SRC_DIR) -name '*.cpp')
 OBJS    = $(SRCS:.cpp=.o)
 HEADERS = $(shell find include -maxdepth 1 -name '*.hpp')
-HIMPL 	= $(shell find include -maxdepth 2 -name '*.tpp')
+#HIMPL 	= $(shell find include -maxdepth 2 -name '*.tpp')
 
 # Default target
 all: $(EXEC)
@@ -23,7 +23,7 @@ $(EXEC): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $@
 
 # Compile source files
-%.o: %.cpp $(HEADERS) $(HIMPL)
+%.o: %.cpp $(HEADERS) #$(HIMPL)
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
 # Remove all object files
