@@ -5,7 +5,7 @@ CPPFLAGS ?= -I include -I include/core # Include flags
 
 # Linker flags
 LDFLAGS ?=
-LDLIBS  ?= 
+LDLIBS  ?=
 
 # Variables
 EXEC    = main
@@ -22,7 +22,7 @@ $(EXEC): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $@
 
 # Compile source files
-%.o: %.cpp $(HEADERS)
+%.o: %.cpp ../include/core/%hpp $(HEADERS)
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
 # Remove all object files

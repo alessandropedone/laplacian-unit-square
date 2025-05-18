@@ -30,9 +30,7 @@ SerialSolver::SerialSolver(const std::vector<double>& exact_sol,
                             max_iter(max_iter),
                             tol(tol) {};
 
-SerialSolver::~SerialSolver() {
-    std::cerr << "Destructor called\n";
-};
+SerialSolver::~SerialSolver() {};
 
 void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<double>& y_points) {
     std::cout << "Solving the equation iteratively..." << std::endl;

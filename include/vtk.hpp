@@ -31,6 +31,7 @@ namespace vtk
      */
     void write(const std::vector<double> &grid, int n, const std::string &filename = "output.vtk")
     {
+        std::cout << "Writing VTK file: " << filename << std::endl;
         std::ofstream vtkFile(filename);
         vtkFile << "# vtk DataFile Version 3.0\n";
         vtkFile << "vtk output\n";
@@ -59,7 +60,7 @@ namespace vtk
         }
         vtkFile.close();
     }
-
+    
     /**
      * @brief Reads a VTK file and extracts grid data and coordinates.
      *
