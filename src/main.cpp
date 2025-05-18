@@ -1,8 +1,11 @@
-#include "serial_solver.hpp"
+
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <numbers>
+
+#include "serial_solver.hpp"
+#include "vtk.hpp"
 
 int main() {
     constexpr double pi = std::numbers::pi;
@@ -15,7 +18,7 @@ int main() {
         y_points[i] = x_points[i];
     }
 
-    std::vector<double> exact_sol(n * n, 0.0), topbc(n, 0.0), bottombc(n, 0.0), rightbc(n-2, 0.0), leftbc(n-2, 0.0);
+    std::vector<double> exact_sol(n * n, 0.0), top_bc(n, 0.0), bottom_bc(n, 0.0), right_bc(n-2, 0.0), left_bc(n-2, 0.0);
 
     // assign_exact_sol
     for (size_t i = 0; i < n; ++i) {
@@ -36,7 +39,7 @@ int main() {
     unsigned max_iter = 1000;
     double tol = 1e-6;
 
-    SerialSolver solver(exact_sol, initial_guess, rhs, topbc, rightbc, bottombc, leftbc, n, max_iter, tol);
+    SerialSolver solver(exact_sol, initial_guess, rhs, top_bc, right_bc, bottom_bc, left_bc, n, max_iter, tol);
 
     solver.solve(x_points, y_points);
     return 0;
