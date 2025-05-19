@@ -26,8 +26,9 @@ namespace vtk
      * @param n         The dimension of the grid (number of rows and columns).
      * @param filename  Output VTK file name (default is "output.vtk").
      */
-    void write(const std::vector<double> &grid, int n, const std::string &filename = "output.vtk")
+    void write(const std::vector<double> &grid, const std::string &filename = "output.vtk")
     {
+        int n = std::sqrt(grid.size());
         std::cout << "Writing VTK file: " << filename << std::endl;
         std::ofstream vtkFile(filename);
         vtkFile << "# vtk DataFile Version 3.0\n";
@@ -35,7 +36,7 @@ namespace vtk
         vtkFile << "ASCII\n";
         vtkFile << "DATASET STRUCTURED_GRID\n";
         vtkFile << "DIMENSIONS " << n << " " << n << " 1\n";
-        vtkFile << "POINTS " << n * n << " float\n";
+        vtkFile << "POINTS " << grid.size() << " float\n";
         vtkFile << std::setprecision(8);
         for (int i = 0; i < n; ++i)
         {
@@ -45,7 +46,7 @@ namespace vtk
             }
         }
         vtkFile << "\n\n";
-        vtkFile << "POINT_DATA " << n * n << "\n";
+        vtkFile << "POINT_DATA " << grid.size() << "\n";
         vtkFile << "SCALARS values float\n";
         vtkFile << "LOOKUP_TABLE default\n";
         for (int i = 0; i < n; ++i)

@@ -1,5 +1,5 @@
 /// @file serial_solver.cpp
-/// @brief This file contains the implementation of the SerialSolver class.
+/// @brief This file contains the implementation of the JacobiSerialSolver class.
 /// @details The class implements an iterative solver for a given equation.
 /// @details The class provides methods to set the boundary conditions,
 ///          initial guess, exact solution, and right-hand side of the equation.    
@@ -10,9 +10,9 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
-#include "serial_solver.hpp"
+#include "jacobi_serial_solver.hpp"
 
-SerialSolver::SerialSolver(const std::vector<double>& exact_sol,
+JacobiSerialSolver::JacobiSerialSolver(const std::vector<double>& exact_sol,
                     const std::vector<double>& initial_guess,
                     const std::vector<double>& rhs,
                     const std::vector<double>& topbc,
@@ -31,9 +31,9 @@ SerialSolver::SerialSolver(const std::vector<double>& exact_sol,
                             max_iter(max_iter),
                             tol(tol) {};
 
-SerialSolver::~SerialSolver() {};
+JacobiSerialSolver::~JacobiSerialSolver() {};
 
-void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<double>& y_points) {
+void JacobiSerialSolver::solve(const std::vector<double>& x_points, const std::vector<double>& y_points) {
     std::cout << "Solving the equation iteratively..." << std::endl;
     // Initialize the grid size
     const double h = 1.0 / (n - 1);
@@ -100,7 +100,7 @@ void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<
     return;
 };
 
-void SerialSolver::set_bc(const std::vector<double>& topbc,
+void JacobiSerialSolver::set_bc(const std::vector<double>& topbc,
                           const std::vector<double>& rightbc,
                           const std::vector<double>& bottombc,
                           const std::vector<double>& leftbc) {
@@ -111,19 +111,19 @@ void SerialSolver::set_bc(const std::vector<double>& topbc,
     this->leftbc = leftbc;
 };
 
-void SerialSolver::set_initial_guess(const std::vector<double>& initial_guess){
+void JacobiSerialSolver::set_initial_guess(const std::vector<double>& initial_guess){
     this->sol = initial_guess;
 };
 
-void SerialSolver::set_exact_sol(const std::vector<double>& exact_sol){
+void JacobiSerialSolver::set_exact_sol(const std::vector<double>& exact_sol){
     this->exact_sol = exact_sol;
 };
 
-void SerialSolver::set_rhs(const std::vector<double>& rhs){
+void JacobiSerialSolver::set_rhs(const std::vector<double>& rhs){
     this->rhs = rhs;
 };
 
-double SerialSolver::compute_error(const double h, const std::vector<double> & reference) const{
+double JacobiSerialSolver::compute_error(const double h, const std::vector<double> & reference) const{
     double error{0.0};
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < n; ++j) {
@@ -134,7 +134,7 @@ double SerialSolver::compute_error(const double h, const std::vector<double> & r
     return error;
 };
 
-void SerialSolver::print(const std::vector<double> &  vec) const{
+void JacobiSerialSolver::print(const std::vector<double> &  vec) const{
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < n; ++j) {
             std::cout << std::setw(10) << vec[i * n + j] << " ";

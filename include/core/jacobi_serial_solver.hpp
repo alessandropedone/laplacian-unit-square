@@ -1,7 +1,7 @@
 /// @file serial_solver.hpp
-/// @brief Header file for the SerialSolver class
+/// @brief Header file for the JacobiSerialSolver class
 /// @date 2025-18-05
-/// @details This file contains the declaration of the SerialSolver class,
+/// @details This file contains the declaration of the JacobiSerialSolver class,
 ///          which implements an iterative solver for a given equation.
 ///          The class provides methods to set the boundary conditions,
 ///          initial guess, exact solution, and right-hand side of the equation.        
@@ -11,15 +11,15 @@
 ///          parallel computing libraries or techniques.
 /// @details The class is intended to be used as a comparison for more complex
 ///          solvers that may incorporate parallelism or other advanced features.
-#ifndef SERIAL_SOLVER_HPP
-#define SERIAL_SOLVER_HPP
+#ifndef JACOBI_SERIAL_SOLVER_HPP
+#define JACOBI_SERIAL_SOLVER_HPP
 #include <iostream>
 #include <vector>
 
-class SerialSolver {
+class JacobiSerialSolver {
     public:
-        SerialSolver() = default;
-        SerialSolver(const std::vector<double>& exact_sol,
+        JacobiSerialSolver() = default;
+        JacobiSerialSolver(const std::vector<double>& exact_sol,
                     const std::vector<double>& initial_guess,
                     const std::vector<double>& rhs,
                     const std::vector<double>& topbc,
@@ -29,7 +29,7 @@ class SerialSolver {
                     size_t n, unsigned max_iter, double tol);
 
         /// @brief default destructor
-        ~SerialSolver();
+        ~JacobiSerialSolver();
         
 
         /// @brief implement iterative solver for the equation
@@ -146,4 +146,4 @@ class SerialSolver {
         double tol = 1e-6;
 };
 
-#endif // SERIAL_SOLVER_HPP
+#endif // JACOBI_SERIAL_SOLVER_HPP

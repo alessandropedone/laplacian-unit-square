@@ -5,13 +5,13 @@
 #include <numbers>
 #include <iomanip> // for std::setw
 
-#include "serial_solver.hpp"
+#include "jacobi_serial_solver.hpp"
 #include "vtk.hpp"
 
 int main() {
     constexpr double pi = std::numbers::pi;
 
-    const size_t n = 10;
+    const size_t n = 100;
     /// @brief grid points over [0, 1]
     std::vector<double> x_points(n), y_points(n);
     for (size_t i = 0; i < n; ++i) {
@@ -46,8 +46,11 @@ int main() {
     unsigned max_iter = 100000;
     double tol = 1e-18;
 
-    SerialSolver solver(exact_sol, initial_guess, rhs, topbc, rightbc, bottombc, leftbc, n, max_iter, tol);
+    JacobiSerialSolver solver(exact_sol, initial_guess, rhs, topbc, rightbc, bottombc, leftbc, n, max_iter, tol);
 
     solver.solve(x_points, y_points);
+
+    // Write the computed solution to a VTK file
+    vtk::write(solver.get_solution());
     return 0;
 }
