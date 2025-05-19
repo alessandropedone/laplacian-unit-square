@@ -61,6 +61,9 @@ public:
     ~JacobiSerialSolver() = default;
 
     /// @brief implement Jacobi iterative solver for the Laplace equation
+    /// @details it computes the solution of the equation using the Jacobi method
+    ///          and checks for convergence using the L2 norm
+    /// @details it saves the solution in the uh vector and writes it to an output vtk file
     void solve();
 
     // SETTERS

@@ -5,24 +5,17 @@
 
 ### Jacobi iteration method
 
-Data structure: std::vector (is it simple to export in vtk format?)
-
-Serial solver (local solver)
-
 Parallel solver
 - local solver (parallelize with OpenMP)
 - global solver (MPI, split nodes by rows, communication between processes)
 
 Error, convergence (converged if all ranks satisfy the criterion) and max iterations (slow convergence!!)
 
-Export the solution in vtk format
-
 Test:
+- L2 norm of the error as function of grid size (grafichino)
 - f(x) = 8π2 sin(2πx) sin(2πy), with exact sol u(x, y) = sin(2πx) sin(2πy)
 - serial vs parallel as grid size increases (time)
-- L2 norm of the error as function of grid size (grafichino)
 - test folder: scalability test (bash script) (1,2,4 cores), data folder to collect results
-- It could be interesting also to report your hardware in a file hw.info: cat /proc/cpuinfo.
 
 ### Extras
 - non homogeneous Dirichlet boundary conditions
