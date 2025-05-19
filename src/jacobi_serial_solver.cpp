@@ -1,144 +1,117 @@
-/// @file serial_solver.cpp
+/// @file jacobi_serial_solver.cpp
 /// @brief This file contains the implementation of the JacobiSerialSolver class.
 /// @details The class implements an iterative solver for a given equation.
 /// @details The class provides methods to set the boundary conditions,
-///          initial guess, exact solution, and right-hand side of the equation.    
+///          initial guess, exact solution, and right-hand side of the equation.
 ///          It also includes a method to print the computed solution.
-
 
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <iomanip>
+
 #include "jacobi_serial_solver.hpp"
+#include "vtk.hpp"
 
-JacobiSerialSolver::JacobiSerialSolver(const std::vector<double>& exact_sol,
-                    const std::vector<double>& initial_guess,
-                    const std::vector<double>& rhs,
-                    const std::vector<double>& topbc,
-                    const std::vector<double>& rightbc,
-                    const std::vector<double>& bottombc,
-                    const std::vector<double>& leftbc,
-                    size_t n, unsigned max_iter, double tol):
-                            exact_sol(exact_sol),
-                            sol(initial_guess),
-                            rhs(rhs),
-                            topbc(topbc),
-                            rightbc(rightbc),
-                            bottombc(bottombc),
-                            leftbc(leftbc),
-                            n(n),
-                            max_iter(max_iter),
-                            tol(tol) {};
-
-JacobiSerialSolver::~JacobiSerialSolver() {};
-
-void JacobiSerialSolver::solve(const std::vector<double>& x_points, const std::vector<double>& y_points) {
+void JacobiSerialSolver::solve()
+{
     std::cout << "Solving the equation iteratively..." << std::endl;
-    // Initialize the grid size
+
+    // Initialize h
     const double h = 1.0 / (n - 1);
 
-    std::cout << "Initial guess without bc:" << std::endl;
-    print(sol);
-
     // Set the boundary conditions
-    for (size_t i = 0; i < n; ++i) {
-            sol[i] = topbc[i]; // Top boundary
-            sol[(n - 1) * n + i] = bottombc[i]; // Bottom boundary
-            sol[i * n] = leftbc[i]; // Left boundary
-            sol[i * n + (n - 1)] = rightbc[i]; // Right boundary
-        }
-    std::cout << "Initial guess with boundary conditions:" << std::endl;
-    print(sol);
+    for (size_t i = 0; i < n; ++i)
+    {
+        uh[i] = fun_at(top_bc, i, n - 1);                 // Top boundary
+        uh[i * n + (n - 1)] = fun_at(right_bc, n - 1, i); // Right boundary
+        uh[(n - 1) * n + i] = fun_at(bottom_bc, i, 0);    // Bottom boundary
+        uh[i * n] = fun_at(left_bc, 0, i);                // Left boundary
+    }
 
     // Initialize the previous solution vector
-    std::vector<double> previous(sol);
-    std::cout << "First 'previous':" << std::endl;
-    print(previous);
-
-    for (n_iter = 0; n_iter < max_iter; ++n_iter) {
+    std::vector<double> previous(n * n);
+    std::cout << std::setw(6) << "Iteration" << std::setw(6) << "|| Residual" <<  std::endl;
+    for (iter = 0; iter < max_iter; ++iter)
+    {
         // Save the previous solution for convergence check
-        previous = sol;
+        previous = uh;
+
         // Perform the iteration
-        for (size_t i = 1; i < n - 1; ++i) {
-            for (size_t j = 1; j < n - 1; ++j) {
-                sol[i * n + j] = 0.25 * (previous[(i - 1) * n + j] + previous[(i + 1) * n + j] +
-                                         previous[i * n + (j - 1)] + previous[i * n + (j + 1)] +
-                                         h * h * rhs[i * n + j]);
+        for (size_t i = 1; i < n - 1; ++i)
+        {
+            for (size_t j = 1; j < n - 1; ++j)
+            {
+                uh[i * n + j] = 0.25 * (previous[(i - 1) * n + j] + previous[(i + 1) * n + j] +
+                                        previous[i * n + (j - 1)] + previous[i * n + (j + 1)] +
+                                        h * h * fun_at(f, i, j));
             }
         }
+
         // Check for convergence
-        double residual = compute_error(h, previous);
-        std::cout << "Iteration " << n_iter << ": Residual = " << residual << std::endl;
-        if (residual < tol) {
+        double residual = compute_error(uh, previous);
+        if (iter % static_cast<int>(0.1*max_iter) == 0)
+        {
+            std::cout << std::setw(6) << iter << std::setw(6) << "|| " << residual << std::endl;
+        }
+        if (residual < tol)
+        {
             break;
         }
     }
-    if (n_iter == max_iter) {
-        std::cout << "Warning: Maximum number of iterations reached without convergence." << std::endl;
-    } else {
-        std::cout << "Converged in " << n_iter << " iterations." << std::endl;
-    }
-    // Print the computed solution
-    std::cout << "Computed solution:" << std::endl;
-    print(sol);
 
-    // Compute the Linf error
-    std::vector<double> err_inf(n * n, 0.0);
-    for (size_t i = 0; i < n; ++i) {
-        for (size_t j = 0; j < n; ++j) {
-            err_inf[i * n + j] = std::abs(sol[i * n + j] - exact_sol[i * n + j]);
-        }
+    // Check if the maximum number of iterations was reached
+    if (iter == max_iter)
+    {
+        std::cout << "Warning: Maximum number of iterations reached without convergence." << std::endl;
     }
-    // Print the Linf error
-    std::cout << "\nLinf error:" << std::endl;
-    print(err_inf);
+    else
+    {
+        std::cout << "Converged in " << iter << " iterations." << std::endl;
+    }
 
     // Compute the L2 error
-    double error = compute_error(h, exact_sol);
-    std::cout << "L2 Error: " << error << std::endl;
+    if (uex != nullptr)
+    {
+        double error = compute_error(uh, uex);
+        std::cout << "L2 error: " << error << std::endl;
+    }
+    else
+    {
+        std::cout << "Exact solution is not known. Cannot compute error." << std::endl;
+    }
+    
+    // save in vtk format
+    vtk::write(uh, "solution.vtk");
+
     return;
 };
 
-void JacobiSerialSolver::set_bc(const std::vector<double>& topbc,
-                          const std::vector<double>& rightbc,
-                          const std::vector<double>& bottombc,
-                          const std::vector<double>& leftbc) {
 
-    this->topbc = topbc;
-    this->rightbc = rightbc;
-    this->bottombc = bottombc;
-    this->leftbc = leftbc;
-};
-
-void JacobiSerialSolver::set_initial_guess(const std::vector<double>& initial_guess){
-    this->sol = initial_guess;
-};
-
-void JacobiSerialSolver::set_exact_sol(const std::vector<double>& exact_sol){
-    this->exact_sol = exact_sol;
-};
-
-void JacobiSerialSolver::set_rhs(const std::vector<double>& rhs){
-    this->rhs = rhs;
-};
-
-double JacobiSerialSolver::compute_error(const double h, const std::vector<double> & reference) const{
+double JacobiSerialSolver::compute_error(const std::vector<double> &sol1, const std::vector<double> &sol2) const
+{
     double error{0.0};
-    for (size_t i = 0; i < n; ++i) {
-        for (size_t j = 0; j < n; ++j) {
-            error += (sol[i * n + j] - reference[i * n + j])*(sol[i * n + j] - reference[i * n + j]);
+    for (size_t i = 0; i < n; ++i)
+    {
+        for (size_t j = 0; j < n; ++j)
+        {
+            error += (sol1[i * n + j] - sol2[i * n + j]) * (sol1[i * n + j] - sol2[i * n + j]);
         }
     }
-    error = std::sqrt(h * error);   
+    error = std::sqrt(1.0 / (n - 1) * error);
     return error;
-};
+}
 
-void JacobiSerialSolver::print(const std::vector<double> &  vec) const{
-    for (size_t i = 0; i < n; ++i) {
-        for (size_t j = 0; j < n; ++j) {
-            std::cout << std::setw(10) << vec[i * n + j] << " ";
+double JacobiSerialSolver::compute_error(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2) const
+{
+    double error{0.0};
+    for (size_t i = 0; i < n; ++i)
+    {
+        for (size_t j = 0; j < n; ++j)
+        {
+            error += (sol1[i * n + j] - fun_at(sol2, i, j)) * (sol1[i * n + j] - fun_at(sol2, i, j));
         }
-        std::cout << std::endl;
     }
-};
+    error = std::sqrt(1.0 / (n - 1) * error);
+    return error;
+}

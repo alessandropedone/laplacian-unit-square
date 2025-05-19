@@ -26,7 +26,7 @@ namespace vtk
      * @param n         The dimension of the grid (number of rows and columns).
      * @param filename  Output VTK file name (default is "output.vtk").
      */
-    void write(const std::vector<double> &grid, const std::string &filename = "output.vtk")
+    inline void write(const std::vector<double> &grid, const std::string &filename = "output.vtk")
     {
         int n = std::sqrt(grid.size());
         std::cout << "Writing VTK file: " << filename << std::endl;
@@ -69,7 +69,7 @@ namespace vtk
      * @param grid      Output vector to store the grid values.
      * @param coords    Output vector to store the coordinates of the points.
      */
-    void read(const std::string &filename, std::vector<double> &grid, std::vector<std::pair<double, double>> &coords)
+    inline void read(const std::string &filename, std::vector<double> &grid, std::vector<std::pair<double, double>> &coords)
     {
         std::ifstream vtkIn("output.vtk");
         std::string line;
