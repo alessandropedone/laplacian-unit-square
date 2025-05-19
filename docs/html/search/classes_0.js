@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['serialsolver_0',['SerialSolver',['../classSerialSolver.html',1,'']]]
+  ['jacobiserialsolver_0',['JacobiSerialSolver',['../classJacobiSerialSolver.html',1,'']]]
 ];

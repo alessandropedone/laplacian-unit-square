@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['write_0',['write',['../vtk_8hpp.html#a028860e942c7b40f65b1762d264a339e',1,'vtk']]]
+  ['_7ejacobiserialsolver_0',['~JacobiSerialSolver',['../classJacobiSerialSolver.html#aff6596bd207444d6a3c034655312fb30',1,'JacobiSerialSolver']]]
 ];

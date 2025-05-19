@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['get_5fn_5fiter_0',['get_n_iter',['../classSerialSolver.html#afcfb8c43cd1ab5c95f48bcdfa275213a',1,'SerialSolver']]],
-  ['get_5fsolution_1',['get_solution',['../classSerialSolver.html#a7e13e263564eadf9c00870431419fa2e',1,'SerialSolver']]]
+  ['in_20the_20unit_20square_0',['Laplce equation in the unit square',['../index.html',1,'']]],
+  ['iteration_20method_1',['Jacobi iteration method',['../index.html#autotoc_md2',1,'']]]
 ];
