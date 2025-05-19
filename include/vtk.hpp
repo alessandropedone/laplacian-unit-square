@@ -1,6 +1,3 @@
-
-
-
 /**
  * @file vtk.hpp
  * @brief Utilities for reading and writing 2D grid data in VTK STRUCTURED_GRID format.

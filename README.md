@@ -32,3 +32,4 @@ Test:
 ### README
 - results discussion
 - instruction to reproduce the scalability test
+- hardware comparison instructions
