@@ -1,6 +1,6 @@
 CPU Info:
-Model name	: Intel(R) Core(TM) Ultra 7 155H
-Physical CPU cores: 11
+model name	: Intel(R) Core(TM) Ultra 7 155H
+cpu cores	: 11
 Logical processors: 22
 
 Cache Sizes:
@@ -11,6 +11,7 @@ L3 Cache:  24576K
 
 RAM Info:
 MemTotal:        7886784 kB
+
 
 
 =====================
@@ -637,42 +638,42 @@ power management:
 All memory info
 =====================
 MemTotal:        7886784 kB
-MemFree:         5456860 kB
-MemAvailable:    5781004 kB
-Buffers:            7344 kB
-Cached:           346444 kB
+MemFree:         5916328 kB
+MemAvailable:    6136688 kB
+Buffers:            5652 kB
+Cached:           246792 kB
 SwapCached:         5816 kB
-Active:           205708 kB
-Inactive:        1503772 kB
-Active(anon):       7048 kB
-Inactive(anon):  1353908 kB
-Active(file):     198660 kB
-Inactive(file):   149864 kB
+Active:           214536 kB
+Inactive:        1040640 kB
+Active(anon):       7136 kB
+Inactive(anon):  1001076 kB
+Active(file):     207400 kB
+Inactive(file):    39564 kB
 Unevictable:           0 kB
 Mlocked:               0 kB
 SwapTotal:       2097152 kB
 SwapFree:        2069712 kB
-Dirty:                68 kB
-Writeback:             0 kB
-AnonPages:       1315880 kB
-Mapped:           225424 kB
-Shmem:              5248 kB
-KReclaimable:     275240 kB
-Slab:             374992 kB
-SReclaimable:     275240 kB
-SUnreclaim:        99752 kB
-KernelStack:        7888 kB
-PageTables:        23288 kB
+Dirty:               160 kB
+Writeback:            32 kB
+AnonPages:        964700 kB
+Mapped:           211612 kB
+Shmem:              5480 kB
+KReclaimable:     273016 kB
+Slab:             374016 kB
+SReclaimable:     273016 kB
+SUnreclaim:       101000 kB
+KernelStack:        7616 kB
+PageTables:        20308 kB
 NFS_Unstable:          0 kB
 Bounce:                0 kB
 WritebackTmp:          0 kB
 CommitLimit:     6040544 kB
-Committed_AS:    2023628 kB
+Committed_AS:    1674060 kB
 VmallocTotal:   34359738367 kB
-VmallocUsed:       30360 kB
+VmallocUsed:       30136 kB
 VmallocChunk:          0 kB
 Percpu:            10080 kB
-AnonHugePages:    268288 kB
+AnonHugePages:    215040 kB
 ShmemHugePages:        0 kB
 ShmemPmdMapped:        0 kB
 FileHugePages:         0 kB

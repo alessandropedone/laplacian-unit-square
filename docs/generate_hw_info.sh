@@ -5,12 +5,10 @@ echo "Generating hardware info..."
 DEVICE_NAME=$(hostname)
 OUTPUT_FILE="${DEVICE_NAME}_hw.info"
 
-#!/bin/bash
-echo "Generating hardware info..."
 {
     echo "CPU Info:"
-    grep -m 1 'Model name' /proc/cpuinfo
-    grep 'Physical CPU cores' /proc/cpuinfo | uniq
+    grep -m 1 'model name' /proc/cpuinfo
+    grep 'cpu cores' /proc/cpuinfo | uniq
     echo "Logical processors: $(nproc --all)"
     
     echo ""

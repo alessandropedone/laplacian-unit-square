@@ -25,8 +25,8 @@ get_value() {
 
 # Features to compare
 declare -A LABELS=(
-  ["Model name"]="CPU Model"
-  ["Physical CPU cores"]="Physical CPU cores"
+  ["model name"]="CPU Model"
+  ["cpu cores"]="Physical cores"
   ["Logical processors"]="Logical processors"
   ["L1d Cache"]="L1d Cache"
   ["L1i Cache"]="L1i Cache"
@@ -36,10 +36,10 @@ declare -A LABELS=(
 )
 
 echo "=== Hardware Comparison ==="
-printf "%-20s | %-30s | %-30s\n" "Feature" "$(basename "$FILE1" _hw.info)" "$(basename "$FILE2" hw.info)"
+printf "%-20s | %-30s | %-30s\n" "Feature" "$(basename "$FILE1" _hw.info)" "$(basename "$FILE2" _hw.info)"
 printf -- "---------------------|--------------------------------|--------------------------------\n"
 
-ordered_keys=("Model name" "Physical CPU cores" "Logical processors" "L1d Cache" "L1i Cache" "L2 Cache" "L3 Cache" "MemTotal")
+ordered_keys=("model name" "cpu cores" "Logical processors" "L1d Cache" "L1i Cache" "L2 Cache" "L3 Cache" "MemTotal")
 for key in "${ordered_keys[@]}"; do
     val1=$(get_value "$key" "$FILE1")
     val2=$(get_value "$key" "$FILE2")
