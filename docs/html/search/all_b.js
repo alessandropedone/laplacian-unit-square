@@ -11,5 +11,5 @@ var searchData=
   ['set_5ftol_8',['set_tol',['../classSerialSolver.html#a94674b8fd16bcbbd7c834c3f49c192e4',1,'SerialSolver']]],
   ['solve_9',['solve',['../classSerialSolver.html#a1d117a07c5fbd73ff9ac1b0088b46474',1,'SerialSolver']]],
   ['solver_20for_20the_20laplace_20equation_10',['A matrix–free parallel solver for the Laplace equation',['../index.html#autotoc_md0',1,'']]],
-  ['spase_20matrix_11',['Spase Matrix',['../index.html',1,'']]]
+  ['square_11',['Laplce equation in the unit square',['../index.html',1,'']]]
 ];

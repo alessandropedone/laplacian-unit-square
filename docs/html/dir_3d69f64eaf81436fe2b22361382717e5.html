@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Laplce equation in the unit square: Laplce equation in the unit square</title>
+<title>Laplce equation in the unit square: /home/ale/challenge3-male/include/core Directory Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -46,7 +46,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -68,46 +67,27 @@ $(function() {
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Laplce equation in the unit square </div></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3d69f64eaf81436fe2b22361382717e5.html">core</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">core Directory Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md__2home_2ale_2challenge3-male_2README"></a> <a href="https://classroom.github.com/a/bOfolMCC"><img src="https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg" alt="Review Assignment Due Date" style="pointer-events: none;" class="inline"/></a> </p>
-<h1><a class="anchor" id="autotoc_md0"></a>
-A matrix–free parallel solver for the Laplace equation</h1>
-<h2><a class="anchor" id="autotoc_md1"></a>
-Roadmap</h2>
-<h3><a class="anchor" id="autotoc_md2"></a>
-Jacobi iteration method</h3>
-<p>Data structure: std::vector (is it simple to export in vtk format?)</p>
-<p>Serial solver (local solver)</p>
-<p>Parallel solver</p><ul>
-<li>local solver (parallelize with OpenMP)</li>
-<li>global solver (MPI, split nodes by rows, communication between processes)</li>
-</ul>
-<p>Error, convergence (converged if all ranks satisfy the criterion) and max iterations (slow convergence!!)</p>
-<p>Export the solution in vtk format</p>
-<p>Test:</p><ul>
-<li>f(x) = 8π2 sin(2πx) sin(2πy), with exact sol u(x, y) = sin(2πx) sin(2πy)</li>
-<li>serial vs parallel as grid size increases (time)</li>
-<li>L2 norm of the error as function of grid size (grafichino)</li>
-<li>test folder: scalability test (bash script) (1,2,4 cores), data folder to collect results</li>
-<li>It could be interesting also to report your hardware in a file hw.info: cat /proc/cpuinfo.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md3"></a>
-Extras</h3>
-<ul>
-<li>non homogeneous Dirichlet boundary conditions</li>
-<li>Neumann and Robin boundary conditions</li>
-<li>Schwarz iteration type (change only the local solver)</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md4"></a>
-README</h3>
-<ul>
-<li>results discussion</li>
-<li>instruction to reproduce the scalability test </li>
-</ul>
-</div></div><!-- PageDoc -->
+<div class="dynheader">
+Directory dependency graph for core:</div>
+<div class="dyncontent">
+<div class="center"><img src="dir_3d69f64eaf81436fe2b22361382717e5_dep.png" border="0" usemap="#adir__3d69f64eaf81436fe2b22361382717e5__dep" alt="/home/ale/challenge3-male/include/core"/></div>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="serial__solver_8hpp_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serial__solver_8hpp.html">serial_solver.hpp</a></td></tr>
+<tr class="memdesc:serial__solver_8hpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header file for the <a class="el" href="classSerialSolver.html">SerialSolver</a> class. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

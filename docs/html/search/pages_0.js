@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['matrix_0',['Spase Matrix',['../index.html',1,'']]]
+  ['equation_20in_20the_20unit_20square_0',['Laplce equation in the unit square',['../index.html',1,'']]]
 ];
