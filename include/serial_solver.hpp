@@ -11,8 +11,8 @@
 ///          parallel computing libraries or techniques.
 /// @details The class is intended to be used as a comparison for more complex
 ///          solvers that may incorporate parallelism or other advanced features.
-#ifndef     SERIAL_SOLVER_HPP
-#define     SERIAL_SOLVER_HPP
+#ifndef SERIAL_SOLVER_HPP
+#define SERIAL_SOLVER_HPP
 #include <iostream>
 #include <vector>
 

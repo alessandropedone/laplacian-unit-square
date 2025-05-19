@@ -30,9 +30,7 @@ SerialSolver::SerialSolver(const std::vector<double>& exact_sol,
                             max_iter(max_iter),
                             tol(tol) {};
 
-SerialSolver::~SerialSolver() {
-    std::cerr << "Destructor called\n";
-};
+SerialSolver::~SerialSolver() {};
 
 void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<double>& y_points) {
     std::cout << "Solving the equation iteratively..." << std::endl;
@@ -59,6 +57,7 @@ void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<
         }
         // Check for convergence
         double residual = compute_error(h, previous);
+        std::cout << "Iteration " << n_iter << ": Residual = " << residual << std::endl;
         if (residual < tol) {
             break;
         }
@@ -69,7 +68,6 @@ void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<
         std::cout << "Converged in " << n_iter << " iterations." << std::endl;
     }
     // Print the computed solution
-    std::cout << "Computed solution:" << std::endl;
     SerialSolver::printSolution();
     // Compute the error
     double error = compute_error(h, exact_sol);
@@ -115,7 +113,7 @@ void SerialSolver::printSolution() const{
     std::cout << "Computed solution:" << std::endl;
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < n; ++j) {
-            std::cout << sol[i * n + j] << "\t ";
+            std::cout << sol[i * n + j] << " ";
         }
         std::cout << std::endl;
     }
