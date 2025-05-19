@@ -112,8 +112,8 @@ class SerialSolver {
         };
         */
 
-        /// @brief print the computed solution
-        void printSolution() const;
+        /// @brief print the vector (such as the computed solution)
+        void print(const std::vector<double>& vec) const;
 
     private:
         /// @brief exact solution of the equation

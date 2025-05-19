@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <iomanip>
 #include "serial_solver.hpp"
 
 SerialSolver::SerialSolver(const std::vector<double>& exact_sol,
@@ -37,6 +38,9 @@ void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<
     // Initialize the grid size
     const double h = 1.0 / (n - 1);
 
+    std::cout << "Initial guess without bc:" << std::endl;
+    print(sol);
+
     // Set the boundary conditions
     for (size_t i = 0; i < n; ++i) {
             sol[i] = topbc[i]; // Top boundary
@@ -44,9 +48,17 @@ void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<
             sol[i * n] = leftbc[i]; // Left boundary
             sol[i * n + (n - 1)] = rightbc[i]; // Right boundary
         }
+    std::cout << "Initial guess with boundary conditions:" << std::endl;
+    print(sol);
+
+    // Initialize the previous solution vector
+    std::vector<double> previous(sol);
+    std::cout << "First 'previous':" << std::endl;
+    print(previous);
+
     for (n_iter = 0; n_iter < max_iter; ++n_iter) {
         // Save the previous solution for convergence check
-        std::vector<double> previous(sol);
+        previous = sol;
         // Perform the iteration
         for (size_t i = 1; i < n - 1; ++i) {
             for (size_t j = 1; j < n - 1; ++j) {
@@ -68,10 +80,23 @@ void SerialSolver::solve(const std::vector<double>& x_points, const std::vector<
         std::cout << "Converged in " << n_iter << " iterations." << std::endl;
     }
     // Print the computed solution
-    SerialSolver::printSolution();
-    // Compute the error
+    std::cout << "Computed solution:" << std::endl;
+    print(sol);
+
+    // Compute the Linf error
+    std::vector<double> err_inf(n * n, 0.0);
+    for (size_t i = 0; i < n; ++i) {
+        for (size_t j = 0; j < n; ++j) {
+            err_inf[i * n + j] = std::abs(sol[i * n + j] - exact_sol[i * n + j]);
+        }
+    }
+    // Print the Linf error
+    std::cout << "\nLinf error:" << std::endl;
+    print(err_inf);
+
+    // Compute the L2 error
     double error = compute_error(h, exact_sol);
-    std::cout << "Error: " << error << std::endl;
+    std::cout << "L2 Error: " << error << std::endl;
     return;
 };
 
@@ -109,11 +134,10 @@ double SerialSolver::compute_error(const double h, const std::vector<double> & r
     return error;
 };
 
-void SerialSolver::printSolution() const{
-    std::cout << "Computed solution:" << std::endl;
+void SerialSolver::print(const std::vector<double> &  vec) const{
     for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < n; ++j) {
-            std::cout << sol[i * n + j] << " ";
+            std::cout << std::setw(10) << vec[i * n + j] << " ";
         }
         std::cout << std::endl;
     }
