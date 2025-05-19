@@ -8,8 +8,7 @@
 Parallel solver
 - local solver (parallelize with OpenMP)
 - global solver (MPI, split nodes by rows, communication between processes)
-
-Error, convergence (converged if all ranks satisfy the criterion) and max iterations (slow convergence!!)
+- (converged if all ranks satisfy the criterion)
 
 Test:
 - L2 norm of the error as function of grid size (grafichino)
@@ -18,7 +17,6 @@ Test:
 - test folder: scalability test (bash script) (1,2,4 cores), data folder to collect results
 
 ### Extras
-- non homogeneous Dirichlet boundary conditions
 - Neumann and Robin boundary conditions
 - Schwarz iteration type (change only the local solver)
 

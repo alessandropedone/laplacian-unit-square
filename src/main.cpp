@@ -27,6 +27,8 @@ int main() {
         1e-15, // tolerance
         [=](double x, double y) { return sin(2 * pi * x) * sin(2 * pi * y); } // exact solution
     );
+
+    
     
     solver.solve();
 
