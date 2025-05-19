@@ -27,7 +27,10 @@ class SerialSolver {
                     const std::vector<double>& bottombc,
                     const std::vector<double>& leftbc,
                     size_t n, unsigned max_iter, double tol);
+
+        /// @brief default destructor
         ~SerialSolver();
+        
 
         /// @brief implement iterative solver for the equation
         /// @param x_points points of discretization in x direction
@@ -54,6 +57,7 @@ class SerialSolver {
         /// @brief set the right-hand side of the equation  
         /// @param rhs right-hand side of the equation
         void set_rhs(const std::vector<double>& rhs);
+        
 
         /// @brief set the number of max iterations
         /// @param max_iter maximum number of iterations

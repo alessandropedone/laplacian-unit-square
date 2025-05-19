@@ -1,8 +1,11 @@
+
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <numbers>
+
 #include "serial_solver.hpp"
+#include "vtk.hpp"
 
 int main() {
     constexpr double pi = std::numbers::pi;
@@ -36,7 +39,7 @@ int main() {
     unsigned max_iter = 1000;
     double tol = 1e-15;
 
-    SerialSolver solver(exact_sol, initial_guess, rhs, topbc, rightbc, bottombc, leftbc, n, max_iter, tol);
+    SerialSolver solver(exact_sol, initial_guess, rhs, top_bc, right_bc, bottom_bc, left_bc, n, max_iter, tol);
 
     solver.solve(x_points, y_points);
     return 0;
