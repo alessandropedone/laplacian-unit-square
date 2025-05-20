@@ -1,6 +1,6 @@
-CXX      ?= g++
-CXXFLAGS ?= -std=c++20 -Wall -O3 -MMD -MP
-CPPFLAGS ?= -I include -I include/core
+CXX      = mpic++
+CXXFLAGS = -std=c++20 -Wall -O3 -MMD -MP -fopenmp
+CPPFLAGS = -I include -I include/core
 
 EXEC    = main
 SRC_DIR = src
