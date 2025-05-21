@@ -1,11 +1,12 @@
 CXX      = mpic++
 CXXFLAGS = -std=c++20 -Wall -O3 -MMD -MP
 CPPFLAGS = -I include -I include/core
-# Enable OpenMP if OPENMP=1 is specified
+# Disable OpenMP if OPENMP=0 is specified
+OPENMP ?= 1
 ifeq ($(OPENMP),1)
 	CXXFLAGS += -fopenmp
 endif
-OPENMP ?= 0
+
 
 OPENMP_FLAG_FILE := .openmp_flag
 
