@@ -1,6 +1,6 @@
-/// @file jacobi_serial_solver.hpp
-/// @brief Header file for the JacobiSerialSolver class
-/// @details This file contains the declaration of the JacobiSerialSolver class,
+/// @file jacobi_solver.hpp
+/// @brief Header file for the JacobiSolver class
+/// @details This file contains the declaration of the JacobiSolver class,
 ///          which implements an iterative solver for a given equation.
 ///          The class provides methods to set the boundary conditions,
 ///          initial guess, exact solution, and right-hand side of the equation.
@@ -10,16 +10,18 @@
 ///          parallel computing libraries or techniques.
 /// @details The class is intended to be used as a comparison for more complex
 ///          solvers that may incorporate parallelism or other advanced features.
-#ifndef JACOBI_SERIAL_SOLVER_HPP
-#define JACOBI_SERIAL_SOLVER_HPP
+#ifndef JACOBI_SOLVER_HPP
+#define JACOBI_SOLVER_HPP
 #include <iostream>
 #include <vector>
 #include <functional>
 
-class JacobiSerialSolver
+#include "vtk.hpp"
+
+class JacobiSolver
 {
 public:
-    JacobiSerialSolver() = delete;
+    JacobiSolver() = delete;
 
     /// @brief constructor
     /// @param uex exact solution of the equation
@@ -32,7 +34,7 @@ public:
     /// @param n grid size
     /// @param max_iter maximum number of iterations
     /// @param tol tolerance for convergence
-    JacobiSerialSolver(
+    JacobiSolver(
         const std::vector<double> &initial_guess,
         std::function<double(double, double)> f,
         std::function<double(double, double)> top_bc,
@@ -41,9 +43,11 @@ public:
         std::function<double(double, double)> left_bc,
         size_t n,
         unsigned max_iter = 1000,
-        double tol = 1e-6,
-        std::function<double(double, double)> uex = nullptr)
+        double tol = 1e-10,
+        std::function<double(double, double)> uex = nullptr,
+        double L2_error = -1.0)
         : iter(0),
+          L2_error(L2_error),
           n(n),
           max_iter(max_iter),
           tol(tol),
@@ -58,13 +62,38 @@ public:
     }
 
     /// @brief default destructor
-    ~JacobiSerialSolver() = default;
+    ~JacobiSolver() = default;
 
-    /// @brief implement Jacobi iterative solver for the Laplace equation
+    /// @brief implement Jacobi iterative solver for the Laplace equation without parallelism
     /// @details it computes the solution of the equation using the Jacobi method
     ///          and checks for convergence using the L2 norm
     /// @details it saves the solution in the uh vector and writes it to an output vtk file
-    void solve();
+    void solve_serial();
+
+    /// @brief implement Jacobi iterative solver for the Laplace equation with OPENMP
+    /// @details it computes the solution of the equation using the Jacobi method
+    ///          and checks for convergence using the L2 norm
+    /// @details it saves the solution in the uh vector and writes it to an output vtk file
+    /// @details it uses OpenMP to parallelize the computation of the solution
+    /// @details it uses a static schedule to distribute the work among threads
+    /// @details it uses a barrier to synchronize the threads before checking for convergence
+    /// @details it uses a single directive to update the previous solution vector
+    /// @details it uses a collapse directive to parallelize the nested loops
+    void solve_omp();
+
+    /// @brief implement Jacobi iterative solver for the Laplace equation with MPI
+    /// @details it computes the solution of the equation using the Jacobi method
+    ///          and checks for convergence using the L2 norm
+    /// @details it saves the solution in the uh vector and writes it to an output vtk file
+    /// @details it uses MPI to parallelize the computation of the solution
+    void solve_mpi();
+
+    /// @brief implement Jacobi iterative solver for the Laplace equation with MPI and OpenMP
+    /// @details it computes the solution of the equation using the Jacobi method
+    ///          and checks for convergence using the L2 norm
+    /// @details it saves the solution in the uh vector and writes it to an output vtk file
+    /// @details it uses hybrid parallelism with MPI and OpenMP
+    void solve_hybrid();
 
     // SETTERS
 
@@ -148,6 +177,38 @@ public:
 
     // GETTERS
 
+    /// @brief get the L2 error between the computed solution and the exact solution
+    /// @return L2 error
+    /// @details The L2 error is computed as the square root of the sum of
+    ///          the squares of the differences between the computed solution
+    ///          and the exact solution
+    /// @details The L2 error is used to measure the accuracy of the computed solution
+    /// @details The L2 error is computed only if the exact solution is known
+    double l2_error()
+    {
+        if (uex != nullptr)
+        {
+            L2_error = compute_error_omp(uh, uex);
+            return L2_error;
+        }
+        else
+        {
+            std::cout << "Exact solution is not known. Cannot compute error." << std::endl;
+            return -1.0;
+        }
+    };
+
+    /// @brief save the computed solution to a VTK file
+    /// @param filename name of the output file
+    /// @details The computed solution is saved in a VTK file format
+    void save_vtk(const std::string &filename)
+    {
+        // Implement VTK file writing here
+        // This is a placeholder and should be implemented as needed
+        std::cout << "Saving solution to " << filename << ".vtk" << std::endl;
+        vtk::write(uh, filename + ".vtk");
+    };
+
     /// @brief get the number of iterations tracked during the solver
     /// @return number of iterations
     unsigned get_iter() const
@@ -177,9 +238,27 @@ public:
         return temp;
     };
 
+    /// @brief reset the solver
+    /// @details The reset function clears the solution vector and resets
+    ///          the number of iterations to zero
+    /// @details The reset function is used to reinitialize the solver
+    ///          before starting a new computation
+    void reset()
+    {
+        iter = 0;
+        uh.clear();
+        uh.resize(n * n, 0.0);
+    };
+
 private:
     /// @brief number of iterations tracked during the solver
     unsigned iter = 0;
+
+    /// @brief L2 error between the computed solution and the exact solution
+    /// @details The L2 error is computed as the square root of the sum of
+    ///          the squares of the differences between the computed solution
+    ///          and the exact solution
+    double L2_error = -1.0;
 
     /// @brief number of grid points
     size_t n;
@@ -188,7 +267,7 @@ private:
     unsigned max_iter = 1000;
 
     /// @brief tolerance for convergence
-    double tol = 1e-6;
+    double tol = 1e-10;
 
     /// @brief Exact solution of the equation
     /// @details uex should be a function of two variables
@@ -217,13 +296,25 @@ private:
     /// @param sol1 first solution vector
     /// @param sol2 second solution vector
     /// @return error between the two solutions
-    double compute_error(const std::vector<double> &sol1, const std::vector<double> &sol2) const;
+    double compute_error_serial(const std::vector<double> &sol1, const std::vector<double> &sol2) const;
+
+    /// @brief OPENMP parallel version of the compute_error_serial function
+    /// @param sol1 first solution vector
+    /// @param sol2 second solution vector
+    /// @return error between the two solutions
+    double compute_error_omp(const std::vector<double> &sol1, const std::vector<double> &sol2) const;
 
     /// @brief compute the L2 norm of the error between a solution in vector form and one in function form
     /// @param sol1 computed solution vector
     /// @param sol2 solution as std::function (for example uex)
     /// @return error between the two solutions
-    double compute_error(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2) const;
+    double compute_error_serial(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2) const;
+
+    /// @brief OPENMP parallel version of the compute_error_serial function
+    /// @param sol1 computed solution vector
+    /// @param sol2 solution as std::function (for example uex)
+    /// @return error between the two solutions
+    double compute_error_omp(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2) const;
 
     /// @brief get element (i, j) of the computed solution
     /// @param i row index
@@ -251,4 +342,4 @@ private:
     };
 };
 
-#endif // JACOBI_SERIAL_SOLVER_HPP
+#endif // JACOBI_SOLVER_HPP

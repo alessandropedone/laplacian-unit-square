@@ -17,6 +17,7 @@ Test:
 - test folder: scalability test (bash script) (1,2,4 cores), data folder to collect results
 
 ### Extras
+- pybind11 to plot (results)[https://chatgpt.com/share/682df901-b6cc-8006-9be6-a300f33212a8]
 - use getpot to read data
 - Neumann and Robin boundary conditions
 - Schwarz iteration type (change only the local solver)
