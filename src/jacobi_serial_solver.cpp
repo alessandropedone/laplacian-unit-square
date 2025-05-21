@@ -35,12 +35,11 @@ void JacobiSerialSolver::solve()
     std::cout << std::setw(6) << "Iteration" << std::setw(6) << "|| Residual" << std::endl;
     bool max_iter_reached = false;
     bool converged = false;
-    size_t iterations = 0;
 
-#pragma omp parallel num_threads(8) shared(uh, previous, max_iter_reached, converged, iterations) private(iter)
+#pragma omp parallel num_threads(8) shared(uh, previous, max_iter_reached, converged)
     {
         // Initialize the previous solution vector
-        for (iter = 0; iter < max_iter && !converged; ++iter)
+        for (size_t iteration = 0; iteration < max_iter && !converged; ++iteration)
         {
 // Save the previous solution for convergence check
 #pragma omp single
@@ -51,8 +50,6 @@ void JacobiSerialSolver::solve()
 #ifdef _OPENMP
 int num_threads = omp_get_num_threads();
 int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
-#else
-            int chunk_size = n * n;
 #endif
 #pragma omp barrier
 
@@ -74,16 +71,16 @@ int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
 #pragma omp single
             {
                 double residual = compute_error(uh, previous);
-                if (iter % static_cast<int>(0.1 * max_iter) == 0)
+                if (iteration % static_cast<int>(0.1 * max_iter) == 0)
                 {
-                    std::cout << std::setw(6) << iter << std::setw(6) << "|| " << residual << std::endl;
+                    std::cout << std::setw(6) << iteration << std::setw(6) << "|| " << residual << std::endl;
                 }
                 if (residual < tol)
                 {
                     converged = true;
-                    iterations = ++iter;
+                    iter = ++iteration;
                 }
-                if (iter == max_iter - 1)
+                if (iteration == max_iter - 1)
                 {
                     max_iter_reached = true;
                 }
@@ -98,7 +95,7 @@ int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
     }
     else
     {
-        std::cout << "Converged in " << iterations << " iterations." << std::endl;
+        std::cout << "Converged in " << iter << " iterations." << std::endl;
     }
 
     // Compute the L2 error
@@ -127,8 +124,6 @@ double JacobiSerialSolver::compute_error(const std::vector<double> &sol1, const 
 #ifdef _OPENMP
 int num_threads = omp_get_num_threads();
 int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
-#else
-            int chunk_size = n * n;
 #endif
 #pragma omp parallel for collapse(2) schedule(static, chunk_size) reduction(+ : error)
     for (size_t i = 0; i < n; ++i)
