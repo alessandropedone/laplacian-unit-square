@@ -4,8 +4,8 @@
 #include <cmath>
 #include <numbers>
 #include <iomanip>
+#include <chrono>
 #include <omp.h>
-
 #include <mpi.h>
 
 #include "jacobi_serial_solver.hpp"
@@ -30,13 +30,17 @@ int main(int argc, char *argv[])
         [=](double x, double y)
         { return 0.0; }, // left boundary condition
         n,               // grid size
-        10000,           // max iterations
+        1000,           // max iterations
         1e-10,           // tolerance
         [=](double x, double y)
         { return sin(2 * pi * x) * sin(2 * pi * y); } // exact solution
     );
 
+    auto start = std::chrono::high_resolution_clock::now();
     solver.solve();
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    std::cout << "Solve time: " << elapsed.count() << " seconds\n";
 
     return 0;
 }

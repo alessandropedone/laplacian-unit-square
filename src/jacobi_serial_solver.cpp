@@ -9,6 +9,7 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
+#include <omp.h>
 
 #include "jacobi_serial_solver.hpp"
 #include "vtk.hpp"
@@ -36,7 +37,7 @@ void JacobiSerialSolver::solve()
     bool converged = false;
     size_t iterations = 0;
 
-#pragma omp parallel num_threads(11) shared(uh, previous, max_iter_reached, converged, iterations) private(iter)
+#pragma omp parallel num_threads(8) shared(uh, previous, max_iter_reached, converged, iterations) private(iter)
     {
         // Initialize the previous solution vector
         for (iter = 0; iter < max_iter && !converged; ++iter)
@@ -47,10 +48,16 @@ void JacobiSerialSolver::solve()
                 std::copy(uh.begin(), uh.end(), previous.begin());
             }
             // Perform the iteration
+#ifdef _OPENMP
+int num_threads = omp_get_num_threads();
+int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
+#else
+            int chunk_size = n * n;
+#endif
 #pragma omp barrier
 
             // Update the solution using the Jacobi method
-#pragma omp for collapse(2)
+#pragma omp for collapse(2) schedule(static, chunk_size)
             for (size_t i = 1; i < n - 1; ++i)
             {
                 for (size_t j = 1; j < n - 1; ++j)
@@ -81,7 +88,6 @@ void JacobiSerialSolver::solve()
                     max_iter_reached = true;
                 }
             }
-#pragma omp barrier
         }
     }
 
@@ -117,6 +123,14 @@ void JacobiSerialSolver::solve()
 double JacobiSerialSolver::compute_error(const std::vector<double> &sol1, const std::vector<double> &sol2) const
 {
     double error{0.0};
+
+#ifdef _OPENMP
+int num_threads = omp_get_num_threads();
+int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
+#else
+            int chunk_size = n * n;
+#endif
+#pragma omp parallel for collapse(2) schedule(static, chunk_size) reduction(+ : error)
     for (size_t i = 0; i < n; ++i)
     {
         for (size_t j = 0; j < n; ++j)
