@@ -1,6 +1,28 @@
 CXX      = mpic++
-CXXFLAGS = -std=c++20 -Wall -O3 -MMD -MP -fopenmp
+CXXFLAGS = -std=c++20 -Wall -O3 -MMD -MP
 CPPFLAGS = -I include -I include/core
+# Enable OpenMP if OPENMP=1 is specified
+ifeq ($(OPENMP),1)
+	CXXFLAGS += -fopenmp
+endif
+OPENMP ?= 0
+
+OPENMP_FLAG_FILE := .openmp_flag
+
+# Check if OPENMP value changed
+ifeq ($(shell test -f $(OPENMP_FLAG_FILE) && grep -qx 'OPENMP=$(OPENMP)' $(OPENMP_FLAG_FILE) && echo same),same)
+else
+.PHONY: force_recompile
+all: force_recompile
+force_recompile: distclean
+endif
+
+# Always update the flag file after build
+all: update_openmp_flag
+
+.PHONY: update_openmp_flag
+update_openmp_flag:
+	@echo "OPENMP=$(OPENMP)" > $(OPENMP_FLAG_FILE)
 
 EXEC    = main
 SRC_DIR = src

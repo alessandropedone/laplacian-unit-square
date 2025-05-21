@@ -5,6 +5,7 @@
 #include <numbers>
 #include <iomanip>
 #include <omp.h>
+
 #include <mpi.h>
 
 #include "jacobi_serial_solver.hpp"
@@ -29,7 +30,7 @@ int main(int argc, char *argv[])
         [=](double x, double y)
         { return 0.0; }, // left boundary condition
         n,               // grid size
-        10000,              // max iterations
+        10000,           // max iterations
         1e-10,           // tolerance
         [=](double x, double y)
         { return sin(2 * pi * x) * sin(2 * pi * y); } // exact solution

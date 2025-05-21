@@ -6,7 +6,7 @@
 ### Jacobi iteration method
 
 Parallel solver
-- local solver (parallelize with OpenMP)
+- local solver (parallelize with OpenMP, how to specify the number of threads)
 - global solver (MPI, split nodes by rows, communication between processes)
 - (converged if all ranks satisfy the criterion)
 
@@ -25,3 +25,4 @@ Test:
 - results discussion
 - instruction to reproduce the scalability test
 - hardware comparison instructions
+- instruction for compilation (OPENMP = 1 option)

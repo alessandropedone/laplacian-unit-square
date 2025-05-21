@@ -31,43 +31,68 @@ void JacobiSerialSolver::solve()
 
     // Initialize the previous solution vector
     std::vector<double> previous(n * n);
-    std::cout << std::setw(6) << "Iteration" << std::setw(6) << "|| Residual" <<  std::endl;
-    for (iter = 0; iter < max_iter; ++iter)
+    std::cout << std::setw(6) << "Iteration" << std::setw(6) << "|| Residual" << std::endl;
+    bool max_iter_reached = false;
+    bool converged = false;
+    size_t iterations = 0;
+
+#pragma omp parallel num_threads(11) shared(uh, previous, max_iter_reached, converged, iterations) private(iter)
     {
-        // Save the previous solution for convergence check
-        previous = uh;
-
-        // Perform the iteration
-        for (size_t i = 1; i < n - 1; ++i)
+        // Initialize the previous solution vector
+        for (iter = 0; iter < max_iter && !converged; ++iter)
         {
-            for (size_t j = 1; j < n - 1; ++j)
+// Save the previous solution for convergence check
+#pragma omp single
             {
-                uh[i * n + j] = 0.25 * (previous[(i - 1) * n + j] + previous[(i + 1) * n + j] +
-                                        previous[i * n + (j - 1)] + previous[i * n + (j + 1)] +
-                                        h * h * fun_at(f, i, j));
+                std::copy(uh.begin(), uh.end(), previous.begin());
             }
-        }
+            // Perform the iteration
+#pragma omp barrier
 
-        // Check for convergence
-        double residual = compute_error(uh, previous);
-        if (iter % static_cast<int>(0.1*max_iter) == 0)
-        {
-            std::cout << std::setw(6) << iter << std::setw(6) << "|| " << residual << std::endl;
-        }
-        if (residual < tol)
-        {
-            break;
+            // Update the solution using the Jacobi method
+#pragma omp for collapse(2)
+            for (size_t i = 1; i < n - 1; ++i)
+            {
+                for (size_t j = 1; j < n - 1; ++j)
+                {
+                    uh[i * n + j] = 0.25 * (previous[(i - 1) * n + j] + previous[(i + 1) * n + j] +
+                                            previous[i * n + (j - 1)] + previous[i * n + (j + 1)] +
+                                            h * h * fun_at(f, i, j));
+                }
+            }
+#pragma omp barrier
+
+            // Update the boundary conditions
+// Check for convergence
+#pragma omp single
+            {
+                double residual = compute_error(uh, previous);
+                if (iter % static_cast<int>(0.1 * max_iter) == 0)
+                {
+                    std::cout << std::setw(6) << iter << std::setw(6) << "|| " << residual << std::endl;
+                }
+                if (residual < tol)
+                {
+                    converged = true;
+                    iterations = ++iter;
+                }
+                if (iter == max_iter - 1)
+                {
+                    max_iter_reached = true;
+                }
+            }
+#pragma omp barrier
         }
     }
 
     // Check if the maximum number of iterations was reached
-    if (iter == max_iter)
+    if (max_iter_reached)
     {
         std::cout << "Warning: Maximum number of iterations reached without convergence." << std::endl;
     }
     else
     {
-        std::cout << "Converged in " << iter << " iterations." << std::endl;
+        std::cout << "Converged in " << iterations << " iterations." << std::endl;
     }
 
     // Compute the L2 error
@@ -80,13 +105,14 @@ void JacobiSerialSolver::solve()
     {
         std::cout << "Exact solution is not known. Cannot compute error." << std::endl;
     }
-    
+
     // save in vtk format
     vtk::write(uh, "solution.vtk");
 
     return;
-};
+}
 
+// Definitions of JacobiSerialSolver member functions outside of solve()
 
 double JacobiSerialSolver::compute_error(const std::vector<double> &sol1, const std::vector<double> &sol2) const
 {
