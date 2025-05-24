@@ -11,20 +11,22 @@
 #include "jacobi_solver.hpp"
 #include "vtk.hpp"
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
+    MPI_Init(&argc, &argv);
+
     constexpr double pi = std::numbers::pi;
-    std::vector<int> ns = {8, 16, 32, 64, 128};
+    std::vector<int> ns = {16}; //{8, 16, 32, 64, 128};
     std::vector<double> serial_times, omp_times, speedups;
     std::vector<double> l2_errrors;
-
+/*
     std::cout << std::setw(8) << "n"
               << std::setw(20) << "Serial Time (s)"
               << std::setw(20) << "OMP Time (s)"
               << std::setw(15) << "Speedup"
               << std::setw(20) << "L2 error"<< "\n";
     std::cout << "---------------------------------------------------------------------------------------------\n";
-
+*/
     for (int n : ns) {
         JacobiSolver solver(
             std::vector<double>(n * n, 0.0), // initial guess
@@ -44,7 +46,7 @@ int main(int argc, char *argv[])
             [=](double x, double y)
             { return sin(2 * pi * x) * sin(2 * pi * y); } // exact solution
         );
-
+/*
         auto start = std::chrono::high_resolution_clock::now();
         solver.solve_serial();
         auto end = std::chrono::high_resolution_clock::now();
@@ -74,8 +76,7 @@ int main(int argc, char *argv[])
         if (n == 128) {
             solver.save_vtk("solution");
         }
-        
-    }
+    
 
     // Output data for plotting
     std::ofstream ofs("results.csv");
@@ -85,5 +86,14 @@ int main(int argc, char *argv[])
             << "," << l2_errrors[i] << "\n";
     }
     ofs.close();
+*/
+    solver.solve_mpi(); // Call the MPI solver 
+    MPI_Barrier(MPI_COMM_WORLD); // Ensure all processes reach this point before exiting
+   
+    }
+
+
+    MPI_Finalize();
+
     return 0;
 }

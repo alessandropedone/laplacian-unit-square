@@ -168,7 +168,136 @@ void JacobiSolver::solve_mpi()
 {
     // MPI implementation of the Jacobi solver
     // This function is a placeholder and should be implemented as needed
-    std::cout << "MPI implementation is not yet available." << std::endl;
+    //std::cout << "MPI implementation is not yet available." << std::endl;
+    int initialized;
+    MPI_Initialized(&initialized);
+
+    if (initialized) {
+        MPI_Comm mpi_comm = MPI_COMM_WORLD;
+
+        int mpi_rank;
+        MPI_Comm_rank(mpi_comm, &mpi_rank);
+
+        int mpi_size;
+        MPI_Comm_size(mpi_comm, &mpi_size);
+
+        // To divide the work among processes
+        unsigned int count = n / mpi_size;
+        int remainder = n - count * mpi_size;
+
+        // Vectors to store the number of elements to send to each
+        // processor and the offset index where to start reading them from.
+        std::vector<int> send_counts(mpi_size, 0);
+        std::vector<int> send_start_idx(mpi_size, 0);
+
+        // Vectors to store the number of elements to receive from each
+        // processor and the offset index where to start writing them into.
+        std::vector<int> recv_counts(mpi_size, 0);
+        std::vector<int> recv_start_idx(mpi_size, 0);
+        unsigned start_idx{0};
+
+        // The first and last processors will have only one extra row,
+        // while the others will have two ghost rows.
+        if (mpi_rank == 0){
+
+            recv_counts[0] = (0 < remainder) ? (count + 2) : count + 1;
+            send_counts[0] = recv_counts[0] * n;
+
+            recv_start_idx[0] = start_idx;
+            send_start_idx[0] = start_idx * n;
+
+            start_idx += recv_counts[0] - 1; //consider repetition of ghost row
+
+            for (int i = 1; i < mpi_size - 1; ++i){
+
+                recv_counts[i] = (i < remainder) ? (count + 3) : count + 2;
+                send_counts[i] = recv_counts[i] * n;
+
+                recv_start_idx[i] = start_idx;
+                send_start_idx[i] = start_idx * n;
+ 
+                start_idx += recv_counts[i] - 1; //consider repetition of ghost row
+            }
+
+            recv_counts[mpi_size-1] = (mpi_size-1 < remainder) ? (count + 2) : count + 1;
+            send_counts[mpi_size-1] = recv_counts[mpi_size-1] * n;
+
+            recv_start_idx[mpi_size-1] = start_idx;
+            send_start_idx[mpi_size-1] = start_idx * n;
+
+            start_idx += recv_counts[mpi_size-1] - 1; //consider repetition of ghost row
+
+            for (int i = 0; i < mpi_size; ++i)
+            {
+                std::cout << "Rank " << i << " send_counts[" << i << "] = " << send_counts[i] << std::endl;
+                std::cout << "Rank " << i << " recv_counts[" << i << "] = " << recv_counts[i] << std::endl;
+                std::cout << "Rank " << i << " send_start_idx[" << i << "] = " << send_start_idx[i] << std::endl;
+                std::cout << "Rank " << i << " recv_start_idx[" << i << "] = " << recv_start_idx[i] << std::endl;
+            }
+        }
+
+        unsigned int local_rows = (mpi_rank < remainder) ? (count + 1) : count;
+        local_rows += (mpi_rank == 0 || mpi_rank == mpi_size - 1) ? 1 : 2; // Add ghost rows
+        //std::cout << "Number of rows on rank " << mpi_rank << ": " << local_rows << std::endl;
+        MPI_Barrier(mpi_comm);
+
+        /* int MPI_Scatterv(
+                void *sendbuf,
+                int *sendcnts,
+                int *displs,
+                MPI_Datatype sendtype,
+                void *recvbuf,
+                int recvcnt,
+                MPI_Datatype recvtype,
+                int root,
+                MPI_Comm comm
+        ); */
+        std::vector<double> local_sol(local_rows * n);
+        MPI_Scatterv(uh.data(),
+               send_counts.data(),
+               send_start_idx.data(),
+               MPI_DOUBLE,
+               local_sol.data(),
+               local_rows * n,
+               MPI_DOUBLE,
+               0,
+               mpi_comm);
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        MPI_Gatherv(local_sol.data(),
+                local_rows,
+                MPI_DOUBLE,
+                uh.data(),
+                recv_counts.data(),
+                recv_start_idx.data(),
+                MPI_DOUBLE,
+                0,
+                mpi_comm);
+
+        //if (mpi_rank == 0 && iter % 10 == 0)
+          //  std::cout << "Iter " << iter << " Residual: " << globalResidual << std::endl;
+
+
+        return;
+    }
+    else {
+        std::cerr << "Error: MPI is not initialized." << std::endl;
+        return;
+    }
 }
 
 void JacobiSolver::solve_hybrid()

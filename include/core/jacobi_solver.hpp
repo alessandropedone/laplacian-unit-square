@@ -15,6 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <functional>
+#include <mpi.h>
 
 #include "vtk.hpp"
 

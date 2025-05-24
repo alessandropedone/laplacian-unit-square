@@ -25,6 +25,10 @@ all: update_openmp_flag
 update_openmp_flag:
 	@echo "OPENMP=$(OPENMP)" > $(OPENMP_FLAG_FILE)
 
+.PHONY: run
+run: $(EXEC)
+	mpirun -np 6 ./$(EXEC)
+
 EXEC    = main
 SRC_DIR = src
 SRCS    = $(shell find $(SRC_DIR) -name '*.cpp')
