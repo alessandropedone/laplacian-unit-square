@@ -189,7 +189,7 @@ public:
     {
         if (uex != nullptr)
         {
-            L2_error = compute_error_omp(uh, uex);
+            L2_error = compute_error_omp(uh, uex, n, n);
             return L2_error;
         }
         else
@@ -296,26 +296,34 @@ private:
     /// @brief compute the L2 norm of the errror between two solutions in vector form
     /// @param sol1 first solution vector
     /// @param sol2 second solution vector
+    /// @param rows number of rows in the solution
+    /// @param cols number of columns in the solution
     /// @return error between the two solutions
-    double compute_error_serial(const std::vector<double> &sol1, const std::vector<double> &sol2) const;
+    double compute_error_serial(const std::vector<double> &sol1, const std::vector<double> &sol2, unsigned rows, unsigned cols) const;
 
     /// @brief OPENMP parallel version of the compute_error_serial function
     /// @param sol1 first solution vector
     /// @param sol2 second solution vector
+    /// @param rows number of rows in the solution
+    /// @param cols number of columns in the solution
     /// @return error between the two solutions
-    double compute_error_omp(const std::vector<double> &sol1, const std::vector<double> &sol2) const;
+    double compute_error_omp(const std::vector<double> &sol1, const std::vector<double> &sol2, unsigned rows, unsigned cols) const;
 
     /// @brief compute the L2 norm of the error between a solution in vector form and one in function form
     /// @param sol1 computed solution vector
     /// @param sol2 solution as std::function (for example uex)
+    /// @param rows number of rows in the solution
+    /// @param cols number of columns in the solution
     /// @return error between the two solutions
-    double compute_error_serial(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2) const;
+    double compute_error_serial(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2, unsigned rows, unsigned cols) const;
 
     /// @brief OPENMP parallel version of the compute_error_serial function
     /// @param sol1 computed solution vector
     /// @param sol2 solution as std::function (for example uex)
+    /// @param rows number of rows in the solution
+    /// @param cols number of columns in the solution
     /// @return error between the two solutions
-    double compute_error_omp(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2) const;
+    double compute_error_omp(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2, unsigned rows, unsigned cols) const;
 
     /// @brief get element (i, j) of the computed solution
     /// @param i row index

@@ -50,7 +50,7 @@ int main(int argc, char **argv)
             [=](double x, double y)
             { return 0.0; }, // left boundary condition
             n,               // grid size
-            30000,           // max iterations
+            10000,           // max iterations
             1e-15,           // tolerance
             [=](double x, double y)
             { return sin(2 * pi * x) * sin(2 * pi * y); } // exact solution
@@ -76,9 +76,6 @@ int main(int argc, char **argv)
             std::chrono::duration<double> omp_elapsed = end - start;
             omp_time = omp_elapsed.count();
 
-            if (n == 128) {
-                solver.save_vtk("solution");
-            }
         }
 
         // Reset solver for MPI run
@@ -93,6 +90,7 @@ int main(int argc, char **argv)
 
         // Only rank 0 handles output and data collection
         if (rank == 0) {
+            solver.save_vtk("solution_" + std::to_string(n));
             double omp_speedup = serial_time / omp_time;
             double mpi_speedup = serial_time / mpi_time;
 
