@@ -10,7 +10,7 @@
 
 #include "jacobi_solver.hpp"
 #include "vtk.hpp"
-#include "csv.hpp"
+#include "plot.hpp"
 
 void plot();
 

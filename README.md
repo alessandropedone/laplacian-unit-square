@@ -13,6 +13,8 @@
 
 ### README
 - results discussion
-- instruction to reproduce the scalability test
+- instruction to reproduce the scalability and grid size tests (just run ./test.sh)
+- explain generated plots
+- simpler python script to visdualize results
 - hardware comparison instructions
 - instruction for compilation (OPENMP = 1 option)

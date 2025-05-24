@@ -1,5 +1,5 @@
-#ifndef CSV_HPP
-#define CSV_HPP
+#ifndef PLOT_HPP
+#define PLOT_HPP
 
 #include <iostream>
 #include <vector>
@@ -80,7 +80,7 @@ public:
     }
 };
 
-class SimplePlotter
+class Plotter
 {
 private:
     static int plot_counter;
@@ -229,7 +229,7 @@ public:
     }
 };
 
-int SimplePlotter::plot_counter = 0;
+int Plotter::plot_counter = 0;
 
 void gridSizeTest(const std::string &filename)
 {
@@ -263,31 +263,31 @@ void gridSizeTest(const std::string &filename)
     std::vector<std::vector<double>> timing_data = {serial_times, omp_times, mpi_times, hybrid_times};
     std::vector<std::string> timing_labels = {"Serial", "OMP", "MPI", "Hybrid"};
 
-    SimplePlotter::writeDataFile("test/plots/timing_vs_n.dat", n_values, timing_data, timing_labels);
-    SimplePlotter::createGnuplotScript("test/plots/timing_vs_n.gp", "test/plots/timing_vs_n.dat",
+    Plotter::writeDataFile("test/plots/timing_vs_n.dat", n_values, timing_data, timing_labels);
+    Plotter::createGnuplotScript("test/plots/timing_vs_n.gp", "test/plots/timing_vs_n.dat",
                                        "Timing vs Grid Size (n)",
                                        "n", "Time (s)", timing_labels, true, true, "test/plots/timing_vs_n.png");
-    SimplePlotter::printDataSummary("Timing vs Grid Size (n)", n_values, timing_data, timing_labels);
+    Plotter::printDataSummary("Timing vs Grid Size (n)", n_values, timing_data, timing_labels);
 
     // Plot 2: L2 Error vs n
     std::vector<std::vector<double>> error_data = {l2_errors};
     std::vector<std::string> error_labels = {"L2 Error"};
 
-    SimplePlotter::writeDataFile("test/plots/l2error_vs_n.dat", n_values, error_data, error_labels);
-    SimplePlotter::createGnuplotScript("test/plots/l2error_vs_n.gp", "test/plots/l2error_vs_n.dat",
+    Plotter::writeDataFile("test/plots/l2error_vs_n.dat", n_values, error_data, error_labels);
+    Plotter::createGnuplotScript("test/plots/l2error_vs_n.gp", "test/plots/l2error_vs_n.dat",
                                        "L2 Error vs Grid Size (n)",
                                        "n", "L2 Error", error_labels, true, true, "test/plots/l2error_vs_n.png");
 
     // Plot 3: Timing vs h (with log2 scaling on both axes)
-    SimplePlotter::writeDataFile("test/plots/timing_vs_h.dat", h_values, timing_data, timing_labels);
-    SimplePlotter::createGnuplotScript("test/plots/timing_vs_h.gp", "test/plots/timing_vs_h.dat",
+    Plotter::writeDataFile("test/plots/timing_vs_h.dat", h_values, timing_data, timing_labels);
+    Plotter::createGnuplotScript("test/plots/timing_vs_h.gp", "test/plots/timing_vs_h.dat",
                                        "Timing vs Grid Spacing (h)",
                                        "h = 1/(n-1)", "Time (s)", timing_labels, true, true, "test/plots/timing_vs_h.png");
-    SimplePlotter::printDataSummary("Timing vs Grid Spacing (h)", h_values, timing_data, timing_labels);
+    Plotter::printDataSummary("Timing vs Grid Spacing (h)", h_values, timing_data, timing_labels);
 
     // Plot 4: L2 Error vs h
-    SimplePlotter::writeDataFile("test/plots/l2error_vs_h.dat", h_values, error_data, error_labels);
-    SimplePlotter::createGnuplotScript("test/plots/l2error_vs_h.gp", "test/plots/l2error_vs_h.dat",
+    Plotter::writeDataFile("test/plots/l2error_vs_h.dat", h_values, error_data, error_labels);
+    Plotter::createGnuplotScript("test/plots/l2error_vs_h.gp", "test/plots/l2error_vs_h.dat",
                                        "L2 Error vs Grid Spacing (h)",
                                        "h = 1/(n-1)", "L2 Error", error_labels, true, true, "test/plots/l2error_vs_h.png");
 }
@@ -334,22 +334,14 @@ void scalabilityTest()
             scalability_data.push_back(timings);
             scalability_labels.push_back("n=" + std::to_string(n));
         }
-
-        // Print timings for debugging
-        std::cout << "n=" << n << " timings: ";
-        for (double t : timings)
-        {
-            std::cout << t << " ";
-        }
-        std::cout << std::endl;
     }
 
-    SimplePlotter::writeDataFile("test/plots/scalability.dat", proc_double, scalability_data, scalability_labels);
-    SimplePlotter::createGnuplotScript("test/plots/scalability.gp", "test/plots/scalability.dat",
+    Plotter::writeDataFile("test/plots/scalability.dat", proc_double, scalability_data, scalability_labels);
+    Plotter::createGnuplotScript("test/plots/scalability.gp", "test/plots/scalability.dat",
                                        "Scalability Test",
                                        "Number of Processes", "Time (s)",
                                        scalability_labels, true, false);
-    SimplePlotter::printDataSummary("Scalability Test", proc_double, scalability_data, scalability_labels);
+    Plotter::printDataSummary("Scalability Test", proc_double, scalability_data, scalability_labels);
 }
 
-#endif // End of CSV_HPP guard
+#endif // End of PLOT_HPP guard
