@@ -168,11 +168,12 @@ void JacobiSolver::solve_mpi()
 {
     // MPI implementation of the Jacobi solver
     // This function is a placeholder and should be implemented as needed
-    //std::cout << "MPI implementation is not yet available." << std::endl;
+    // std::cout << "MPI implementation is not yet available." << std::endl;
     int initialized;
     MPI_Initialized(&initialized);
 
-    if (initialized) {
+    if (initialized)
+    {
         MPI_Comm mpi_comm = MPI_COMM_WORLD;
 
         int mpi_rank;
@@ -195,18 +196,20 @@ void JacobiSolver::solve_mpi()
 
         // The first and last processors will have only one extra row,
         // while the others will have two ghost rows.
-        if (mpi_rank == 0){
+        if (mpi_rank == 0)
+        {
 
-            send_counts[0] = ((0 < remainder) ? (count + 2) : count + 1) * n;
+            send_counts[0] = ((0 < remainder) ? (count + 1 + 1) : count + 1) * n;
             send_start_idx[0] = 0;
-            start_idx = send_counts[0]-n;
+            start_idx = send_counts[0] - 2 * n;
 
-            for (int i = 1; i < mpi_size - 1; ++i){
-                send_counts[i] = ((i < remainder) ? (count + 3) : count + 2) * n;
-                send_start_idx[i] = start_idx; 
-                start_idx += send_counts[i]-n; //consider repetition of ghost row
-             }
-            send_counts[mpi_size - 1] = ((mpi_size - 1 < remainder) ? (count + 2) : count + 1) * n;
+            for (int i = 1; i < mpi_size - 1; ++i)
+            {
+                send_counts[i] = ((i < remainder) ? (count + 1 + 2) : count + 2) * n;
+                send_start_idx[i] = start_idx;
+                start_idx += send_counts[i] - 2 * n; // consider repetition of ghost row
+            }
+            send_counts[mpi_size - 1] = ((mpi_size - 1 < remainder) ? (count + 1 + 1) : count + 1) * n;
             send_start_idx[mpi_size - 1] = start_idx;
 
             for (int i = 0; i < mpi_size; ++i)
@@ -218,7 +221,7 @@ void JacobiSolver::solve_mpi()
 
         unsigned int local_rows = (mpi_rank < remainder) ? (count + 1) : count;
         local_rows += (mpi_rank == 0 || mpi_rank == mpi_size - 1) ? 1 : 2; // Add ghost rows
-        //std::cout << "Number of rows on rank " << mpi_rank << ": " << local_rows << std::endl;
+        // std::cout << "Number of rows on rank " << mpi_rank << ": " << local_rows << std::endl;
         MPI_Barrier(mpi_comm);
 
         /* int MPI_Scatterv(
@@ -234,47 +237,32 @@ void JacobiSolver::solve_mpi()
         ); */
         std::vector<double> local_sol(local_rows * n);
         MPI_Scatterv(uh.data(),
-               send_counts.data(),
-               send_start_idx.data(),
-               MPI_DOUBLE,
-               local_sol.data(),
-               local_rows * n,
-               MPI_DOUBLE,
-               0,
-               mpi_comm);
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
+                     send_counts.data(),
+                     send_start_idx.data(),
+                     MPI_DOUBLE,
+                     local_sol.data(),
+                     local_rows * n,
+                     MPI_DOUBLE,
+                     0,
+                     mpi_comm);
 
         MPI_Gatherv(local_sol.data(),
-                local_rows,
-                MPI_DOUBLE,
-                uh.data(),
-                send_counts.data(),
-                send_start_idx.data(),
-                MPI_DOUBLE,
-                0,
-                mpi_comm);
+                    local_rows,
+                    MPI_DOUBLE,
+                    uh.data(),
+                    send_counts.data(),
+                    send_start_idx.data(),
+                    MPI_DOUBLE,
+                    0,
+                    mpi_comm);
 
-        //if (mpi_rank == 0 && iter % 10 == 0)
-          //  std::cout << "Iter " << iter << " Residual: " << globalResidual << std::endl;
-
+        // if (mpi_rank == 0 && iter % 10 == 0)
+        //   std::cout << "Iter " << iter << " Residual: " << globalResidual << std::endl;
 
         return;
     }
-    else {
+    else
+    {
         std::cerr << "Error: MPI is not initialized." << std::endl;
         return;
     }
