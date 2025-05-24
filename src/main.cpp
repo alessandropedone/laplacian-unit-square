@@ -1,3 +1,34 @@
+
+/**
+ * @file main.cpp
+ * @brief Main driver program for parallel Jacobi solver performance testing and analysis.
+ * 
+ * This program implements a comprehensive performance analysis of different parallelization
+ * strategies for solving the 2D Poisson equation using the Jacobi iterative method. It tests
+ * serial, OpenMP, MPI, and hybrid (OpenMP+MPI) implementations across various grid sizes.
+ * 
+ * The program solves the equation:
+ * -∇²u = 8π²sin(2πx)sin(2πy)
+ * with homogeneous Dirichlet boundary conditions on the unit square [0,1]×[0,1].
+ * The exact solution is u(x,y) = sin(2πx)sin(2πy).
+ * 
+ * Features:
+ * - Performance benchmarking across multiple grid sizes (8×8 to 64×64)
+ * - Speedup calculations for each parallelization method
+ * - L2 error analysis for accuracy validation
+ * - VTK output for visualization of the largest grid solution
+ * - CSV data export for further analysis
+ * - Automated plotting and scalability analysis
+ * 
+ * Output:
+ * - Console table showing execution times, speedups, and errors
+ * - CSV files with detailed results for each MPI process count
+ * - VTK files for solution visualization
+ * - Performance plots 
+ * 
+ * @note This program requires MPI initialization and should be run with multiple processes
+ *       to evaluate MPI and hybrid performance. Only rank 0 handles output operations.
+ */
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -12,7 +43,6 @@
 #include "vtk.hpp"
 #include "plot.hpp"
 
-void plot();
 
 int main(int argc, char **argv)
 {
@@ -154,23 +184,10 @@ int main(int argc, char **argv)
 
     if (size == 8 && rank == 0)
     {
-        plot();
+        plot::plot();
     }
 
     MPI_Finalize();
     return 0;
 }
 
-void plot()
-{
-    try
-    {
-        scalabilityTest();
-        gridSizeTest("results_1.csv");
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
-    return;
-}
