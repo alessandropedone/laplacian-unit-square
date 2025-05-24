@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
     constexpr double pi = std::numbers::pi;
-    std::vector<int> ns = {32}; //{8, 16, 32, 64, 128};
+    std::vector<int> ns = {16}; //{8, 16, 32, 64, 128};
     std::vector<double> serial_times, omp_times, mpi_times, omp_speedups, mpi_speedups;
     std::vector<double> l2_errors; // Fixed typo: was "l2_errrors"
 

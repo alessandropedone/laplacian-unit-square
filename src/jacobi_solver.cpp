@@ -197,39 +197,22 @@ void JacobiSolver::solve_mpi()
         // while the others will have two ghost rows.
         if (mpi_rank == 0){
 
-            recv_counts[0] = (0 < remainder) ? (count + 2) : count + 1;
-            send_counts[0] = recv_counts[0] * n;
-
-            recv_start_idx[0] = start_idx;
-            send_start_idx[0] = start_idx * n;
-
-            start_idx += recv_counts[0] - 1; //consider repetition of ghost row
+            send_counts[0] = ((0 < remainder) ? (count + 2) : count + 1) * n;
+            send_start_idx[0] = 0;
+            start_idx = send_counts[0]-n;
 
             for (int i = 1; i < mpi_size - 1; ++i){
-
-                recv_counts[i] = (i < remainder) ? (count + 3) : count + 2;
-                send_counts[i] = recv_counts[i] * n;
-
-                recv_start_idx[i] = start_idx;
-                send_start_idx[i] = start_idx * n;
- 
-                start_idx += recv_counts[i] - 1; //consider repetition of ghost row
-            }
-
-            recv_counts[mpi_size-1] = (mpi_size-1 < remainder) ? (count + 2) : count + 1;
-            send_counts[mpi_size-1] = recv_counts[mpi_size-1] * n;
-
-            recv_start_idx[mpi_size-1] = start_idx;
-            send_start_idx[mpi_size-1] = start_idx * n;
-
-            start_idx += recv_counts[mpi_size-1] - 1; //consider repetition of ghost row
+                send_counts[i] = ((i < remainder) ? (count + 3) : count + 2) * n;
+                send_start_idx[i] = start_idx; 
+                start_idx += send_counts[i]-n; //consider repetition of ghost row
+             }
+            send_counts[mpi_size - 1] = ((mpi_size - 1 < remainder) ? (count + 2) : count + 1) * n;
+            send_start_idx[mpi_size - 1] = start_idx;
 
             for (int i = 0; i < mpi_size; ++i)
             {
-                std::cout << "Rank " << i << " send_counts[" << i << "] = " << send_counts[i] << std::endl;
-                std::cout << "Rank " << i << " recv_counts[" << i << "] = " << recv_counts[i] << std::endl;
                 std::cout << "Rank " << i << " send_start_idx[" << i << "] = " << send_start_idx[i] << std::endl;
-                std::cout << "Rank " << i << " recv_start_idx[" << i << "] = " << recv_start_idx[i] << std::endl;
+                std::cout << "Rank " << i << " send_counts[" << i << "] = " << send_counts[i] << std::endl;
             }
         }
 
@@ -279,8 +262,8 @@ void JacobiSolver::solve_mpi()
                 local_rows,
                 MPI_DOUBLE,
                 uh.data(),
-                recv_counts.data(),
-                recv_start_idx.data(),
+                send_counts.data(),
+                send_start_idx.data(),
                 MPI_DOUBLE,
                 0,
                 mpi_comm);

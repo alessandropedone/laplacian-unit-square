@@ -27,7 +27,7 @@ update_openmp_flag:
 
 .PHONY: run
 run: $(EXEC)
-	mpirun -np 6 ./$(EXEC)
+	mpirun -np 2 ./$(EXEC)
 
 EXEC    = main
 SRC_DIR = src
