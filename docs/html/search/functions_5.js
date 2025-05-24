@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['_7ejacobiserialsolver_0',['~JacobiSerialSolver',['../classJacobiSerialSolver.html#aff6596bd207444d6a3c034655312fb30',1,'JacobiSerialSolver']]]
+  ['read_0',['read',['../vtk_8hpp.html#a325ee41224bd8d4155616041a8c42b9c',1,'vtk']]],
+  ['readcsv_1',['readCSV',['../classplot_1_1CSVReader.html#a3abb97803f144bcbda9dd0b9449bed1e',1,'plot::CSVReader']]],
+  ['reset_2',['reset',['../classJacobiSolver.html#a10679be4adc24541340be34aa20009d0',1,'JacobiSolver']]]
 ];

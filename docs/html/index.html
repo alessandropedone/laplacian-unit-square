@@ -78,35 +78,25 @@ A matrix–free parallel solver for the Laplace equation</h1>
 <h2><a class="anchor" id="autotoc_md1"></a>
 Roadmap</h2>
 <h3><a class="anchor" id="autotoc_md2"></a>
-Jacobi iteration method</h3>
-<p>Data structure: std::vector (is it simple to export in vtk format?)</p>
-<p>Serial solver (local solver)</p>
-<p>Parallel solver</p><ul>
-<li>local solver (parallelize with OpenMP)</li>
-<li>global solver (MPI, split nodes by rows, communication between processes)</li>
-</ul>
-<p>Error, convergence (converged if all ranks satisfy the criterion) and max iterations (slow convergence!!)</p>
-<p>Export the solution in vtk format</p>
-<p>Test:</p><ul>
-<li>f(x) = 8π2 sin(2πx) sin(2πy), with exact sol u(x, y) = sin(2πx) sin(2πy)</li>
-<li>serial vs parallel as grid size increases (time)</li>
-<li>L2 norm of the error as function of grid size (grafichino)</li>
-<li>test folder: scalability test (bash script) (1,2,4 cores), data folder to collect results</li>
-<li>It could be interesting also to report your hardware in a file hw.info: cat /proc/cpuinfo.</li>
-</ul>
-<h3><a class="anchor" id="autotoc_md3"></a>
 Extras</h3>
 <ul>
-<li>non homogeneous Dirichlet boundary conditions</li>
-<li>Neumann and Robin boundary conditions</li>
+<li>use getpot to read data</li>
+<li>(Neumann and Robin boundary conditions)[<a href="https://chatgpt.com/share/68322bf2-c650-8006-abfa-ca0234cb86ef">https://chatgpt.com/share/68322bf2-c650-8006-abfa-ca0234cb86ef</a>]</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md3"></a>
+?</h3>
+<ul>
 <li>Schwarz iteration type (change only the local solver)</li>
 </ul>
 <h3><a class="anchor" id="autotoc_md4"></a>
 README</h3>
 <ul>
 <li>results discussion</li>
-<li>instruction to reproduce the scalability test</li>
-<li>hardware comparison instructions </li>
+<li>instruction to reproduce the scalability and grid size tests (just run ./test.sh)</li>
+<li>explain generated plots</li>
+<li>simpler python script to visdualize results</li>
+<li>hardware comparison instructions</li>
+<li>instruction for compilation (OPENMP = 1 option) </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

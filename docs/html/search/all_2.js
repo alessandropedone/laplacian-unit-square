@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['for_20the_20laplace_20equation_0',['A matrix–free parallel solver for the Laplace equation',['../index.html#autotoc_md0',1,'']]]
+  ['creategnuplotscript_0',['createGnuplotScript',['../classplot_1_1Plotter.html#a2d229ea6a5c7989a18bf1125a0db5489',1,'plot::Plotter']]],
+  ['csvreader_1',['CSVReader',['../classplot_1_1CSVReader.html',1,'plot']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jacobiserialsolver_0',['JacobiSerialSolver',['../classJacobiSerialSolver.html',1,'']]]
+  ['csvreader_0',['CSVReader',['../classplot_1_1CSVReader.html',1,'plot']]]
 ];
