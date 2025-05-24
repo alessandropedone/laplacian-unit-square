@@ -185,15 +185,12 @@ void JacobiSolver::solve_mpi()
         unsigned int count = n / mpi_size;
         int remainder = n - count * mpi_size;
 
-        // Vectors to store the number of elements to send to each
-        // processor and the offset index where to start reading them from.
+        // Vector to store the number of elements to send to each processor,
+        // and to store the number of elements to receive from each processor.
         std::vector<int> send_counts(mpi_size, 0);
+        // Vector to store the offset index where to start reading/writing them from.
         std::vector<int> send_start_idx(mpi_size, 0);
 
-        // Vectors to store the number of elements to receive from each
-        // processor and the offset index where to start writing them into.
-        std::vector<int> recv_counts(mpi_size, 0);
-        std::vector<int> recv_start_idx(mpi_size, 0);
         unsigned start_idx{0};
 
         // The first and last processors will have only one extra row,
