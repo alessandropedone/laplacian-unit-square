@@ -32,10 +32,8 @@ namespace vtk
     inline void write(const std::vector<double> &grid, const std::string &filename = "output.vtk")
     {
         int n = std::sqrt(grid.size());
-        std::cout << "Writing VTK file: " << filename << std::endl;
-        // Create data directory if it doesn't exist
-        std::filesystem::create_directories("data");
-        std::ofstream vtkFile("data/" + filename);
+        std::cout << "Writing VTK file: " << filename << std::endl;        
+        std::ofstream vtkFile(filename);
         vtkFile << "# vtk DataFile Version 3.0\n";
         vtkFile << "vtk output\n";
         vtkFile << "ASCII\n";
@@ -76,7 +74,7 @@ namespace vtk
      */
     inline void read(const std::string &filename, std::vector<double> &grid, std::vector<std::pair<double, double>> &coords)
     {
-        std::ifstream vtkIn("data/" + filename);
+        std::ifstream vtkIn(filename);
         std::string line;
 
         // Skip header lines until "POINTS"

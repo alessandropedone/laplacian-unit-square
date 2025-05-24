@@ -207,7 +207,8 @@ public:
         // Implement VTK file writing here
         // This is a placeholder and should be implemented as needed
         std::cout << "Saving solution to " << filename << ".vtk" << std::endl;
-        vtk::write(uh, filename + ".vtk");
+        std::filesystem::create_directories("test/data");
+        vtk::write(uh, "test/data/" + filename + ".vtk");
     };
 
     /// @brief get the number of iterations tracked during the solver

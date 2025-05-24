@@ -10,6 +10,9 @@
 
 #include "jacobi_solver.hpp"
 #include "vtk.hpp"
+#include "csv.hpp"
+
+void plot();
 
 int main(int argc, char **argv)
 {
@@ -139,7 +142,7 @@ int main(int argc, char **argv)
     // Only write results file on rank 0
     if (rank == 0)
     {
-        std::ofstream ofs("data/results_" + std::to_string(size) + ".csv");
+        std::ofstream ofs("test/data/results_" + std::to_string(size) + ".csv");
         ofs << "n,serial,omp,mpi,hybrid,omp_speedup,mpi_speedup,hybrid_speedup,l2_error\n";
         for (size_t i = 0; i < ns.size(); ++i)
         {
@@ -149,6 +152,25 @@ int main(int argc, char **argv)
         ofs.close();
     }
 
+    if (size == 8 && rank == 0)
+    {
+        plot();
+    }
+
     MPI_Finalize();
     return 0;
+}
+
+void plot()
+{
+    try
+    {
+        scalabilityTest();
+        gridSizeTest("results_1.csv");
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+    return;
 }
