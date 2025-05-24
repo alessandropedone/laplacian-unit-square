@@ -1,0 +1,43 @@
+# vtk DataFile Version 3.0
+vtk output
+ASCII
+DATASET STRUCTURED_GRID
+DIMENSIONS 4 4 1
+POINTS 16 float
+0 0 0
+0 0.25 0
+0 0.5 0
+0 0.75 0
+0.25 0 0
+0.25 0.25 0
+0.25 0.5 0
+0.25 0.75 0
+0.5 0 0
+0.5 0.25 0
+0.5 0.5 0
+0.5 0.75 0
+0.75 0 0
+0.75 0.25 0
+0.75 0.5 0
+0.75 0.75 0
+
+
+POINT_DATA 16
+SCALARS values float
+LOOKUP_TABLE default
+0
+0
+0
+0
+0
+1.0966227
+-1.0966227
+0
+0
+-1.0966227
+1.0966227
+0
+0
+0
+0
+0
