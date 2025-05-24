@@ -188,9 +188,9 @@ void JacobiSolver::solve_mpi()
 
         // Vector to store the number of elements to send to each processor,
         // and to store the number of elements to receive from each processor.
-        std::vector<int> send_counts(mpi_size, 0);
+        std::vector<int> counts(mpi_size, 0);
         // Vector to store the offset index where to start reading/writing them from.
-        std::vector<int> send_start_idx(mpi_size, 0);
+        std::vector<int> start_idxs(mpi_size, 0);
 
         unsigned start_idx{0};
 
@@ -199,23 +199,23 @@ void JacobiSolver::solve_mpi()
         if (mpi_rank == 0)
         {
 
-            send_counts[0] = ((0 < remainder) ? (count + 1 + 1) : count + 1) * n;
-            send_start_idx[0] = 0;
-            start_idx = send_counts[0] - 2 * n;
+            counts[0] = ((0 < remainder) ? (count + 1 + 1) : count + 1) * n;
+            start_idxs[0] = 0;
+            start_idx = counts[0] - 2 * n;
 
             for (int i = 1; i < mpi_size - 1; ++i)
             {
-                send_counts[i] = ((i < remainder) ? (count + 1 + 2) : count + 2) * n;
-                send_start_idx[i] = start_idx;
-                start_idx += send_counts[i] - 2 * n; // consider repetition of ghost row
+                counts[i] = ((i < remainder) ? (count + 1 + 2) : count + 2) * n;
+                start_idxs[i] = start_idx;
+                start_idx += counts[i] - 2 * n; // consider repetition of ghost row
             }
-            send_counts[mpi_size - 1] = ((mpi_size - 1 < remainder) ? (count + 1 + 1) : count + 1) * n;
-            send_start_idx[mpi_size - 1] = start_idx;
+            counts[mpi_size - 1] = ((mpi_size - 1 < remainder) ? (count + 1 + 1) : count + 1) * n;
+            start_idxs[mpi_size - 1] = start_idx;
 
             for (int i = 0; i < mpi_size; ++i)
             {
-                std::cout << "Rank " << i << " send_start_idx[" << i << "] = " << send_start_idx[i] << std::endl;
-                std::cout << "Rank " << i << " send_counts[" << i << "] = " << send_counts[i] << std::endl;
+                std::cout << "Rank " << i << " start_idxs[" << i << "] = " << start_idxs[i] << std::endl;
+                std::cout << "Rank " << i << " counts[" << i << "] = " << counts[i] << std::endl;
             }
         }
 
@@ -237,8 +237,8 @@ void JacobiSolver::solve_mpi()
         ); */
         std::vector<double> local_sol(local_rows * n);
         MPI_Scatterv(uh.data(),
-                     send_counts.data(),
-                     send_start_idx.data(),
+                     counts.data(),
+                     start_idxs.data(),
                      MPI_DOUBLE,
                      local_sol.data(),
                      local_rows * n,
@@ -250,8 +250,8 @@ void JacobiSolver::solve_mpi()
                     local_rows,
                     MPI_DOUBLE,
                     uh.data(),
-                    send_counts.data(),
-                    send_start_idx.data(),
+                    counts.data(),
+                    start_idxs.data(),
                     MPI_DOUBLE,
                     0,
                     mpi_comm);
