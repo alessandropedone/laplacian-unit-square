@@ -13,6 +13,9 @@
 #include <fstream>
 #include <iomanip>
 #include <string>
+#include <filesystem>
+#include <iostream>
+#include <cmath>
 
 namespace vtk
 {
@@ -30,7 +33,9 @@ namespace vtk
     {
         int n = std::sqrt(grid.size());
         std::cout << "Writing VTK file: " << filename << std::endl;
-        std::ofstream vtkFile(filename);
+        // Create data directory if it doesn't exist
+        std::filesystem::create_directories("data");
+        std::ofstream vtkFile("data/" + filename);
         vtkFile << "# vtk DataFile Version 3.0\n";
         vtkFile << "vtk output\n";
         vtkFile << "ASCII\n";
@@ -42,7 +47,7 @@ namespace vtk
         {
             for (int j = 0; j < n; ++j)
             {
-                vtkFile << static_cast<double>(i) / n << " " << static_cast<double>(j) / n << " 0\n";
+            vtkFile << static_cast<double>(i) / n << " " << static_cast<double>(j) / n << " 0\n";
             }
         }
         vtkFile << "\n\n";
@@ -53,7 +58,7 @@ namespace vtk
         {
             for (int j = 0; j < n; ++j)
             {
-                vtkFile << grid[i * n + j] << "\n";
+            vtkFile << grid[i * n + j] << "\n";
             }
         }
         vtkFile.close();
@@ -71,7 +76,7 @@ namespace vtk
      */
     inline void read(const std::string &filename, std::vector<double> &grid, std::vector<std::pair<double, double>> &coords)
     {
-        std::ifstream vtkIn("output.vtk");
+        std::ifstream vtkIn("data/" + filename);
         std::string line;
 
         // Skip header lines until "POINTS"

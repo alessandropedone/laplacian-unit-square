@@ -306,7 +306,7 @@ void JacobiSolver::solve_mpi()
                     MPI_Recv(&local_uh[0], n, MPI_DOUBLE, mpi_rank - 1, 0, mpi_comm, MPI_STATUS_IGNORE);
                 }
             }
-        }
+        } 
 
         // Synchronize all processes before gathering results
         MPI_Barrier(mpi_comm);
@@ -445,7 +445,7 @@ void JacobiSolver::solve_hybrid()
             }
 #ifdef _OPENMP
             int num_threads = omp_get_num_threads();
-            int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
+            int chunk_size = (local_rows * n) / (num_threads); // ensures all elements are covered
 #pragma omp barrier
 #pragma omp for collapse(2) schedule(static, chunk_size)
 #endif

@@ -5,11 +5,6 @@
 
 ### Jacobi iteration method
 
-Parallel solver
-- local solver (parallelize with OpenMP, how to specify the number of threads)
-- global solver (MPI, split nodes by rows, communication between processes)
-- (converged if all ranks satisfy the criterion)
-
 Test:
 - L2 norm of the error as function of grid size (grafichino)
 - f(x) = 8π2 sin(2πx) sin(2πy), with exact sol u(x, y) = sin(2πx) sin(2πy)
@@ -17,9 +12,9 @@ Test:
 - test folder: scalability test (bash script) (1,2,4 cores), data folder to collect results
 
 ### Extras
-- pybind11 to plot (results)[https://chatgpt.com/share/682df901-b6cc-8006-9be6-a300f33212a8]
+- pybind11 to plot [results](https://chatgpt.com/share/682df901-b6cc-8006-9be6-a300f33212a8)
 - use getpot to read data
-- Neumann and Robin boundary conditions
+- (Neumann and Robin boundary conditions)[https://chatgpt.com/share/68322bf2-c650-8006-abfa-ca0234cb86ef]
 - Schwarz iteration type (change only the local solver)
 
 ### README

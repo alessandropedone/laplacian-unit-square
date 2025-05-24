@@ -20,13 +20,14 @@ int main(int argc, char **argv)
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
     constexpr double pi = std::numbers::pi;
-    std::vector<int> ns = {8, 16, 32, 64};
+    std::vector<int> ns = {4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64};
     std::vector<double> serial_times, omp_times, mpi_times, hybrid_times;
     std::vector<double> omp_speedups, mpi_speedups, hybrid_speedups;
     std::vector<double> l2_errors;
 
     // Only print headers on rank 0
-    if (rank == 0) {
+    if (rank == 0)
+    {
         std::cout << std::setw(8) << "n"
                   << std::setw(15) << "Serial Time(s)"
                   << std::setw(15) << "OMP Time(s)"
@@ -36,10 +37,11 @@ int main(int argc, char **argv)
                   << std::setw(10) << "MPI SU"
                   << std::setw(10) << "Hybrid SU"
                   << std::setw(15) << "L2 error" << "\n";
-        std::cout << "-------------------------------------------------------------------------------------------------------------------------------\n";
+        std::cout << "----------------------------------------------------------------------------------------------------------------------\n";
     }
 
-    for (int n : ns) {
+    for (int n : ns)
+    {
         JacobiSolver solver(
             std::vector<double>(n * n, 0.0), // initial guess
             [=](double x, double y)
@@ -63,7 +65,8 @@ int main(int argc, char **argv)
         double serial_l2 = 0.0;
 
         // Only run serial and OpenMP tests on rank 0 to avoid duplication
-        if (rank == 0) {
+        if (rank == 0)
+        {
             // Serial test
             auto start = std::chrono::high_resolution_clock::now();
             solver.solve_serial();
@@ -84,7 +87,7 @@ int main(int argc, char **argv)
 
         // Reset solver for MPI run
         solver.reset();
-        
+
         // MPI test (all processes participate)
         auto start_mpi = std::chrono::high_resolution_clock::now();
         solver.solve_mpi();
@@ -94,7 +97,7 @@ int main(int argc, char **argv)
 
         // Reset solver for hybrid run
         solver.reset();
-        
+
         // Hybrid OpenMP+MPI test (all processes participate)
         auto start_hybrid = std::chrono::high_resolution_clock::now();
         solver.solve_hybrid();
@@ -103,9 +106,8 @@ int main(int argc, char **argv)
         hybrid_time = hybrid_elapsed.count();
 
         // Only rank 0 handles output and data collection
-        if (rank == 0) {
-            solver.save_vtk("solution_" + std::to_string(n));
-            
+        if (rank == 0)
+        {
             double omp_speedup = serial_time / omp_time;
             double mpi_speedup = serial_time / mpi_time;
             double hybrid_speedup = serial_time / hybrid_time;
@@ -128,23 +130,23 @@ int main(int argc, char **argv)
                       << std::setw(10) << std::fixed << std::setprecision(4) << mpi_speedup
                       << std::setw(10) << std::fixed << std::setprecision(4) << hybrid_speedup
                       << std::setw(15) << std::scientific << std::setprecision(3) << serial_l2 << "\n";
+
+            if (n == 64)
+                solver.save_vtk("solution_" + std::to_string(size) + "_n_" + std::to_string(n));
         }
     }
 
     // Only write results file on rank 0
-    if (rank == 0) {
-        std::ofstream ofs("results.csv");
+    if (rank == 0)
+    {
+        std::ofstream ofs("data/results_" + std::to_string(size) + ".csv");
         ofs << "n,serial,omp,mpi,hybrid,omp_speedup,mpi_speedup,hybrid_speedup,l2_error\n";
-        for (size_t i = 0; i < ns.size(); ++i) {
+        for (size_t i = 0; i < ns.size(); ++i)
+        {
             ofs << ns[i] << "," << serial_times[i] << "," << omp_times[i] << "," << mpi_times[i] << "," << hybrid_times[i]
                 << "," << omp_speedups[i] << "," << mpi_speedups[i] << "," << hybrid_speedups[i] << "," << l2_errors[i] << "\n";
         }
         ofs.close();
-        
-        std::cout << "\nResults saved to results.csv\n";
-        std::cout << "Number of MPI processes: " << size << "\n";
-        std::cout << "Number of OpenMP threads per process: " << omp_get_max_threads() << "\n";
-        std::cout << "Total parallel units (hybrid): " << size * omp_get_max_threads() << "\n";
     }
 
     MPI_Finalize();
