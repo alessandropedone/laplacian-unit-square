@@ -1,0 +1,98 @@
+# PROBLEM DEFINITION
+# Laplacian on the unit square problem definition
+# Solve: -∇²u = f on Ω = [0,1] × [0,1]
+# where ∇²u = ∂²u/∂x² + ∂²u/∂y²
+#
+# Boundary Conditions:
+# 
+# 1. Dirichlet BC: u = g on ∂Ω (prescribed function value)
+#    Example: u = 0 on boundary (homogeneous Dirichlet)
+#
+# 2. Neumann BC: ∂u/∂n = h on ∂Ω (prescribed normal derivative)
+#    Example: ∂u/∂n = 0 on boundary (no flux condition)
+#
+# 3. Robin BC: αu + β∂u/∂n = γ on ∂Ω (mixed condition)
+
+# ----------
+# Force term
+# ----------
+
+f = '8 * pi * pi * sin(2 * pi * x[0]) * sin(2 * pi * x[1])'
+
+
+# -----------------------------
+# Dirichlet boundary conditions
+# -----------------------------
+
+# Top boundary condition (y = 1)
+d_top_bc = '0'
+
+# Bottom boundary condition (y = 0)
+d_bottom_bc = '0'
+
+# Right boundary condition (x = 1)
+d_right_bc = '0'
+
+# Left boundary condition (x = 0)
+d_left_bc = '0'
+
+
+# ---------------------------
+# Neumann boundary conditions
+# ---------------------------
+
+# Top boundary condition (y = 1)
+n_top_bc = '0'
+
+# Bottom boundary condition (y = 0)
+n_bottom_bc = '0'
+
+# Right boundary condition (x = 1)
+n_right_bc = '0'
+
+# Left boundary condition (x = 0)
+n_left_bc = '0'
+
+
+# -------------------------
+# Robin boundary conditions
+# -------------------------
+
+# Alpha
+alpha = '0'
+
+# Beta 
+beta = '0'
+
+# Top boundary condition (y = 1)
+r_top_bc = '0'
+
+# Bottom boundary condition (y = 0)
+r_bottom_bc = '0'
+
+# Right boundary condition (x = 1)
+r_right_bc = '0'
+
+# Left boundary condition (x = 0)
+r_left_bc = '0'
+
+
+# -----------------------------
+# Exact solution of the problem
+# -----------------------------
+
+uex = 'sin(2 * pi * x[0]) * sin(2 * pi * x[1])'
+
+
+# -----------------
+# Solver patameters
+# -----------------
+
+# Grid sizes vector
+n = '{8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64}'
+
+# Maximum number of iterations
+max_iter = 30000
+
+# Tolerance
+tol = 1e-15
