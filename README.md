@@ -2,6 +2,8 @@
 # A matrix–free parallel solver for the Laplace equation
 
 ## Roadmap
+- manage test for n = 2^7, 2^8 (requested)
+    - per n=8 raggiunge max_iter in alcuni processori ma ottiene lo stesso il risultato finale
 
 ### Extras
 - use getpot to read data
@@ -20,10 +22,11 @@
 - simpler python script to visdualize results
 - hardware comparison instructions
 - instruction for compilation (OPENMP = 1 option)
-- required package (muparserx), run if on Debian-based Linux distribution
+- required package (muparserx and ltbb), run if on Debian-based Linux distribution
     ```bash
     sudo apt-get update
     sudo apt-get install libmuparserx-dev
+    sudo apt-get install libtbb-dev
     ```
 
 
