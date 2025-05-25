@@ -1,6 +1,11 @@
 CXX      = mpic++
 CXXFLAGS = -std=c++20 -Wall -O3 -MMD -MP
 CPPFLAGS = -I include -I include/core
+
+# Linker flags
+LDFLAGS ?= 
+LDLIBS  ?= -lmuparserx -ltbb
+
 # Disable OpenMP if OPENMP=0 is specified
 OPENMP ?= 1
 ifeq ($(OPENMP),1)

@@ -12,8 +12,19 @@
 
 ### README
 - results discussion
-- instruction to reproduce the scalability and grid size tests (just run ./test.sh)
+- instruction to reproduce the scalability and grid size tests, just run
+    ```bash
+    ./test.sh
+    ```
 - explain generated plots
 - simpler python script to visdualize results
 - hardware comparison instructions
 - instruction for compilation (OPENMP = 1 option)
+- required package (muparserx), run if on Debian-based Linux distribution
+    ```bash
+    sudo apt-get update
+    sudo apt-get install libmuparserx-dev
+    ```
+
+
+
