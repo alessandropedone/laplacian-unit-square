@@ -563,7 +563,7 @@ double JacobiSolver::compute_error_omp(const std::vector<double> &sol1, const st
     return error;
 }
 
-double JacobiSolver::compute_error_serial(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2, unsigned rows, unsigned cols) const
+double JacobiSolver::compute_error_serial(const std::vector<double> &sol1, const std::function<double(std::vector<double>)> &sol2, unsigned rows, unsigned cols) const
 {
     double error{0.0};
     for (unsigned i = 0; i < rows; ++i)
@@ -577,7 +577,7 @@ double JacobiSolver::compute_error_serial(const std::vector<double> &sol1, const
     return error;
 }
 
-double JacobiSolver::compute_error_omp(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2, unsigned rows, unsigned cols) const
+double JacobiSolver::compute_error_omp(const std::vector<double> &sol1, const std::function<double(std::vector<double>)> &sol2, unsigned rows, unsigned cols) const
 {
     double error{0.0};
 #ifdef _OPENMP

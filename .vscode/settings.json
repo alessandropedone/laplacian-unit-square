@@ -59,6 +59,7 @@
         "codecvt": "cpp",
         "complex": "cpp",
         "cstring": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "getpot": "cpp"
     }
 }

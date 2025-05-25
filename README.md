@@ -7,7 +7,7 @@
 
 ### Extras
 - use getpot to read data
-- (Neumann and Robin boundary conditions)[https://chatgpt.com/share/68322bf2-c650-8006-abfa-ca0234cb86ef]
+- [Neumann and Robin boundary conditions](https://chatgpt.com/share/68322bf2-c650-8006-abfa-ca0234cb86ef)
 
 ### ?
 - Schwarz iteration type (change only the local solver)
@@ -28,6 +28,7 @@
     sudo apt-get install libmuparserx-dev
     sudo apt-get install libtbb-dev
     ```
+- flag --use-datafile to use dataset file information
 
 
 

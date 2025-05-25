@@ -37,15 +37,15 @@ public:
     /// @param tol tolerance for convergence
     JacobiSolver(
         const std::vector<double> &initial_guess,
-        std::function<double(double, double)> f,
-        std::function<double(double, double)> top_bc,
-        std::function<double(double, double)> right_bc,
-        std::function<double(double, double)> bottom_bc,
-        std::function<double(double, double)> left_bc,
+        std::function<double(std::vector<double>)> f,
+        std::function<double(std::vector<double>)> top_bc,
+        std::function<double(std::vector<double>)> right_bc,
+        std::function<double(std::vector<double>)> bottom_bc,
+        std::function<double(std::vector<double>)> left_bc,
         size_t n,
         unsigned max_iter = 1000,
         double tol = 1e-10,
-        std::function<double(double, double)> uex = nullptr,
+        std::function<double(std::vector<double>)> uex = nullptr,
         double L2_error = -1.0)
         : iter(0),
           L2_error(L2_error),
@@ -130,7 +130,7 @@ public:
     /// @param uex exact solution of the equation
     /// @details The exact solution is used to compare the computed solution
     ///          and to compute the error of the computed solution
-    void set_uex(const std::function<double(double, double)> &uex)
+    void set_uex(const std::function<double(std::vector<double>)> &uex)
     {
         this->uex = uex;
     };
@@ -146,14 +146,14 @@ public:
 
     /// @brief set the exact solution of the equation
     /// @param exact_sol exact solution of the equation
-    void set_exact_sol(std::function<double(double, double)> uex)
+    void set_exact_sol(std::function<double(std::vector<double>)> uex)
     {
         this->uex = uex;
     };
 
     /// @brief set the right-hand side of the equation
     /// @param rhs right-hand side of the equation
-    void set_f(std::function<double(double, double)> f)
+    void set_f(std::function<double(std::vector<double>)> f)
     {
         this->f = f;
     };
@@ -165,10 +165,10 @@ public:
     /// @param left_bc left boundary condition
     /// @details The boundary conditions are defined as functions of two variables
     ///          and are used to set the values of the solution at the boundaries
-    void set_bc(const std::function<double(double, double)> &top_bc,
-                const std::function<double(double, double)> &right_bc,
-                const std::function<double(double, double)> &bottom_bc,
-                const std::function<double(double, double)> &left_bc)
+    void set_bc(const std::function<double(std::vector<double>)> &top_bc,
+                const std::function<double(std::vector<double>)> &right_bc,
+                const std::function<double(std::vector<double>)> &bottom_bc,
+                const std::function<double(std::vector<double>)> &left_bc)
     {
         this->top_bc = top_bc;
         this->right_bc = right_bc;
@@ -234,7 +234,7 @@ public:
         {
             for (size_t j = 0; j < n; ++j)
             {
-                temp[i * n + j] = uex(i, j);
+                temp[i * n + j] = fun_at(uex, i, j);
             }
         }
         return temp;
@@ -273,26 +273,26 @@ private:
 
     /// @brief Exact solution of the equation
     /// @details uex should be a function of two variables
-    std::function<double(double, double)> uex;
+    std::function<double(std::vector<double>)> uex;
 
     /// @brief computed approximate solution of the equation
     /// @details uh should have size n*n
     std::vector<double> uh;
 
     /// @brief force term of the equation
-    std::function<double(double, double)> f;
+    std::function<double(std::vector<double>)> f;
 
     /// @brief top boundary condition
-    std::function<double(double, double)> top_bc;
+    std::function<double(std::vector<double>)> top_bc;
 
     /// @brief right boundary condition
-    std::function<double(double, double)> right_bc;
+    std::function<double(std::vector<double>)> right_bc;
 
     /// @brief bottom boundary condition
-    std::function<double(double, double)> bottom_bc;
+    std::function<double(std::vector<double>)> bottom_bc;
 
     /// @brief left boundary condition
-    std::function<double(double, double)> left_bc;
+    std::function<double(std::vector<double>)> left_bc;
 
     /// @brief compute the L2 norm of the errror between two solutions in vector form
     /// @param sol1 first solution vector
@@ -316,7 +316,7 @@ private:
     /// @param rows number of rows in the solution
     /// @param cols number of columns in the solution
     /// @return error between the two solutions
-    double compute_error_serial(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2, unsigned rows, unsigned cols) const;
+    double compute_error_serial(const std::vector<double> &sol1, const std::function<double(std::vector<double>)> &sol2, unsigned rows, unsigned cols) const;
 
     /// @brief OPENMP parallel version of the compute_error_serial function
     /// @param sol1 computed solution vector
@@ -324,7 +324,7 @@ private:
     /// @param rows number of rows in the solution
     /// @param cols number of columns in the solution
     /// @return error between the two solutions
-    double compute_error_omp(const std::vector<double> &sol1, const std::function<double(double, double)> &sol2, unsigned rows, unsigned cols) const;
+    double compute_error_omp(const std::vector<double> &sol1, const std::function<double(std::vector<double>)> &sol2, unsigned rows, unsigned cols) const;
 
     /// @brief get element (i, j) of the computed solution
     /// @param i row index
@@ -342,13 +342,13 @@ private:
     /// @brief get element (i, j) of the exact solution, force term or boundary condition
     /// @param i row index
     /// @param j column index
-    double fun_at(std::function<double(double, double)> fun, size_t i, size_t j) const
+    double fun_at(std::function<double(std::vector<double>)> fun, size_t i, size_t j) const
     {
         if (i < 0 || i >= n || j < 0 || j >= n)
         {
             throw std::out_of_range("Index out of range");
         }
-        return fun(static_cast<double>(i) / (n - 1), static_cast<double>(j) / (n - 1));
+        return fun({static_cast<double>(i) / (n - 1), static_cast<double>(j) / (n - 1)});
     };
 };
 
