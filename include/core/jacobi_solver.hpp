@@ -96,6 +96,13 @@ public:
     /// @details it uses hybrid parallelism with MPI and OpenMP
     void solve_hybrid();
 
+    /// @brief Schwarz implementation where locally the equation is solved using Eigen LDLT decomposition
+    /// @details for each processor, it computes the local solution of the equation using a direct method
+    ///          and checks for convergence using the L2 norm
+    /// @details it uses Eigen's SparseMatrix and SimplicialLLT to solve the local system
+    /// @details it uses MPI to divide the domain among the processes
+    void solve_direct();
+
     // SETTERS
 
     /// @brief set grid size
