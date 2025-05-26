@@ -15,6 +15,7 @@ def grid_size_test(filename: str):
     ax1.plot(df['n'], df['omp'], 'o-', color='tab:orange', label='OMP Time')
     ax1.plot(df['n'], df['mpi'], 'o-', color='tab:green', label='MPI Time')
     ax1.plot(df['n'], df['hybrid'], 'o-', color='tab:purple', label='Hybrid Time')
+    ax1.plot(df['n'], df['direct'], 'o-', color='tab:black', label='Direct Time')
     ax1.set_xscale('log', base=2)
     ax1.set_yscale('log', base=2)
     ax1.legend(loc='upper center')

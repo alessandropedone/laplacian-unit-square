@@ -23,17 +23,16 @@ using Eigen::VectorXd;
 
 void JacobiSolver::solve_serial()
 {
-
     // Initialize h
     const double h = 1.0 / (n - 1);
 
     // Set the boundary conditions
     for (size_t i = 0; i < n; ++i)
     {
-        uh[i] = fun_at(top_bc, i, n - 1);                 // Top boundary
-        uh[i * n + (n - 1)] = fun_at(right_bc, n - 1, i); // Right boundary
-        uh[(n - 1) * n + i] = fun_at(bottom_bc, i, 0);    // Bottom boundary
-        uh[i * n] = fun_at(left_bc, 0, i);                // Left boundary
+        uh[i] = fun_at(top_bc, 0, i);                       // Top boundary
+        uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);   // Right boundary
+        uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i);  // Bottom boundary
+        uh[i * n] = fun_at(left_bc, i, 0);                  // Left boundary
     }
 
     // Initialize the previous solution vector
@@ -70,7 +69,7 @@ void JacobiSolver::solve_serial()
         else if (iteration == max_iter - 1)
         {
             iter = ++iteration;
-            std::cout << "Warning: Maximum number of iterations reached without convergence." << std::endl;
+            std::cout << "Warning from serial solver: Maximum number of iterations reached without convergence." << std::endl;
         }
     }
     return;
@@ -80,19 +79,26 @@ void JacobiSolver::solve_omp()
 {
 
 #ifndef _OPENMP
-    std::cout << "Warning: OpenMP is not enabled. Falling back to serial execution." << std::endl;
+    std::cout << "Warning from OpenMP solver: OpenMP is not enabled. Falling back to serial execution." << std::endl;
 #endif
 
     // Initialize h
     const double h = 1.0 / (n - 1);
 
+
+#ifdef _OPENMP
+    int num_threads = omp_get_num_threads();
+    int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
+#pragma omp barrier
+#pragma omp parallel for schedule(static, chunk_size)
+#endif
     // Set the boundary conditions
     for (size_t i = 0; i < n; ++i)
     {
-        uh[i] = fun_at(top_bc, i, n - 1);                 // Top boundary
-        uh[i * n + (n - 1)] = fun_at(right_bc, n - 1, i); // Right boundary
-        uh[(n - 1) * n + i] = fun_at(bottom_bc, i, 0);    // Bottom boundary
-        uh[i * n] = fun_at(left_bc, 0, i);                // Left boundary
+        uh[i] = fun_at(top_bc, 0, i);                       // Top boundary
+        uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);   // Right boundary
+        uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i);  // Bottom boundary
+        uh[i * n] = fun_at(left_bc, i, 0);                  // Left boundary
     }
 
     // Initialize the previous solution vector
@@ -149,7 +155,7 @@ void JacobiSolver::solve_omp()
                 else if (iteration == max_iter - 1)
                 {
                     iter = ++iteration;
-                    std::cout << "Warning: Maximum number of iterations reached without convergence." << std::endl;
+                    std::cout << "Warning from OpenMP solver: Maximum number of iterations reached without convergence." << std::endl;
                 }
             }
         }
@@ -301,7 +307,7 @@ void JacobiSolver::solve_mpi()
             else if (iteration == max_iter - 1)
             {
                 iter = ++iteration;
-                std::cout << "Warning: Maximum number of iterations reached without convergence." << std::endl;
+                std::cout << "Warning from MPI solver: Maximum number of iterations reached without convergence." << std::endl;
             }
 
             // Bidirectional ghost cell exchange
@@ -352,7 +358,7 @@ void JacobiSolver::solve_hybrid()
 {
 
 #ifndef _OPENMP
-    std::cout << "Warning: OpenMP is not enabled. Falling back to serial execution." << std::endl;
+    std::cout << "Warning from Hybrid solver: OpenMP is not enabled. Falling back to serial execution." << std::endl;
 #endif
     int initialized;
     MPI_Initialized(&initialized);
@@ -367,6 +373,17 @@ void JacobiSolver::solve_hybrid()
         MPI_Comm_rank(mpi_comm, &mpi_rank);
         MPI_Comm_size(mpi_comm, &mpi_size);
 
+        // Set the boundary conditions
+        if(mpi_rank == 0){
+            for (size_t i = 0; i < n; ++i)
+            {
+                uh[i] = fun_at(top_bc, 0, i);                       // Top boundary
+                uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);   // Right boundary
+                uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i);  // Bottom boundary
+                uh[i * n] = fun_at(left_bc, i, 0);                  // Left boundary
+            }
+        }
+        
         // Compute these two quantities to divide the work among processes
         unsigned int count = n / mpi_size;
         int remainder = n - count * mpi_size;
@@ -453,6 +470,7 @@ void JacobiSolver::solve_hybrid()
 #ifdef _OPENMP
 #pragma omp parallel num_threads(2) shared(local_uh, local_previous, converged)
 #endif
+        
         for (size_t iteration = 0; iteration < max_iter && !converged; ++iteration)
         {
 #ifdef _OPENMP
@@ -501,7 +519,7 @@ void JacobiSolver::solve_hybrid()
                 else if (iteration == max_iter - 1)
                 {
                     iter = ++iteration;
-                    std::cout << "Warning: Maximum number of iterations reached without convergence." << std::endl;
+                    std::cout << "Warning from Hybrid solver: Maximum number of iterations reached without convergence." << std::endl; 
                 }
 
                 // Bidirectional ghost cell exchange
@@ -712,13 +730,13 @@ void JacobiSolver::solve_direct()
             A.setFromTriplets(triplets.begin(), triplets.end());
 
             // Solve the local system
-            Eigen::SimplicialLLT<SparseMatrix<double>> solver;
+            Eigen::SimplicialLDLT<SparseMatrix<double>> solver;
             solver.compute(A);
             VectorXd x = solver.solve(b);
 
             for (unsigned i = 1; i < local_rows - 1; ++i)
                 for (unsigned j = 1; j < n - 1; ++j)
-                    local_uh[i * n + j] = x[(i - 1) * working_cols + j];
+                    local_uh[i * n + j] = x[(i - 1) * working_cols + j - 1];
         
             // Check for convergence
             // Compute the local residual
@@ -737,7 +755,7 @@ void JacobiSolver::solve_direct()
             else if (iteration == max_iter - 1)
             {
                 iter = ++iteration;
-                std::cout << "Warning: Maximum number of iterations reached without convergence." << std::endl;
+                std::cout << "Warning from Direct solver: Maximum number of iterations reached without convergence." << std::endl;
             }
 
             // Bidirectional ghost cell exchange
@@ -804,6 +822,7 @@ double JacobiSolver::compute_error_omp(const std::vector<double> &sol1, const st
 #ifdef _OPENMP
     int num_threads = omp_get_num_threads();
     int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
+#pragma omp barrier
 #pragma omp parallel for collapse(2) schedule(static, chunk_size) reduction(+ : error) num_threads(num_threads)
 #endif
     for (unsigned i = 0; i < rows; ++i)
@@ -837,6 +856,7 @@ double JacobiSolver::compute_error_omp(const std::vector<double> &sol1, const st
 #ifdef _OPENMP
     int num_threads = omp_get_num_threads();
     int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
+#pragma omp barrier
 #pragma omp parallel for collapse(2) schedule(static, chunk_size) reduction(+ : error) num_threads(num_threads)
 #endif
     for (unsigned i = 0; i < rows; ++i)

@@ -53,6 +53,7 @@ namespace plot
         double omp;
         double mpi;
         double hybrid;
+        double direct;
         double l2_error;
     };
 
@@ -104,6 +105,9 @@ namespace plot
 
                 std::getline(ss, cell, ',');
                 row.hybrid = std::stod(cell);
+
+                std::getline(ss, cell, ',');
+                row.direct = std::stod(cell);
 
                 // Skip 3 columns (h, serial, omp columns are handled separately)
                 for (int i = 0; i < 3; ++i)
@@ -324,7 +328,7 @@ namespace plot
 
         // Extract data for plotting
         std::vector<double> n_values, h_values;
-        std::vector<double> serial_times, omp_times, mpi_times, hybrid_times, l2_errors;
+        std::vector<double> serial_times, omp_times, mpi_times, hybrid_times, direct_times, l2_errors;
 
         for (const auto &row : data)
         {
@@ -334,12 +338,13 @@ namespace plot
             omp_times.push_back(row.omp);
             mpi_times.push_back(row.mpi);
             hybrid_times.push_back(row.hybrid);
+            direct_times.push_back(row.direct);
             l2_errors.push_back(row.l2_error);
         }
 
         // Plot 1: Timing vs n (with log2 scaling on both axes)
-        std::vector<std::vector<double>> timing_data = {serial_times, omp_times, mpi_times, hybrid_times};
-        std::vector<std::string> timing_labels = {"Serial", "OMP", "MPI", "Hybrid"};
+        std::vector<std::vector<double>> timing_data = {serial_times, omp_times, mpi_times, hybrid_times, direct_times};
+        std::vector<std::string> timing_labels = {"Serial", "OMP", "MPI", "Hybrid", "Direct"};
 
         Plotter::writeDataFile("test/plots/timing_vs_n.dat", n_values, timing_data, timing_labels);
         Plotter::createGnuplotScript("test/plots/timing_vs_n.gp", "test/plots/timing_vs_n.dat",

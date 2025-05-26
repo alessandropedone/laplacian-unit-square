@@ -91,8 +91,8 @@ int main(int argc, char **argv)
     }
 
     std::vector<int> ns = {8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64};
-    std::vector<double> serial_times, omp_times, mpi_times, hybrid_times;
-    std::vector<double> omp_speedups, mpi_speedups, hybrid_speedups;
+    std::vector<double> serial_times, omp_times, mpi_times, hybrid_times, direct_times;
+    std::vector<double> omp_speedups, mpi_speedups, hybrid_speedups, direct_speedups;
     std::vector<double> l2_errors;
 
     // Only print headers on rank 0
@@ -103,11 +103,13 @@ int main(int argc, char **argv)
                   << std::setw(15) << "OMP Time(s)"
                   << std::setw(15) << "MPI Time(s)"
                   << std::setw(15) << "Hybrid Time(s)"
+                  << std::setw(15) << "Direct Time(s)"
                   << std::setw(10) << "OMP SU"
                   << std::setw(10) << "MPI SU"
                   << std::setw(10) << "Hybrid SU"
+                  << std::setw(10) << "Direct SU"
                   << std::setw(15) << "L2 error" << "\n";
-        std::cout << "----------------------------------------------------------------------------------------------------------------------\n";
+        std::cout << "---------------------------------------------------------------------------------------------------------------------------------------------\n";
     }
 
     for (int n : ns)
@@ -160,7 +162,7 @@ int main(int argc, char **argv)
             { return sin(2 * pi * x[0]) * sin(2 * pi * x[1]); } // exact solution
         );
 
-        double serial_time = 0.0, omp_time = 0.0, mpi_time = 0.0, hybrid_time = 0.0;
+        double serial_time = 0.0, omp_time = 0.0, mpi_time = 0.0, hybrid_time = 0.0, direct_time = 0.0;
         double serial_l2 = 0.0;
 
         // Only run serial and OpenMP tests on rank 0 to avoid duplication
@@ -173,8 +175,9 @@ int main(int argc, char **argv)
             std::chrono::duration<double> serial_elapsed = end - start;
             serial_time = serial_elapsed.count();
             serial_l2 = solver.l2_error();
-
-            solver.reset(); // Reset the solver for the next run
+            
+            // Reset the solver for OMP run
+            solver.reset(); 
 
             // OpenMP test
             start = std::chrono::high_resolution_clock::now();
@@ -204,20 +207,33 @@ int main(int argc, char **argv)
         std::chrono::duration<double> hybrid_elapsed = end_hybrid - start_hybrid;
         hybrid_time = hybrid_elapsed.count();
 
+        // Reset solver for direct local solver test
+        solver.reset();
+        
+        // Mpi test with direct local solver
+        auto direct_start = std::chrono::high_resolution_clock::now();
+        solver.solve_direct();
+        auto direct_end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> direct_elapsed = direct_end - direct_start;
+        direct_time = direct_elapsed.count();
+
         // Only rank 0 handles output and data collection
         if (rank == 0)
         {
             double omp_speedup = serial_time / omp_time;
             double mpi_speedup = serial_time / mpi_time;
             double hybrid_speedup = serial_time / hybrid_time;
+            double direct_speedup = serial_time / direct_time;
 
             serial_times.push_back(serial_time);
             omp_times.push_back(omp_time);
             mpi_times.push_back(mpi_time);
             hybrid_times.push_back(hybrid_time);
+            direct_times.push_back(direct_time);
             omp_speedups.push_back(omp_speedup);
             mpi_speedups.push_back(mpi_speedup);
             hybrid_speedups.push_back(hybrid_speedup);
+            direct_speedups.push_back(direct_speedup);
             l2_errors.push_back(serial_l2);
 
             std::cout << std::setw(8) << n
@@ -225,9 +241,11 @@ int main(int argc, char **argv)
                       << std::setw(15) << std::fixed << std::setprecision(6) << omp_time
                       << std::setw(15) << std::fixed << std::setprecision(6) << mpi_time
                       << std::setw(15) << std::fixed << std::setprecision(6) << hybrid_time
+                      << std::setw(15) << std::fixed << std::setprecision(6) << direct_time
                       << std::setw(10) << std::fixed << std::setprecision(4) << omp_speedup
                       << std::setw(10) << std::fixed << std::setprecision(4) << mpi_speedup
                       << std::setw(10) << std::fixed << std::setprecision(4) << hybrid_speedup
+                      << std::setw(10) << std::fixed << std::setprecision(4) << direct_speedup
                       << std::setw(15) << std::scientific << std::setprecision(3) << serial_l2 << "\n";
 
             if (n == 64)
@@ -239,11 +257,11 @@ int main(int argc, char **argv)
     if (rank == 0)
     {
         std::ofstream ofs("test/data/results_" + std::to_string(size) + ".csv");
-        ofs << "n,serial,omp,mpi,hybrid,omp_speedup,mpi_speedup,hybrid_speedup,l2_error\n";
+        ofs << "n,serial,omp,mpi,hybrid,direct,omp_speedup,mpi_speedup,hybrid_speedup,direct_speedup,l2_error\n";
         for (size_t i = 0; i < ns.size(); ++i)
         {
-            ofs << ns[i] << "," << serial_times[i] << "," << omp_times[i] << "," << mpi_times[i] << "," << hybrid_times[i]
-                << "," << omp_speedups[i] << "," << mpi_speedups[i] << "," << hybrid_speedups[i] << "," << l2_errors[i] << "\n";
+            ofs << ns[i] << "," << serial_times[i] << "," << omp_times[i] << "," << mpi_times[i] << "," << hybrid_times[i] << "," << direct_times[i] << ","
+            << omp_speedups[i] << "," << mpi_speedups[i] << "," << hybrid_speedups[i] << "," << direct_speedups[i] << "," << l2_errors[i] << "\n";
         }
         ofs.close();
     }
