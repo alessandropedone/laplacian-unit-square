@@ -10,6 +10,7 @@
 
 ### README
 - strucutre of the repo and doxygen documentation
+- clone with submodules
 - results discussion
 - instruction to reproduce the scalability and grid size tests, just run
     ```bash
