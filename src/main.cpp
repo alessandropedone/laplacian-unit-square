@@ -266,7 +266,7 @@ int main(int argc, char **argv)
         ofs.close();
     }
 
-    if (size == 2 && rank == 0)
+    if (size == 4 && rank == 0)
     {
         std::cout << "==========================================" << std::endl;
         std::cout << "=== Plotting results for " << size << " processors. ===" << std::endl;

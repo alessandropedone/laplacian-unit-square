@@ -110,7 +110,7 @@ namespace plot
                 row.direct = std::stod(cell);
 
                 // Skip 3 columns (h, serial, omp columns are handled separately)
-                for (int i = 0; i < 3; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     std::getline(ss, cell, ',');
                 }
@@ -383,8 +383,8 @@ namespace plot
      */
     void scalabilityTest()
     {
-        std::vector<int> processes = {1, 2, 4, 8};
-        std::vector<int> grid_sizes = {56, 60, 64};
+        std::vector<int> processes = {1, 2, 4};
+        std::vector<int> grid_sizes = {56, 64};
 
         std::vector<double> proc_double;
         for (int p : processes)
@@ -395,25 +395,44 @@ namespace plot
         std::vector<std::vector<double>> scalability_data;
         std::vector<std::string> scalability_labels;
 
+        namespace fs = std::filesystem;
+
+        std::vector<fs::directory_entry> entries;
+
+        // Collect entries
+        for (const auto &entry : fs::directory_iterator("test/data"))
+        {
+            if (entry.path().extension() == ".csv")
+            {
+                entries.push_back(entry);
+            }
+        }
+
+        // Sort entries alphabetically by filename
+        std::sort(entries.begin(), entries.end(),
+                  [](const fs::directory_entry &a, const fs::directory_entry &b)
+                  {
+                      return a.path().filename() < b.path().filename();
+                  });
+
         for (int n : grid_sizes)
         {
             std::vector<double> timings;
 
             // Read all CSV files in data directory
-            for (const auto &entry : fs::directory_iterator("test/data"))
+            // Iterate in sorted order
+            for (const auto &entry : entries)
             {
-                if (entry.path().extension() == ".csv")
-                {
-                    std::vector<DataRow> data = CSVReader::readCSV(entry.path().string());
+                std::vector<DataRow> data = CSVReader::readCSV(entry.path().string());
 
-                    // Find row with matching n value
-                    for (const auto &row : data)
+                for (const auto &row : data)
+                {
+                    if (row.n == n)
                     {
-                        if (row.n == n)
-                        {
-                            timings.push_back(row.hybrid);
-                            break;
-                        }
+                        timings.push_back(row.hybrid);
+                        std::cout << "Reading file: " << entry.path().filename() << std::endl;
+                        std::cout << "timing n = " << row.n << " time = " << row.hybrid << std::endl;
+                        break;
                     }
                 }
             }
@@ -442,7 +461,7 @@ namespace plot
         try
         {
             plot::scalabilityTest();
-            plot::gridSizeTest("results_1.csv");
+            plot::gridSizeTest("results_2.csv");
         }
         catch (const std::exception &e)
         {

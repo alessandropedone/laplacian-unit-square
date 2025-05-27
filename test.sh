@@ -31,13 +31,6 @@ echo "Testing with 4 processors"
 echo "========================="
 mpirun -np 4 ./main
 
-# Test with 8 processors
-echo ""
-echo "========================="
-echo "Testing with 8 processors"
-echo "========================="
-mpirun -np 8 ./main
-
 echo ""
 echo ""
 echo "Scalability test completed."

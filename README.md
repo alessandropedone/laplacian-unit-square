@@ -3,13 +3,9 @@
 
 ## Refinements
 - manage test for n = 2^7, 2^8 (requested)
-    - per n=8 raggiunge max_iter in alcuni processori ma ottiene lo stesso il risultato finale
 - review muparserx interface for speed
 - review documentation and comments
-- non convergence warnings
-- negative times
-- review gaphs
-
+- verify solution in paraview
 
 ### README
 - strucutre of the repo and doxygen documentation
@@ -30,7 +26,11 @@
     sudo apt-get install libtbb-dev
     ```
 - flag --use-datafile to use dataset file information
-- if you don't have 8 cores on your machine modify test.sh
+- explain why direct solver doesn't converge with 4 processors and finer mesh
+- too slow for grid size over 64
 
+Plots:
+- timing of result_2 (2 processors are plotted)
+- scalability test for the hybrid method
 
 

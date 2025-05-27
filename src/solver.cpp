@@ -18,7 +18,6 @@ using Eigen::SparseMatrix;
 using Eigen::Triplet;
 using Eigen::VectorXd;
 
-
 #include "solver.hpp"
 
 void Solver::solve_jacobi_serial()
@@ -29,10 +28,10 @@ void Solver::solve_jacobi_serial()
     // Set the boundary conditions
     for (size_t i = 0; i < n; ++i)
     {
-        uh[i] = fun_at(top_bc, 0, i);                       // Top boundary
-        uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);   // Right boundary
-        uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i);  // Bottom boundary
-        uh[i * n] = fun_at(left_bc, i, 0);                  // Left boundary
+        uh[i] = fun_at(top_bc, 0, i);                      // Top boundary
+        uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);  // Right boundary
+        uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i); // Bottom boundary
+        uh[i * n] = fun_at(left_bc, i, 0);                 // Left boundary
     }
 
     // Initialize the previous solution vector
@@ -85,7 +84,6 @@ void Solver::solve_jacobi_omp()
     // Initialize h
     const double h = 1.0 / (n - 1);
 
-
 #ifdef _OPENMP
     int num_threads = omp_get_num_threads();
     int chunk_size = (n * n) / (num_threads); // ensures all elements are covered
@@ -95,10 +93,10 @@ void Solver::solve_jacobi_omp()
     // Set the boundary conditions
     for (size_t i = 0; i < n; ++i)
     {
-        uh[i] = fun_at(top_bc, 0, i);                       // Top boundary
-        uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);   // Right boundary
-        uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i);  // Bottom boundary
-        uh[i * n] = fun_at(left_bc, i, 0);                  // Left boundary
+        uh[i] = fun_at(top_bc, 0, i);                      // Top boundary
+        uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);  // Right boundary
+        uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i); // Bottom boundary
+        uh[i * n] = fun_at(left_bc, i, 0);                 // Left boundary
     }
 
     // Initialize the previous solution vector
@@ -180,13 +178,14 @@ void Solver::solve_jacobi_mpi()
         MPI_Comm_size(mpi_comm, &mpi_size);
 
         // Set the boundary conditions
-        if(mpi_rank == 0){
+        if (mpi_rank == 0)
+        {
             for (size_t i = 0; i < n; ++i)
             {
-                uh[i] = fun_at(top_bc, 0, i);                       // Top boundary
-                uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);   // Right boundary
-                uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i);  // Bottom boundary
-                uh[i * n] = fun_at(left_bc, i, 0);                  // Left boundary
+                uh[i] = fun_at(top_bc, 0, i);                      // Top boundary
+                uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);  // Right boundary
+                uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i); // Bottom boundary
+                uh[i * n] = fun_at(left_bc, i, 0);                 // Left boundary
             }
         }
 
@@ -285,8 +284,8 @@ void Solver::solve_jacobi_mpi()
                 {
                     // Jacobi iteration
                     local_uh[i * n + j] = 0.25 * (local_previous[(i - 1) * n + j] + local_previous[(i + 1) * n + j] +
-                                                local_previous[i * n + (j - 1)] + local_previous[i * n + (j + 1)] +
-                                                h * h * fun_at(f, start_idxs[mpi_rank] / n + i, j));
+                                                  local_previous[i * n + (j - 1)] + local_previous[i * n + (j + 1)] +
+                                                  h * h * fun_at(f, start_idxs[mpi_rank] / n + i, j));
                 }
             }
 
@@ -307,7 +306,8 @@ void Solver::solve_jacobi_mpi()
             else if (iteration == max_iter - 1)
             {
                 iter = ++iteration;
-                std::cout << "Warning from MPI solver: Maximum number of iterations reached without convergence." << std::endl;
+                if (mpi_rank == 0)
+                    std::cout << "Warning from MPI solver: Maximum number of iterations reached without convergence." << std::endl;
             }
 
             // Bidirectional ghost cell exchange
@@ -331,8 +331,8 @@ void Solver::solve_jacobi_mpi()
                     MPI_Recv(&local_uh[0], n, MPI_DOUBLE, mpi_rank - 1, 0, mpi_comm, MPI_STATUS_IGNORE);
                 }
             }
-        } 
-    
+        }
+
         // Synchronize all processes before gathering results
         MPI_Barrier(mpi_comm);
 
@@ -374,16 +374,17 @@ void Solver::solve_jacobi_hybrid()
         MPI_Comm_size(mpi_comm, &mpi_size);
 
         // Set the boundary conditions
-        if(mpi_rank == 0){
+        if (mpi_rank == 0)
+        {
             for (size_t i = 0; i < n; ++i)
             {
-                uh[i] = fun_at(top_bc, 0, i);                       // Top boundary
-                uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);   // Right boundary
-                uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i);  // Bottom boundary
-                uh[i * n] = fun_at(left_bc, i, 0);                  // Left boundary
+                uh[i] = fun_at(top_bc, 0, i);                      // Top boundary
+                uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);  // Right boundary
+                uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i); // Bottom boundary
+                uh[i * n] = fun_at(left_bc, i, 0);                 // Left boundary
             }
         }
-        
+
         // Compute these two quantities to divide the work among processes
         unsigned int count = n / mpi_size;
         int remainder = n - count * mpi_size;
@@ -470,7 +471,7 @@ void Solver::solve_jacobi_hybrid()
 #ifdef _OPENMP
 #pragma omp parallel num_threads(2) shared(local_uh, local_previous, converged)
 #endif
-        
+
         for (size_t iteration = 0; iteration < max_iter && !converged; ++iteration)
         {
 #ifdef _OPENMP
@@ -519,7 +520,8 @@ void Solver::solve_jacobi_hybrid()
                 else if (iteration == max_iter - 1)
                 {
                     iter = ++iteration;
-                    std::cout << "Warning from Hybrid solver: Maximum number of iterations reached without convergence." << std::endl; 
+                    if (mpi_rank == 0)
+                        std::cout << "Warning from Hybrid solver: Maximum number of iterations reached without convergence." << std::endl;
                 }
 
                 // Bidirectional ghost cell exchange
@@ -583,13 +585,14 @@ void Solver::solve_direct_mpi()
         MPI_Comm_size(mpi_comm, &mpi_size);
 
         // Set the boundary conditions
-        if(mpi_rank == 0){
+        if (mpi_rank == 0)
+        {
             for (size_t i = 0; i < n; ++i)
             {
-                uh[i] = fun_at(top_bc, 0, i);                       // Top boundary
-                uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);   // Right boundary
-                uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i);  // Bottom boundary
-                uh[i * n] = fun_at(left_bc, i, 0);                  // Left boundary
+                uh[i] = fun_at(top_bc, 0, i);                      // Top boundary
+                uh[i * n + (n - 1)] = fun_at(right_bc, i, n - 1);  // Right boundary
+                uh[(n - 1) * n + i] = fun_at(bottom_bc, n - 1, i); // Bottom boundary
+                uh[i * n] = fun_at(left_bc, i, 0);                 // Left boundary
             }
         }
 
@@ -675,7 +678,7 @@ void Solver::solve_direct_mpi()
 
         // Define h
         const double h = 1.0 / (n - 1);
-   
+
         for (size_t iteration = 0; iteration < max_iter && !converged; ++iteration)
         {
             // Save the previous solution for convergence check
@@ -683,7 +686,7 @@ void Solver::solve_direct_mpi()
 
             // Assemble local system
             unsigned working_rows = local_rows - 2; // in each case, top and bottom rows are given
-            unsigned working_cols = n - 2; // in each case, left and right columns are given
+            unsigned working_cols = n - 2;          // in each case, left and right columns are given
             // Unknowns are in the interior of the grid, so we have working_rows * working_cols unknowns
             SparseMatrix<double> A(working_rows * working_cols, working_rows * working_cols);
             std::vector<Triplet<double>> triplets; // to insert elements in sparse matrix
@@ -695,31 +698,39 @@ void Solver::solve_direct_mpi()
                 {
                     int idx = i * working_cols + j;
                     triplets.emplace_back(idx, idx, 4.0);
-                    if (i > 0) {// Use top neighbor
-                        triplets.emplace_back(idx, idx - working_cols, -1.0); 
+                    if (i > 0)
+                    { // Use top neighbor
+                        triplets.emplace_back(idx, idx - working_cols, -1.0);
                     }
-                    else {
+                    else
+                    {
                         // If we are at the first local row, use upper ghost row
-                        b(idx) += local_uh[j]; 
+                        b(idx) += local_uh[j];
                     }
-                    if (i < working_rows - 1) { // Use bottom neighbor
+                    if (i < working_rows - 1)
+                    { // Use bottom neighbor
                         triplets.emplace_back(idx, idx + working_cols, -1.0);
                     }
-                    else {
+                    else
+                    {
                         // If we are at the last local row, use lower ghost row
                         b(idx) += local_uh[(local_rows - 1) * n + j];
                     }
-                    if (j > 0) { // Use left neighbor
+                    if (j > 0)
+                    { // Use left neighbor
                         triplets.emplace_back(idx, idx - 1, -1.0);
                     }
-                    else {
+                    else
+                    {
                         // If we are at the first local column, use left ghost column
                         b(idx) += local_uh[i * n];
                     }
-                    if (j < working_cols - 1) { // Use right neighbor
+                    if (j < working_cols - 1)
+                    { // Use right neighbor
                         triplets.emplace_back(idx, idx + 1, -1.0);
                     }
-                    else {
+                    else
+                    {
                         // If we are at the last local column, use right ghost column
                         b(idx) += local_uh[i * n + (n - 1)];
                     }
@@ -737,7 +748,7 @@ void Solver::solve_direct_mpi()
             for (unsigned i = 1; i < local_rows - 1; ++i)
                 for (unsigned j = 1; j < n - 1; ++j)
                     local_uh[i * n + j] = x[(i - 1) * working_cols + j - 1];
-        
+
             // Check for convergence
             // Compute the local residual
             double local_residual = compute_error_serial(local_uh, local_previous, local_rows, n);
@@ -755,7 +766,8 @@ void Solver::solve_direct_mpi()
             else if (iteration == max_iter - 1)
             {
                 iter = ++iteration;
-                std::cout << "Warning from Direct solver: Maximum number of iterations reached without convergence." << std::endl;
+                if (mpi_rank == 0)
+                    std::cout << "Warning from Direct solver: Maximum number of iterations reached without convergence." << std::endl;
             }
 
             // Bidirectional ghost cell exchange
@@ -779,8 +791,8 @@ void Solver::solve_direct_mpi()
                     MPI_Recv(&local_uh[0], n, MPI_DOUBLE, mpi_rank - 1, 0, mpi_comm, MPI_STATUS_IGNORE);
                 }
             }
-        } 
-    
+        }
+
         // Synchronize all processes before gathering results
         MPI_Barrier(mpi_comm);
 
@@ -799,7 +811,7 @@ void Solver::solve_direct_mpi()
     {
         std::cerr << "Error: MPI is not initialized." << std::endl;
         return;
-    } 
+    }
 }
 
 double Solver::compute_error_serial(const std::vector<double> &sol1, const std::vector<double> &sol2, unsigned rows, unsigned cols) const
