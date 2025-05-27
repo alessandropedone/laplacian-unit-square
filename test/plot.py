@@ -15,7 +15,7 @@ def grid_size_test(filename: str):
     ax1.plot(df['n'], df['omp'], 'o-', color='tab:orange', label='OMP Time')
     ax1.plot(df['n'], df['mpi'], 'o-', color='tab:green', label='MPI Time')
     ax1.plot(df['n'], df['hybrid'], 'o-', color='tab:purple', label='Hybrid Time')
-    ax1.plot(df['n'], df['direct'], 'o-', color='tab:black', label='Direct Time')
+    ax1.plot(df['n'], df['direct'], 'o-', color='tab:pink', label='Direct Time')
     ax1.set_xscale('log', base=2)
     ax1.set_yscale('log', base=2)
     ax1.legend(loc='upper center')
@@ -37,6 +37,7 @@ def grid_size_test(filename: str):
     ax1.plot(df['h'], df['omp'], 'o-', color='tab:orange', label='OMP Time')
     ax1.plot(df['h'], df['mpi'], 'o-', color='tab:green', label='MPI Time')
     ax1.plot(df['h'], df['hybrid'], 'o-', color='tab:purple', label='Hybrid Time')
+    ax1.plot(df['h'], df['direct'], 'o-', color='tab:pink', label='Direct Time')
     ax1.set_xscale('log', base=2)
     ax1.set_yscale('log', base=2)
     ax1.legend(loc='upper center')
@@ -50,10 +51,14 @@ def grid_size_test(filename: str):
     plt.tight_layout()
     plt.show()
 
+grid_size_test("results_1.csv")
+grid_size_test("results_2.csv")
+grid_size_test("results_4.csv")
+grid_size_test("results_8.csv")
 
 def scalability_test():
     x = [1, 2, 4, 8]
-    for i in [56, 60, 64]:
+    for i in [56, 64]:
         timings = []
         for filename in os.listdir('data'):
             if filename.endswith('.csv'):

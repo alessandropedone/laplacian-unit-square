@@ -90,7 +90,7 @@ int main(int argc, char **argv)
         params.broadcast(0, MPI_COMM_WORLD);
     }
 
-    std::vector<int> ns = {8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64};
+    std::vector<int> ns = {8, 16, 24, 32, 40, 48, 56, 64};
     std::vector<double> serial_times, omp_times, mpi_times, hybrid_times, direct_times;
     std::vector<double> omp_speedups, mpi_speedups, hybrid_speedups, direct_speedups;
     std::vector<double> l2_errors;
@@ -175,9 +175,9 @@ int main(int argc, char **argv)
             std::chrono::duration<double> serial_elapsed = end - start;
             serial_time = serial_elapsed.count();
             serial_l2 = solver.l2_error();
-            
+
             // Reset the solver for OMP run
-            solver.reset(); 
+            solver.reset();
 
             // OpenMP test
             start = std::chrono::high_resolution_clock::now();
@@ -209,7 +209,7 @@ int main(int argc, char **argv)
 
         // Reset solver for direct local solver test
         solver.reset();
-        
+
         // Mpi test with direct local solver
         auto direct_start = std::chrono::high_resolution_clock::now();
         solver.solve_direct_mpi();
@@ -261,13 +261,16 @@ int main(int argc, char **argv)
         for (size_t i = 0; i < ns.size(); ++i)
         {
             ofs << ns[i] << "," << serial_times[i] << "," << omp_times[i] << "," << mpi_times[i] << "," << hybrid_times[i] << "," << direct_times[i] << ","
-            << omp_speedups[i] << "," << mpi_speedups[i] << "," << hybrid_speedups[i] << "," << direct_speedups[i] << "," << l2_errors[i] << "\n";
+                << omp_speedups[i] << "," << mpi_speedups[i] << "," << hybrid_speedups[i] << "," << direct_speedups[i] << "," << l2_errors[i] << "\n";
         }
         ofs.close();
     }
 
-    if (size == 8 && rank == 0)
+    if (size == 2 && rank == 0)
     {
+        std::cout << "==========================================" << std::endl;
+        std::cout << "=== Plotting results for " << size << " processors. ===" << std::endl;
+        std::cout << "==========================================" << std::endl;
         plot::plot();
     }
 

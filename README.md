@@ -6,6 +6,9 @@
     - per n=8 raggiunge max_iter in alcuni processori ma ottiene lo stesso il risultato finale
 - review muparserx interface for speed
 - review documentation and comments
+- non convergence warnings
+- negative times
+- review gaphs
 
 
 ### README
@@ -27,6 +30,7 @@
     sudo apt-get install libtbb-dev
     ```
 - flag --use-datafile to use dataset file information
+- if you don't have 8 cores on your machine modify test.sh
 
 
 

@@ -38,6 +38,8 @@ echo "Testing with 8 processors"
 echo "========================="
 mpirun -np 8 ./main
 
+echo ""
+echo ""
 echo "Scalability test completed."
 
 gnuplot test/plots/l2error_vs_h.gp test/plots/l2error_vs_n.gp test/plots/timing_vs_h.gp test/plots/timing_vs_n.gp test/plots/scalability.gp
