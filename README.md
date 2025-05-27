@@ -2,7 +2,6 @@
 # A matrix–free parallel solver for the Laplace equation
 
 ## Refinements
-- manage test for n = 2^7, 2^8 (requested)
 - review muparserx interface for speed
 - review documentation and comments
 
