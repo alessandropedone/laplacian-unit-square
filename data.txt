@@ -3,15 +3,8 @@
 # Solve: -∇²u = f on Ω = [0,1] × [0,1]
 # where ∇²u = ∂²u/∂x² + ∂²u/∂y²
 #
-# Boundary Conditions:
-# 
-# 1. Dirichlet BC: u = g on ∂Ω (prescribed function value)
+# Dirichlet Boundary Conditions: u = g on ∂Ω (prescribed function value)
 #    Example: u = 0 on boundary (homogeneous Dirichlet)
-#
-# 2. Neumann BC: ∂u/∂n = h on ∂Ω (prescribed normal derivative)
-#    Example: ∂u/∂n = 0 on boundary (no flux condition)
-#
-# 3. Robin BC: αu + β∂u/∂n = γ on ∂Ω (mixed condition)
 
 # ----------
 # Force term
@@ -35,46 +28,6 @@ d_right_bc = '0'
 
 # Left boundary condition (x = 0)
 d_left_bc = '0'
-
-
-# ---------------------------
-# Neumann boundary conditions
-# ---------------------------
-
-# Top boundary condition (y = 1)
-n_top_bc = '0'
-
-# Bottom boundary condition (y = 0)
-n_bottom_bc = '0'
-
-# Right boundary condition (x = 1)
-n_right_bc = '0'
-
-# Left boundary condition (x = 0)
-n_left_bc = '0'
-
-
-# -------------------------
-# Robin boundary conditions
-# -------------------------
-
-# Alpha
-alpha = '0'
-
-# Beta 
-beta = '0'
-
-# Top boundary condition (y = 1)
-r_top_bc = '0'
-
-# Bottom boundary condition (y = 0)
-r_bottom_bc = '0'
-
-# Right boundary condition (x = 1)
-r_right_bc = '0'
-
-# Left boundary condition (x = 0)
-r_left_bc = '0'
 
 
 # -----------------------------

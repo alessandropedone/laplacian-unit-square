@@ -1,18 +1,15 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/bOfolMCC)
 # A matrix–free parallel solver for the Laplace equation
 
-## Roadmap
+## Refinements
 - manage test for n = 2^7, 2^8 (requested)
     - per n=8 raggiunge max_iter in alcuni processori ma ottiene lo stesso il risultato finale
+- review muparserx interface for speed
+- review documentation and comments
 
-### Extras
-- use getpot to read data
-- [Neumann and Robin boundary conditions](https://chatgpt.com/share/68322bf2-c650-8006-abfa-ca0234cb86ef)
-
-### ?
-- Schwarz iteration type (change only the local solver)
 
 ### README
+- strucutre of the repo and doxygen documentation
 - results discussion
 - instruction to reproduce the scalability and grid size tests, just run
     ```bash

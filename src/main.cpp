@@ -43,7 +43,7 @@
 #include <GetPot>
 
 #include "muparser_interface.hpp"
-#include "jacobi_solver.hpp"
+#include "solver.hpp"
 #include "vtk.hpp"
 #include "plot.hpp"
 #include "simulation_parameters.hpp"
@@ -143,7 +143,7 @@ int main(int argc, char **argv)
 
         constexpr auto pi = std::numbers::pi;
 
-        JacobiSolver solver(
+        Solver solver(
             std::vector<double>(n * n, 0.0), // initial guess
             [=](std::vector<double> x)
             { return 8 * pi * pi * sin(2 * pi * x[0]) * sin(2 * pi * x[1]); }, // rhs
@@ -170,7 +170,7 @@ int main(int argc, char **argv)
         {
             // Serial test
             auto start = std::chrono::high_resolution_clock::now();
-            solver.solve_serial();
+            solver.solve_jacobi_serial();
             auto end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> serial_elapsed = end - start;
             serial_time = serial_elapsed.count();
@@ -181,7 +181,7 @@ int main(int argc, char **argv)
 
             // OpenMP test
             start = std::chrono::high_resolution_clock::now();
-            solver.solve_omp();
+            solver.solve_jacobi_omp();
             end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> omp_elapsed = end - start;
             omp_time = omp_elapsed.count();
@@ -192,7 +192,7 @@ int main(int argc, char **argv)
 
         // MPI test (all processes participate)
         auto start_mpi = std::chrono::high_resolution_clock::now();
-        solver.solve_mpi();
+        solver.solve_jacobi_mpi();
         auto end_mpi = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> mpi_elapsed = end_mpi - start_mpi;
         mpi_time = mpi_elapsed.count();
@@ -202,7 +202,7 @@ int main(int argc, char **argv)
 
         // Hybrid OpenMP+MPI test (all processes participate)
         auto start_hybrid = std::chrono::high_resolution_clock::now();
-        solver.solve_hybrid();
+        solver.solve_jacobi_hybrid();
         auto end_hybrid = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> hybrid_elapsed = end_hybrid - start_hybrid;
         hybrid_time = hybrid_elapsed.count();
@@ -212,7 +212,7 @@ int main(int argc, char **argv)
         
         // Mpi test with direct local solver
         auto direct_start = std::chrono::high_resolution_clock::now();
-        solver.solve_direct();
+        solver.solve_direct_mpi();
         auto direct_end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> direct_elapsed = direct_end - direct_start;
         direct_time = direct_elapsed.count();

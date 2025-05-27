@@ -1,10 +1,10 @@
 CXX      = mpic++
 CXXFLAGS = -std=c++20 -Wall -O3 -MMD -MP
-CPPFLAGS = -I include -I include/core -I $(shell dpkg -L libmuparserx-dev | grep -oP '.*include/muparserx' | sort -u)  -I include/eigen-3.4.0
+CPPFLAGS = -I include -I include/core -I $(shell dpkg -L libmuparserx-dev | grep -oP '.*include/muparserx' | sort -u)  -I include/eigen
 
 # Linker flags
 LDFLAGS ?= 
-LDLIBS  ?= -lmuparserx 
+LDLIBS  ?= -lmuparserx
 
 # Disable OpenMP if OPENMP=0 is specified
 OPENMP ?= 1
