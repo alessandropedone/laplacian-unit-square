@@ -26,7 +26,7 @@
     sudo apt-get install libtbb-dev
     ```
 - flag --use-datafile to use dataset file information
-- explain why direct solver doesn't converge with 4 processors and finer mesh
+- explain why direct solver doesn't converge with 4 processors and finer mesh (you can see the non converged solution in test/data/solution_4_n_64.vtk)
 - too slow for grid size over 64
 
 Plots:
