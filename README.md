@@ -5,7 +5,6 @@
 - manage test for n = 2^7, 2^8 (requested)
 - review muparserx interface for speed
 - review documentation and comments
-- verify solution in paraview
 
 ### README
 - strucutre of the repo and doxygen documentation
