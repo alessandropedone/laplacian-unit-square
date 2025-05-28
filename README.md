@@ -6,7 +6,7 @@
 - review documentation and comments
 
 ### README
-- strucutre of the repo and doxygen documentation
+- structure of the repo and doxygen documentation
 - clone with submodules
 - results discussion
 - instruction to reproduce the scalability and grid size tests, just run
@@ -14,7 +14,7 @@
     ./test.sh
     ```
 - explain generated plots
-- simpler python script to visdualize results
+- simpler python script to visualize results
 - hardware comparison instructions
 - instruction for compilation (OPENMP = 1 option)
 - required package (muparserx and ltbb), run if on Debian-based Linux distribution

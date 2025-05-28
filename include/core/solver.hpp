@@ -1,15 +1,11 @@
-/// @file jacobi_solver.hpp
-/// @brief Header file for the Solver class
+/// @file    solver.hpp
+/// @brief   Header file for the Solver class
 /// @details This file contains the declaration of the Solver class,
 ///          which implements an iterative solver for a given equation.
 ///          The class provides methods to set the boundary conditions,
 ///          initial guess, exact solution, and right-hand side of the equation.
 ///          It also includes a method to print the computed solution.
-/// @details The class is designed to be used in a serial computing environment.
-///          It is not optimized for parallel computing and does not use any
-///          parallel computing libraries or techniques.
-/// @details The class is intended to be used as a comparison for more complex
-///          solvers that may incorporate parallelism or other advanced features.
+
 #ifndef SOLVER_HPP
 #define SOLVER_HPP
 #include <iostream>
