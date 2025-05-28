@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['write_0',['write',['../vtk_8hpp.html#a22f0326006cce1057953ba3eea07d597',1,'vtk']]],
-  ['writedatafile_1',['writeDataFile',['../classplot_1_1Plotter.html#ad9962691265da5a45466a20c085acd4a',1,'plot::Plotter']]]
+  ['uex_5fstr_0',['uex_str',['../structSimulationParameters.html#aa9bf81c3349e746ef2b8e2e42cc0d4d9',1,'SimulationParameters']]],
+  ['unit_20square_1',['Laplce equation in the unit square',['../index.html',1,'']]]
 ];

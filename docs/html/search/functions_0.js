@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['creategnuplotscript_0',['createGnuplotScript',['../classplot_1_1Plotter.html#a2d229ea6a5c7989a18bf1125a0db5489',1,'plot::Plotter']]]
+  ['broadcast_0',['broadcast',['../structSimulationParameters.html#a3a2a6c0a45b23b57ce3c932eb4ccfd5f',1,'SimulationParameters']]]
 ];

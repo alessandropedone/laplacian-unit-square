@@ -1,4 +1,29 @@
 var searchData=
 [
-  ['unit_20square_0',['Laplce equation in the unit square',['../index.html',1,'']]]
+  ['salability_20test_0',['Salability test',['../index.html#autotoc_md5',1,'']]],
+  ['save_5fvtk_1',['save_vtk',['../classSolver.html#a592403b441f76d6b79ad647cb9aceb89',1,'Solver']]],
+  ['scalabilitytest_2',['scalabilityTest',['../namespaceplot.html#ab8bee4487634e900cb15524c1fe917db',1,'plot']]],
+  ['set_5fbc_3',['set_bc',['../classSolver.html#ab54236c58be531bfa2744048a6ed658f',1,'Solver']]],
+  ['set_5fexact_5fsol_4',['set_exact_sol',['../classSolver.html#a1ad03e25cf92b446521dc4f9990a3929',1,'Solver']]],
+  ['set_5fexpression_5',['set_expression',['../classmuparser_1_1muParserXInterface.html#abb8f73bb16d9ae35d55c2f909425f69b',1,'muparser::muParserXInterface']]],
+  ['set_5ff_6',['set_f',['../classSolver.html#a2868cb2c72b9c8cfd64567b540389038',1,'Solver']]],
+  ['set_5finitial_5fguess_7',['set_initial_guess',['../classSolver.html#a036f1bf536b6b67e3824d5a597227184',1,'Solver']]],
+  ['set_5fmax_5fiter_8',['set_max_iter',['../classSolver.html#a6b3cbdd1d2113643843c165c0662e09e',1,'Solver']]],
+  ['set_5fn_9',['set_n',['../classSolver.html#a268ef209e5bce9c479c227b61523f60c',1,'Solver']]],
+  ['set_5ftol_10',['set_tol',['../classSolver.html#a26c0c91e687a5b89750cdfdd601c86ba',1,'Solver']]],
+  ['set_5fuex_11',['set_uex',['../classSolver.html#a72c4cf552dcda7f75a1227e6c67cf251',1,'Solver']]],
+  ['setup_20and_20test_12',['Setup and test',['../index.html#autotoc_md3',1,'']]],
+  ['simulationparameters_13',['SimulationParameters',['../structSimulationParameters.html',1,'']]],
+  ['size_20variation_14',['Grid size variation',['../index.html#autotoc_md6',1,'']]],
+  ['solve_5fdirect_5fmpi_15',['solve_direct_mpi',['../classSolver.html#ace1232308ed55154e3d376e56201c8ff',1,'Solver']]],
+  ['solve_5fjacobi_5fhybrid_16',['solve_jacobi_hybrid',['../classSolver.html#abf1f117628bfd6053187bdbe5e496b19',1,'Solver']]],
+  ['solve_5fjacobi_5fmpi_17',['solve_jacobi_mpi',['../classSolver.html#a410a47b7a989c51a7dd2a9c4f828c757',1,'Solver']]],
+  ['solve_5fjacobi_5fomp_18',['solve_jacobi_omp',['../classSolver.html#a4c8571057e644f0012aceb353f94cdc1',1,'Solver']]],
+  ['solve_5fjacobi_5fserial_19',['solve_jacobi_serial',['../classSolver.html#a882da917502b0f84b301222f4c5f00e4',1,'Solver']]],
+  ['solver_20',['solver',['../classSolver.html#ac7edef7ba9f3e32356ff8836f93de4ad',1,'Solver::Solver()'],['../classSolver.html',1,'Solver']]],
+  ['solver_20for_20the_20laplace_20equation_21',['A matrix–free parallel solver for the Laplace equation',['../index.html#autotoc_md0',1,'']]],
+  ['solver_2ecpp_22',['solver.cpp',['../solver_8cpp.html',1,'']]],
+  ['solver_2ehpp_23',['solver.hpp',['../solver_8hpp.html',1,'']]],
+  ['square_24',['Laplce equation in the unit square',['../index.html',1,'']]],
+  ['structure_20of_20the_20repository_25',['Structure of the repository',['../index.html#autotoc_md4',1,'']]]
 ];

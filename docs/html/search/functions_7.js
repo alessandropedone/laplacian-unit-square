@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['write_0',['write',['../vtk_8hpp.html#a22f0326006cce1057953ba3eea07d597',1,'vtk']]],
-  ['writedatafile_1',['writeDataFile',['../classplot_1_1Plotter.html#ad9962691265da5a45466a20c085acd4a',1,'plot::Plotter']]]
+  ['read_0',['read',['../vtk_8hpp.html#a325ee41224bd8d4155616041a8c42b9c',1,'vtk']]],
+  ['readcsv_1',['readCSV',['../classplot_1_1CSVReader.html#a3abb97803f144bcbda9dd0b9449bed1e',1,'plot::CSVReader']]],
+  ['reset_2',['reset',['../classSolver.html#a5e8705b4f1604a3b141ca0e312561837',1,'Solver']]]
 ];

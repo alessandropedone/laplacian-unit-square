@@ -1,34 +1,121 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/bOfolMCC)
 # A matrix–free parallel solver for the Laplace equation
 
-## Refinements
+## TBD
 - review muparserx interface for speed
 - review documentation and comments
+- readme
+    - results discussion
+    - method implementation description
+    - test all commands
+    - review
 
-### README
-- structure of the repo and doxygen documentation
-- clone with submodules
-- results discussion
-- instruction to reproduce the scalability and grid size tests, just run
-    ```bash
-    ./test.sh
-    ```
-- explain generated plots
-- simpler python script to visualize results
-- hardware comparison instructions
-- instruction for compilation (OPENMP = 1 option)
-- required package (muparserx and ltbb), run if on Debian-based Linux distribution
-    ```bash
-    sudo apt-get update
-    sudo apt-get install libmuparserx-dev
-    sudo apt-get install libtbb-dev
-    ```
-- flag --use-datafile to use dataset file information
-- explain why direct solver doesn't converge with 4 processors and finer mesh (you can see the non converged solution in test/data/solution_4_n_64.vtk)
-- too slow for grid size over 64
+## Setup and test
+You can run the following command to clone the repository:
+```bash
+git clone --recurse-submodules git@github.com:PACS-24-25/challenge3-male.git
+```
+Then to compile and run all the tests you can execute:
+```bash
+./test.sh
+```
 
-Plots:
-- timing of result_2 (2 processors are plotted)
-- scalability test for the hybrid method
+## Required packages
+It's required to link with muparserx library, which, for instance, if your on Debian/Ubuntu/...  you can install on your machine with the following command:
+```bash
+sudo apt-get update
+sudo apt-get install libmuparserx-dev
+```
+
+## Structure of the repository
+```bash
+challenge3-male
+├── Challenge24-25-3.pdf
+├── LICENSE
+├── Makefile
+├── README.md
+├── data.txt
+├── docs
+│   ├── Doxyfile
+│   ├── ale_hw.info
+│   ├── compare_hw.sh
+│   ├── generate_hw_info.sh
+│   ├── html
+│   └── marta_hw.info
+├── include
+│   ├── GetPot
+│   ├── core
+│   ├── eigen
+│   ├── muparser_interface.hpp
+│   ├── plot.hpp
+│   ├── simulation_parameters.hpp
+│   └── vtk.hpp
+├── src
+│   ├── main.cpp
+│   └── solver.cpp
+├── test
+│   ├── data
+│   ├── plot.py
+│   └── plots
+└── test.sh
+```
+
+### Implementation
+We implemented five methods to solve the problem, which are members of the Solver class:
+- serial
+- OPENMP
+- MPI
+- hybrid
+- direct (with Schwarz method)
+
+We chose to avoid using template programming since it would more complicated putting al lot of if constexpr instead of simply structuring in a different way the code in separate member functions.
+
+### Salability test
+We performed a small scalability test with 1, 2 and 4 processors. \
+The results can be obtained by running the above specified command and timings are printed on the screen.
+In `test/data` folder you can find .csv files with saved timings from the last execution of the test and some saved solution in `.vtk` format.
+
+### Grid size variation
+We also made the grid size vary between 8 and 64, and we avoided going beyond this threshold because the execution took too long and results can be already observed with this choice of grid sizes.
+
+### Docs
+In docs folder you can find the documentation generated with doxygen in html format.
+
+### Hardware information and comparison
+Again in docs folder you can find the follwing files:
+- ale_hw.info which contains the hardware information of [@alessandropedone](https://github.com/alessandropedone)
+- marta_hw.info which contains the hardware information of [@martapignatelli](https://github.com/martapignatelli)
+- `generate_hw_info.sh` which is an executable that you can run in the terminal to create a file with the information of your machine in the same format as the aforementioned files
+- `compare_hw.sh` that allows to print a comparison between to hardware specifying the name of the files
+So you can run for example:
+```bash
+cd docs 
+./generate_hw_info.sh
+./compare_hw.sh ale_hw.info your_machine_name_hw.info
+```
+
+## Flags
+It's possible to disable the compilation with OPENMP by running
+```bash
+make OPENMP=0
+```
+There are two possibilities to run the code:
+1. if you run the following command you just run the code on chosen example,
+    ```bash
+    mpirun -np j ./main
+    ```
+2. if you run the same command but with `--use-datafile` flag the tests run with the data specified within `data.txt` (be careful: the code runs slower because of the overhead of the interface).
+
+## Results discussion
+In `test/plot` you can find 5 plots in `.png` format, which are generated using gnuplot, of the following quantities:
+- L2 error (one plot with n and one with h),
+- timings of the case with two processors, stored in `results_2.csv` (one plot with n and one with h),
+- scalability test for the hybrid method in the case of $n=56$ and $n=64$.
+
+We also kept a python script as an alternative that we wrote in the beginning to test quickly the results. 
+Only pandas and matplotlib libraries are required to run the python code.
+
+The direct solver doesn't converge with 4 processors and finer mesh, and this is an intrinsic problem of Schwarz method, since... TBD!!! \
+It's possible to observed the solution in the non convergence case of the direct solver in `test/data/solution_4_n_64.vtk`.
 
 
