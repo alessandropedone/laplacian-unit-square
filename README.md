@@ -5,7 +5,6 @@
 - review documentation and comments
 - readme
     - non-convergin Scharz method
-    - test all commands
 
 ## Setup and test
 You can run the following command to clone the repository:
