@@ -122,12 +122,12 @@ int main(int argc, char **argv)
         if (use_datafile)
         {
             // Create muParserX interfaces
-            muparser::muParserXScalarInterface f(params.f_str, 2);
-            muparser::muParserXScalarInterface uex(params.uex_str, 2);
-            muparser::muParserXScalarInterface top_bc(params.bc_top_str, 2);
-            muparser::muParserXScalarInterface right_bc(params.bc_right_str, 2);
-            muparser::muParserXScalarInterface bottom_bc(params.bc_bottom_str, 2);
-            muparser::muParserXScalarInterface left_bc(params.bc_left_str, 2);
+            muparser::muParserXInterface f(params.f_str, 2);
+            muparser::muParserXInterface uex(params.uex_str, 2);
+            muparser::muParserXInterface top_bc(params.bc_top_str, 2);
+            muparser::muParserXInterface right_bc(params.bc_right_str, 2);
+            muparser::muParserXInterface bottom_bc(params.bc_bottom_str, 2);
+            muparser::muParserXInterface left_bc(params.bc_left_str, 2);
             solver.set_bc(top_bc, right_bc, bottom_bc, left_bc);       // Set boundary conditions
             solver.set_initial_guess(std::vector<double>(n * n, 0.0)); // Initial guess
             solver.set_f(f);                                           // Set right-hand side function

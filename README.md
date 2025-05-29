@@ -2,7 +2,6 @@
 # A matrix–free parallel solver for the Laplace equation
 
 ## TBD
-- review muparserx interface for speed
 - review documentation and comments
 - readme
     - non-convergin Scharz method
@@ -111,7 +110,7 @@ There are two possibilities to run the code:
     ```bash
     mpirun -np j ./main
     ```
-2. if you run the same command but with `--use-datafile` flag the tests run with the data specified within `data.txt` (be careful: the code runs slower because of the overhead of the interface).
+2. if you run the same command but with `--use-datafile` flag the tests run with the data specified within `data.txt` (be careful: the code runs a lot slower because of the overhead of the interface).
     ```bash
     mpirun -np j ./main --use-datafile
     ```

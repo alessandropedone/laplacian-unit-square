@@ -9,7 +9,6 @@
 
 namespace muparser
 {
-    using matrix_type = std::vector<std::vector<double>>;
     using vector_type = std::vector<double>;
     using string_type = std::string;
 
@@ -108,49 +107,38 @@ namespace muparser
             M_parser.SetExpr(e.c_str());
         }
 
-        //! Function call operator to evaluate the expression
         /*!
-         * Takes a vector of input variables, evaluates the expression, and returns the result.
-         * Supports both scalar and matrix outputs.
+         * Evaluate the expression and return the first element of the result.
+         *
+         * The expression is evaluated using the muParserXInterface::operator() method.
+         * The result of the expression is taken to be the first element of the
+         * returned vector.
          *
          * @param x Vector of input variable values.
-         * @return Vector of evaluated results.
+         * @return The first element of the result of the expression.
          */
-        matrix_type operator()(const vector_type &x) const
+        double operator()(const vector_type &x) const
         {
             // Assign input values to the parser's variable storage
             for (unsigned i = 0; i < N; ++i)
             {
                 M_value.At(i) = x[i];
             }
-
             mup::Value val;
-            matrix_type res;
+            double res;
             try
             {
                 // Evaluate the parsed expression
                 val = M_parser.Eval();
-
                 if (val.IsScalar())
                 {
-                    // If the result is a scalar, return a single-element vector
-                    res = matrix_type(1, vector_type(1));
-                    res[0][0] = val.GetFloat();
+                    // If the result is a scalar, return it directly
+                    res = val.GetFloat();
                 }
                 else
                 {
-                    // If the result is a matrix, extract its values
-                    unsigned rows = val.GetRows();
-                    unsigned cols = val.GetCols();
-                    res = matrix_type(rows, vector_type(cols));
-
-                    for (unsigned i = 0; i < rows; ++i)
-                    {
-                        for (unsigned j = 0; j < cols; ++j)
-                        {
-                            res[i][j] = val.At(i, j).GetFloat();
-                        }
-                    }
+                    std::cerr << "Muparsex error: expression did not evaluate to a scalar." << std::endl;
+                    throw mup::ParserError("Expected scalar result.");
                 }
             }
             catch (mup::ParserError &error)
@@ -164,7 +152,7 @@ namespace muparser
             return res;
         }
 
-    protected:
+    private:
         /// @brief A copy of the muparserX expression, used for the copy operations
         string_type My_e;
         /// @brief The muparseX engine
@@ -173,84 +161,6 @@ namespace muparser
         mutable mup::Value M_value;
         /// @brief The number of variables in the expression
         mutable unsigned N;
-    };
-
-    /**
-     * \brief A muParserX interface with a vector output
-     *
-     * This class is a specialisation of the muParserXInterface class, with a vector output.
-     */
-    class muParserXVectorInterface : public muParserXInterface
-    {
-    public:
-        /*!
-         * Constructor of the muParserXVectorInterface class
-         *
-         * This is a thin wrapper around the muParserXInterface constructor.
-         * It is used to create a muParserXInterface that returns a vector.
-         *
-         * @param expression The expression to be parsed
-         * @param N The size of the vector returned by the expression
-         */
-        muParserXVectorInterface(const string_type expression, const unsigned N = 1) : muParserXInterface(expression, N) {}
-
-        /*!
-         * Since the expression may evaluate to a matrix, the result is
-         * taken to be the first column of the matrix.
-         *
-         * @param x Vector of input variable values.
-         * @return Vector of evaluated results.
-         */
-        vector_type operator()(const vector_type &x) const
-        {
-            matrix_type mat = muParserXInterface::operator()(x);
-            vector_type result;
-            result.reserve(mat.size());
-            for (const auto& row : mat) {
-                if (!row.empty()) {
-                    result.push_back(row[0]);
-                }
-            }
-            return result;
-        };
-    };
-
-    /**
-     * \brief A muParserX interface with a scalar output
-     *
-     * This class is a specialisation of the muParserXVectorInterface class, with a scalar output.
-     *
-     * It is used to create a muParserXInterface that returns a scalar.
-     */
-    class muParserXScalarInterface : public muParserXVectorInterface
-    {
-    public:
-        /*!
-         * Constructor of the muParserXScalarInterface class
-         *
-         * This is a thin wrapper around the muParserXVectorInterface constructor.
-         * It is used to create a muParserXInterface that returns a scalar.
-         *
-         * @param expression The expression to be parsed
-         * @param N The size of the vector returned by the expression
-         */
-        muParserXScalarInterface(const string_type expression, const unsigned N = 1) : muParserXVectorInterface(expression, N) {}
-
-        /*!
-         * Evaluate the expression and return the first element of the result.
-         *
-         * The expression is evaluated using the muParserXInterface::operator() method.
-         * The result of the expression is taken to be the first element of the
-         * returned vector.
-         *
-         * @param x Vector of input variable values.
-         * @return The first element of the result of the expression.
-         */
-        double operator()(const vector_type &x) const
-        {
-            vector_type vec = muParserXVectorInterface::operator()({x});
-            return vec.size() == 0 ? 0.0 : vec[0];
-        }
-    };
-}
+    }; // class muParserXInterface    
+} // namespace muparser
 #endif // MUPARSERX_INTERFACE_HPP
