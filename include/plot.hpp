@@ -461,8 +461,6 @@ namespace plot
                     if (row.n == n)
                     {
                         timings.push_back(row.hybrid);
-                        std::cout << "Reading file: " << entry.path().filename() << std::endl;
-                        std::cout << "timing n = " << row.n << " time = " << row.hybrid << std::endl;
                         break;
                     }
                 }

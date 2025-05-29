@@ -62,7 +62,7 @@ Again in `docs` folder you can find the follwing files:
 - `ale_hw.info` which contains the hardware information of [@alessandropedone](https://github.com/alessandropedone)
 - `marta_hw.info` which contains the hardware information of [@martapignatelli](https://github.com/martapignatelli)
 - `generate_hw_info.sh` which is an executable that you can run in the terminal to create a file with the information of your machine in the same format as the aforementioned files
-- `compare_hw.sh` that allows to print a comparison between to hardware specifying the name of the files
+- `compare_hw.sh` that allows to print a comparison between two hardwares specifying the name of the files
 For instance, you could run:
 ```bash
 cd docs 
@@ -88,7 +88,7 @@ void solve_jacobi_hybrid();
 /// @brief Schwarz implementation: locally, the equation is solved using Eigen LDLT decomposition
 void solve_direct_mpi();
 ```
-We chose to avoid using template programming since it would more complicated putting several `if constexpr` instead of simply structuring in a different way the code in separate member functions.
+We chose to avoid using template programming, since it would be more complicated putting several `if constexpr` instead of simply structuring in a different way the code, using separate member functions.
 
 ### Salability test
 We performed a small scalability test with 1, 2 and 4 processors. \
@@ -103,27 +103,27 @@ It's possible to disable the compilation with OPENMP by running
 make OPENMP=0
 ```
 There are two possibilities to run the code:
-1. if you use the following command you just run the code on the example chosen by us,
+1. if you use the following command, you just run the code on the example chosen by us,
     ```bash
     mpirun -np j ./main
     ```
-2. if you run the same command but with `--use-datafile` flag the tests run with the data specified within `data.txt` (be careful: the code runs a lot slower because of the overhead of the interface).
+2. if you run the same command but with `--use-datafile` flag, the tests run with the data specified within `data.txt` (be careful: the code runs a lot slower because of the overhead of the interface).
     ```bash
     mpirun -np j ./main --use-datafile
     ```
 
 ## Results
 
-In `test/data` folder you can find `.csv` files with saved timings from the last execution of the test and some saved solution in `.vtk` format. The results we obtained from running the test on our machine are already included in the repository. To view them, simply clone the repository without running the test again on yuor machine.
+In `test/data` folder, you can find `.csv` files with saved timings from the last execution of the test and some saved solution in `.vtk` format. The results we obtained from running the test on our machine are already included in the repository. To view them, simply clone the repository without running the test again on your machine.
 
-In `test/plot` you can find 5 plots in `.png` format, which are generated using gnuplot from `.csv` in `test/data` folder, of the following quantities:
+In `test/plot` you can find 5 plots in `.png` format - which are generated using gnuplot from `.csv` in `test/data` folder - of the following quantities:
 - L2 error (one plot with n and one with h),
 - timings of the case with two processors, stored in `results_2.csv` (one plot with n and one with h),
 - scalability test for the hybrid method in the case of $n=56$ and $n=64$.
 
 We also kept a python script, as an alternative. Only pandas and matplotlib libraries are required to run the python code.
 
-The direct solver doesn't converge with 4 processors and finer mesh, and this is an intrinsic problem of Schwarz method, since... TBD!!! \
-It's possible to observed the solution in the non convergence case of the direct solver in `test/data/solution_4_n_64.vtk`.
+The direct solver doesn't converge with 4 processors and a finer mesh, and this is an intrinsic limitation of discretized additive Schwarz methods: the efficiency decreases as the number of subdomains grows, unless sufficient overlap between them is provided. We can indeed notice that the size of overlapping regions may be too small for the global solution to propagate across the domain, especially with respect to the high number of dofs per process. A stronger coupling, such as a wider shared region or a coarse correction, is required to mantain convergence.\
+It's possible to observe the solution in the non convergence case of the direct solver in `test/data/solution_4_n_64.vtk`.
 
 
