@@ -1,11 +1,11 @@
-
 /**
  * @file main.cpp
  * @brief Main driver program for parallel Jacobi solver performance testing and analysis.
  *
  * This program implements a comprehensive performance analysis of different parallelization
  * strategies for solving the 2D Poisson equation using the Jacobi iterative method. It tests
- * serial, OpenMP, MPI, and hybrid (OpenMP+MPI) implementations across various grid sizes.
+ * serial, OpenMP, MPI, hybrid (OpenMP+MPI), and direct solver implementations across various 
+ * grid sizes.
  *
  * The program solves the equation:
  * -∇²u = 8π²sin(2πx)sin(2πy)
@@ -14,22 +14,27 @@
  *
  * Features:
  * - Performance benchmarking across multiple grid sizes (8×8 to 64×64)
+ * - Five different solver implementations: serial, OpenMP, MPI, hybrid, and direct MPI
  * - Speedup calculations for each parallelization method
  * - L2 error analysis for accuracy validation
  * - VTK output for visualization of the largest grid solution
  * - CSV data export for further analysis
  * - Automated plotting and scalability analysis
+ * - Optional parameter file support via GetPot and muParserX
+ *
+ * Command Line Options:
+ * - --use-datafile or -d: Read parameters from data.txt file (slower due to parser overhead)
  *
  * Output:
- * - Console table showing execution times, speedups, and errors
+ * - Console table showing execution times, speedups, and errors for all methods
  * - CSV files with detailed results for each MPI process count
- * - VTK files for solution visualization
- * - Performance plots
+ * - VTK files for solution visualization (n=64)
+ * - Performance plots (when run with 4 MPI processes)
  *
  * @note This program requires MPI initialization and should be run with multiple processes
  *       to evaluate MPI and hybrid performance. Only rank 0 handles output operations.
  *
- * @note It's possible to read the parameters from a file, but the test runs slower.
+ * @note Parameter file reading is available but introduces overhead due to muParserX interface.
  */
 #include <iostream>
 #include <vector>

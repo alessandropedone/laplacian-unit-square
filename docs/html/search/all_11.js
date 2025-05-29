@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['uex_5fstr_0',['uex_str',['../structSimulationParameters.html#aa9bf81c3349e746ef2b8e2e42cc0d4d9',1,'SimulationParameters']]],
-  ['unit_20square_1',['Laplce equation in the unit square',['../index.html',1,'']]]
+  ['variation_0',['Grid size variation',['../index.html#autotoc_md9',1,'']]],
+  ['vtk_2ehpp_1',['vtk.hpp',['../vtk_8hpp.html',1,'']]]
 ];

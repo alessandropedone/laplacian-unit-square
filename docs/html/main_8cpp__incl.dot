@@ -26,7 +26,7 @@ digraph "/home/ale/challenge3-male/src/main.cpp"
   Node1 -> Node11 [id="edge10_Node000001_Node000011",color="steelblue1",style="solid",tooltip=" "];
   Node11 [id="Node000011",label="GetPot",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
   Node1 -> Node12 [id="edge11_Node000001_Node000012",color="steelblue1",style="solid",tooltip=" "];
-  Node12 [id="Node000012",label="muparser_interface.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$muparser__interface_8hpp_source.html",tooltip=" "];
+  Node12 [id="Node000012",label="muparser_interface.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$muparser__interface_8hpp.html",tooltip="Interface wrapper for muParserX mathematical expression parser."];
   Node12 -> Node13 [id="edge12_Node000012_Node000013",color="steelblue1",style="solid",tooltip=" "];
   Node13 [id="Node000013",label="memory",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
   Node12 -> Node14 [id="edge13_Node000012_Node000014",color="steelblue1",style="solid",tooltip=" "];
@@ -37,7 +37,7 @@ digraph "/home/ale/challenge3-male/src/main.cpp"
   Node12 -> Node16 [id="edge16_Node000012_Node000016",color="steelblue1",style="solid",tooltip=" "];
   Node16 [id="Node000016",label="mpParser.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
   Node1 -> Node17 [id="edge17_Node000001_Node000017",color="steelblue1",style="solid",tooltip=" "];
-  Node17 [id="Node000017",label="solver.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$solver_8hpp.html",tooltip="Header file for the Solver class."];
+  Node17 [id="Node000017",label="solver.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$solver_8hpp.html",tooltip="Header file for the Solver class that implements various numerical methods for solving the Laplace eq..."];
   Node17 -> Node2 [id="edge18_Node000017_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node17 -> Node3 [id="edge19_Node000017_Node000003",color="steelblue1",style="solid",tooltip=" "];
   Node17 -> Node18 [id="edge20_Node000017_Node000018",color="steelblue1",style="solid",tooltip=" "];
@@ -69,7 +69,7 @@ digraph "/home/ale/challenge3-male/src/main.cpp"
   Node23 [id="Node000023",label="algorithm",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
   Node21 -> Node6 [id="edge41_Node000021_Node000006",color="steelblue1",style="solid",tooltip=" "];
   Node1 -> Node24 [id="edge42_Node000001_Node000024",color="steelblue1",style="solid",tooltip=" "];
-  Node24 [id="Node000024",label="simulation_parameters.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$simulation__parameters_8hpp_source.html",tooltip=" "];
+  Node24 [id="Node000024",label="simulation_parameters.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$simulation__parameters_8hpp.html",tooltip="Header file containing simulation parameters structure and string broadcasting utility for MPI-based ..."];
   Node24 -> Node14 [id="edge43_Node000024_Node000014",color="steelblue1",style="solid",tooltip=" "];
   Node24 -> Node10 [id="edge44_Node000024_Node000010",color="steelblue1",style="solid",tooltip=" "];
 }

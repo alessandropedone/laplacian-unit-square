@@ -79,7 +79,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Header file for the <a class="el" href="classSolver.html">Solver</a> class.  
+<p>Header file for the <a class="el" href="classSolver.html">Solver</a> class that implements various numerical methods for solving the Laplace equation.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -105,8 +105,15 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Header file for the <a class="el" href="classSolver.html">Solver</a> class. </p>
-<p>This file contains the declaration of the <a class="el" href="classSolver.html">Solver</a> class, which implements an iterative solver for a given equation. The class provides methods to set the boundary conditions, initial guess, exact solution, and right-hand side of the equation. It also includes a method to print the computed solution. </p>
+<div class="textblock"><p>Header file for the <a class="el" href="classSolver.html">Solver</a> class that implements various numerical methods for solving the Laplace equation. </p>
+<p>This header defines the <a class="el" href="classSolver.html">Solver</a> class which provides multiple implementations for solving the Laplace equation using different parallelization strategies including serial execution, OpenMP, MPI, and hybrid MPI+OpenMP approaches. The class also supports direct solving methods using Eigen's sparse matrix decomposition.</p>
+<p>The solver supports:</p><ul>
+<li>Jacobi iterative method with various parallelization strategies</li>
+<li>Direct solving using Schwarz domain decomposition</li>
+<li>Boundary condition specification through function objects</li>
+<li>Error computation and convergence monitoring</li>
+<li>VTK output for visualization </li>
+</ul>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

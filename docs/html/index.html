@@ -76,17 +76,22 @@ $(function() {
 <h1><a class="anchor" id="autotoc_md0"></a>
 A matrix–free parallel solver for the Laplace equation</h1>
 <h2><a class="anchor" id="autotoc_md1"></a>
-Refinements</h2>
+TBD</h2>
 <ul>
-<li>review muparserx interface for speed</li>
 <li>review documentation and comments</li>
+<li>readme<ul>
+<li>non-convergin Scharz method</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md2"></a>
-README</h3>
-<h2><a class="anchor" id="autotoc_md3"></a>
+</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md2"></a>
 Setup and test</h2>
 <p>You can run the following command to clone the repository: </p><div class="fragment"><div class="line">git clone --recurse-submodules git@github.com:PACS-24-25/challenge3-male.git</div>
 </div><!-- fragment --><p> Then to compile and run all the tests you can execute: </p><div class="fragment"><div class="line">./test.sh</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
+Required packages</h2>
+<p>It's required to link with <code>muparserx</code> library, which, for instance, if you're on Debian/Ubuntu/... you can install on your machine with the following command: </p><div class="fragment"><div class="line">sudo apt-get update</div>
+<div class="line">sudo apt-get install libmuparserx-dev</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
 Structure of the repository</h2>
 <div class="fragment"><div class="line">challenge3-male</div>
@@ -118,45 +123,58 @@ Structure of the repository</h2>
 <div class="line">│   ├── plot.py</div>
 <div class="line">│   └── plots</div>
 <div class="line">└── test.sh</div>
-</div><!-- fragment --> <h3><a class="anchor" id="autotoc_md5"></a>
-Salability test</h3>
-<p>We performed a small scalability test with 1, 2 and 4 processors. The results can be obtained by running the above specified command and timings are printed on the screen. In test/data folder you can find .csv files with saved timings from the last execution of the test and some saved solution in .vtk format. </p>
-<h3><a class="anchor" id="autotoc_md6"></a>
-Grid size variation</h3>
-<p>We also made the grid size vary between 8 and 64 (avoiding going beyond it because the execution took too long and results can be already observed with thes choice of grid sizes) </p>
-<h3><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md5"></a>
 Docs</h3>
-<p>In docs folder you can find the documentation generated with doxygen in html format. </p>
-<h3><a class="anchor" id="autotoc_md8"></a>
+<p>In <code>docs</code> folder you can find the documentation generated with doxygen in <code>html</code> format.</p>
+<h3><a class="anchor" id="autotoc_md6"></a>
 Hardware information and comparison</h3>
-<p>Again in docs folder you can find the follwing files:</p><ul>
-<li>ale_hw.info which contains the hardware information of (@alessandropedone)[<a href="https://github.com/alessandropedone">https://github.com/alessandropedone</a>]</li>
-<li>marta_hw.info which contains the hardware information of (@martapignatelli)[<a href="https://github.com/martapignatelli">https://github.com/martapignatelli</a>]</li>
-<li>generate_hw_info.sh which is an executable that you can run in the terminal to create a file with the information of your machine in the same format as the aforementioned files</li>
-<li>compare_hw.sh that allows to print a comparison between to hardware specifying the name of the files So you can run for example: <div class="fragment"><div class="line">cd docs </div>
+<p>Again in <code>docs</code> folder you can find the follwing files:</p><ul>
+<li><code>ale_hw.info</code> which contains the hardware information of <a href="https://github.com/alessandropedone">@alessandropedone</a></li>
+<li><code>marta_hw.info</code> which contains the hardware information of <a href="https://github.com/martapignatelli">@martapignatelli</a></li>
+<li><code>generate_hw_info.sh</code> which is an executable that you can run in the terminal to create a file with the information of your machine in the same format as the aforementioned files</li>
+<li><code>compare_hw.sh</code> that allows to print a comparison between to hardware specifying the name of the files For instance, you could run: <div class="fragment"><div class="line">cd docs </div>
 <div class="line">./generate_hw_info.sh</div>
 <div class="line">./compare_hw.sh ale_hw.info your_machine_name_hw.info</div>
 </div><!-- fragment --></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md9"></a>
-Results discussion</h2>
-<p>In test/plots you can find 5 plots in .png format, which are created using gnuplot.</p><ul>
-<li>2 of l2 error</li>
-<li>2 of timings</li>
-<li>1 for the scalability test We also kept a python script as an alternative that we wrote in the beginning to test quickly the results. Only pandas and matplotlib libraries are required to run the code.</li>
-<li>instruction for compilation (OPENMP = 1 option)</li>
-<li>required package (muparserx and ltbb), run if on Debian-based Linux distribution <div class="fragment"><div class="line">sudo apt-get update</div>
-<div class="line">sudo apt-get install libmuparserx-dev</div>
-<div class="line">sudo apt-get install libtbb-dev</div>
+<h3><a class="anchor" id="autotoc_md7"></a>
+Implementation</h3>
+<p>We implemented five methods to solve the problem, which are members of the class named <a class="el" href="classSolver.html">Solver</a>: </p><div class="fragment"><div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> solve_jacobi_serial();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> solve_jacobi_omp();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> solve_jacobi_mpi();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> solve_jacobi_hybrid();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> solve_direct_mpi();</div>
+</div><!-- fragment --><p> We chose to avoid using template programming since it would more complicated putting several <code>if constexpr</code> instead of simply structuring in a different way the code in separate member functions.</p>
+<h3><a class="anchor" id="autotoc_md8"></a>
+Salability test</h3>
+<p>We performed a small scalability test with 1, 2 and 4 processors. \ The results can be obtained by running the command specified in the first section (timings are printed in the terminal).</p>
+<h3><a class="anchor" id="autotoc_md9"></a>
+Grid size variation</h3>
+<p>We also made the grid size vary between 8 and 64, and we avoided going beyond this threshold because the execution took too long and results can be already observed with this choice of grid sizes.</p>
+<h2><a class="anchor" id="autotoc_md10"></a>
+Flags</h2>
+<p>It's possible to disable the compilation with OPENMP by running </p><div class="fragment"><div class="line">make OPENMP=0</div>
+</div><!-- fragment --><p> There are two possibilities to run the code:</p><ol type="1">
+<li>if you use the following command you just run the code on the example chosen by us, <div class="fragment"><div class="line">mpirun -np j ./main</div>
 </div><!-- fragment --></li>
-<li>flag &ndash;use-datafile to use dataset file information</li>
-<li>explain why direct solver doesn't converge with 4 processors and finer mesh (you can see the non converged solution in test/data/solution_4_n_64.vtk)</li>
-<li>too slow for grid size over 64</li>
+<li>if you run the same command but with <code>--use-datafile</code> flag the tests run with the data specified within <code>data.txt</code> (be careful: the code runs a lot slower because of the overhead of the interface). <div class="fragment"><div class="line">mpirun -np j ./main --use-datafile</div>
+</div><!-- fragment --></li>
+</ol>
+<h2><a class="anchor" id="autotoc_md11"></a>
+Results</h2>
+<p>In <code>test/data</code> folder you can find <code>.csv</code> files with saved timings from the last execution of the test and some saved solution in <code>.vtk</code> format. The results we obtained from running the test on our machine are already included in the repository. To view them, simply clone the repository without running the test again on yuor machine.</p>
+<p>In <code>test/plot</code> you can find 5 plots in <code>.png</code> format, which are generated using gnuplot from <code>.csv</code> in <code>test/data</code> folder, of the following quantities:</p><ul>
+<li>L2 error (one plot with n and one with h),</li>
+<li>timings of the case with two processors, stored in <code>results_2.csv</code> (one plot with n and one with h),</li>
+<li>scalability test for the hybrid method in the case of $n=56$ and $n=64$.</li>
 </ul>
-<p>Plots:</p><ul>
-<li>timing of result_2 (2 processors are plotted)</li>
-<li>scalability test for the hybrid method </li>
-</ul>
+<p>We also kept a python script, as an alternative. Only pandas and matplotlib libraries are required to run the python code.</p>
+<p>The direct solver doesn't converge with 4 processors and finer mesh, and this is an intrinsic problem of Schwarz method, since... TBD!!! \ It's possible to observed the solution in the non convergence case of the direct solver in <code>test/data/solution_4_n_64.vtk</code>. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->

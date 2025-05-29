@@ -1,3 +1,32 @@
+
+
+/**
+ * @file muparser_interface.hpp
+ * @brief Interface wrapper for muParserX mathematical expression parser
+ * 
+ * This file provides a C++ wrapper interface around the muParserX library for parsing
+ * and evaluating mathematical expressions. The interface simplifies the usage of muParserX
+ * by providing a cleaner API and handling common operations like variable management
+ * and expression evaluation.
+ * 
+ * @see https://github.com/pacs-course/pacs-examples.git
+ * 
+ * @note This interface is designed to work with non-complex numbers and supports
+ *       matrix operations through muParserX's built-in capabilities.
+ * 
+ * @warning The muParserX library has specific design constraints that require
+ *          careful handling of copy operations due to internal variable address storage.
+ * 
+ * Example usage:
+ * @code
+ * // Create parser for 2-variable expression
+ * muparser::muParserXInterface parser("sin(x[0]) + x[1]^2", 2);
+ * 
+ * // Evaluate with specific values
+ * std::vector<double> values = {1.0, 2.0};
+ * double result = parser(values);
+ * @endcode
+ */
 #ifndef MUPARSERX_INTERFACE_HPP
 #define MUPARSERX_INTERFACE_HPP
 
@@ -14,7 +43,8 @@ namespace muparser
 
     /**
      * @brief muParserX interface for mathematical expression parsing and evaluation
-     * Adapted from muParserInterface inside pacs-examples repository (https://github.com/pacs-course/pacs-examples.git)
+     * @note Adapted from muParserInterface inside pacs-examples repository.
+     * @see https://github.com/pacs-course/pacs-examples.git)
      */
     class muParserXInterface
     {

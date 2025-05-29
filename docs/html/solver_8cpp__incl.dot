@@ -22,7 +22,7 @@ digraph "/home/ale/challenge3-male/src/solver.cpp"
   Node1 -> Node9 [id="edge8_Node000001_Node000009",color="steelblue1",style="solid",tooltip=" "];
   Node9 [id="Node000009",label="Eigen/IterativeLinearSolvers",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
   Node1 -> Node10 [id="edge9_Node000001_Node000010",color="steelblue1",style="solid",tooltip=" "];
-  Node10 [id="Node000010",label="solver.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$solver_8hpp.html",tooltip="Header file for the Solver class."];
+  Node10 [id="Node000010",label="solver.hpp",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$solver_8hpp.html",tooltip="Header file for the Solver class that implements various numerical methods for solving the Laplace eq..."];
   Node10 -> Node2 [id="edge10_Node000010_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node10 -> Node3 [id="edge11_Node000010_Node000003",color="steelblue1",style="solid",tooltip=" "];
   Node10 -> Node11 [id="edge12_Node000010_Node000011",color="steelblue1",style="solid",tooltip=" "];

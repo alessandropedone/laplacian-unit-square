@@ -1,3 +1,19 @@
+
+
+/**
+ * @file simulation_parameters.hpp
+ * @brief Header file containing simulation parameters structure and string broadcasting utility for MPI-based Poisson equation solver.
+ * 
+ * This file defines the SimulationParameters structure that holds all configuration values
+ * needed for solving the Poisson equation, including boundary conditions, solver parameters,
+ * and mathematical functions. It also provides MPI broadcasting capabilities to distribute
+ * these parameters across all processes in a parallel computation environment.
+ * 
+ * The parameters include:
+ * - Right-hand side function and exact solution (as muParserX expressions)
+ * - Boundary conditions for all four edges of the computational domain
+ * - Numerical solver settings (tolerance and maximum iterations)
+ */
 #ifndef SIMULATION_PARAMETERS_HPP
 #define SIMULATION_PARAMETERS_HPP
 

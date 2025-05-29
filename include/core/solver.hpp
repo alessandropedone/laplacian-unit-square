@@ -1,11 +1,21 @@
-/// @file    solver.hpp
-/// @brief   Header file for the Solver class
-/// @details This file contains the declaration of the Solver class,
-///          which implements an iterative solver for a given equation.
-///          The class provides methods to set the boundary conditions,
-///          initial guess, exact solution, and right-hand side of the equation.
-///          It also includes a method to print the computed solution.
 
+
+/**
+ * @file solver.hpp
+ * @brief Header file for the Solver class that implements various numerical methods for solving the Laplace equation
+ * 
+ * This header defines the Solver class which provides multiple implementations for solving
+ * the Laplace equation using different parallelization strategies including serial execution,
+ * OpenMP, MPI, and hybrid MPI+OpenMP approaches. The class also supports direct solving
+ * methods using Eigen's sparse matrix decomposition.
+ * 
+ * The solver supports:
+ * - Jacobi iterative method with various parallelization strategies
+ * - Direct solving using Schwarz domain decomposition
+ * - Boundary condition specification through function objects
+ * - Error computation and convergence monitoring
+ * - VTK output for visualization
+ */
 #ifndef SOLVER_HPP
 #define SOLVER_HPP
 #include <iostream>

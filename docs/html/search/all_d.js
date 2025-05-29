@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['parallel_20solver_20for_20the_20laplace_20equation_0',['A matrix–free parallel solver for the Laplace equation',['../index.html#autotoc_md0',1,'']]],
-  ['plot_1',['plot',['../namespaceplot.html',1,'plot'],['../namespaceplot.html#a31925a5dbaf98843c43e4fae87af3907',1,'plot::plot()']]],
-  ['plot_2ehpp_2',['plot.hpp',['../plot_8hpp.html',1,'']]],
-  ['plotter_3',['Plotter',['../classplot_1_1Plotter.html',1,'plot']]],
-  ['printdatasummary_4',['printDataSummary',['../classplot_1_1Plotter.html#abe5a6a28b60bf68ede39e90b9371d50f',1,'plot::Plotter']]]
+  ['read_0',['read',['../vtk_8hpp.html#a325ee41224bd8d4155616041a8c42b9c',1,'vtk']]],
+  ['readcsv_1',['readCSV',['../classplot_1_1CSVReader.html#a3abb97803f144bcbda9dd0b9449bed1e',1,'plot::CSVReader']]],
+  ['repository_2',['Structure of the repository',['../index.html#autotoc_md4',1,'']]],
+  ['required_20packages_3',['Required packages',['../index.html#autotoc_md3',1,'']]],
+  ['reset_4',['reset',['../classSolver.html#a5e8705b4f1604a3b141ca0e312561837',1,'Solver']]],
+  ['results_5',['Results',['../index.html#autotoc_md11',1,'']]]
 ];

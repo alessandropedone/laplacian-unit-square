@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['of_20the_20repository_0',['Structure of the repository',['../index.html#autotoc_md4',1,'']]],
-  ['operator_28_29_1',['operator()',['../classmuparser_1_1muParserXInterface.html#a5485a85c72884a513cd5cb46fdb5ce56',1,'muparser::muParserXInterface::operator()()'],['../classmuparser_1_1muParserXVectorInterface.html#acb12e6f6efa88aa2f0dc332e61188f50',1,'muparser::muParserXVectorInterface::operator()()'],['../classmuparser_1_1muParserXScalarInterface.html#adfc831020a5c595826340ab8561089f2',1,'muparser::muParserXScalarInterface::operator()()']]],
-  ['operator_3d_2',['operator=',['../classmuparser_1_1muParserXInterface.html#a55ad127f070b564415e68162b2f70ecf',1,'muparser::muParserXInterface']]]
+  ['packages_0',['Required packages',['../index.html#autotoc_md3',1,'']]],
+  ['parallel_20solver_20for_20the_20laplace_20equation_1',['A matrix–free parallel solver for the Laplace equation',['../index.html#autotoc_md0',1,'']]],
+  ['plot_2',['plot',['../namespaceplot.html',1,'plot'],['../namespaceplot.html#a31925a5dbaf98843c43e4fae87af3907',1,'plot::plot()']]],
+  ['plot_2ehpp_3',['plot.hpp',['../plot_8hpp.html',1,'']]],
+  ['plotter_4',['Plotter',['../classplot_1_1Plotter.html',1,'plot']]],
+  ['printdatasummary_5',['printDataSummary',['../classplot_1_1Plotter.html#abe5a6a28b60bf68ede39e90b9371d50f',1,'plot::Plotter']]]
 ];

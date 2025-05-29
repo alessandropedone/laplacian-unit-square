@@ -16,5 +16,5 @@ var searchData=
   ['solve_5fjacobi_5fmpi_13',['solve_jacobi_mpi',['../classSolver.html#a410a47b7a989c51a7dd2a9c4f828c757',1,'Solver']]],
   ['solve_5fjacobi_5fomp_14',['solve_jacobi_omp',['../classSolver.html#a4c8571057e644f0012aceb353f94cdc1',1,'Solver']]],
   ['solve_5fjacobi_5fserial_15',['solve_jacobi_serial',['../classSolver.html#a882da917502b0f84b301222f4c5f00e4',1,'Solver']]],
-  ['solver_16',['Solver',['../classSolver.html#ac7edef7ba9f3e32356ff8836f93de4ad',1,'Solver']]]
+  ['solver_16',['solver',['../classSolver.html#a7808b466eaac88fb9f73b8064b087c1d',1,'Solver::Solver()=default'],['../classSolver.html#ac7edef7ba9f3e32356ff8836f93de4ad',1,'Solver::Solver(const std::vector&lt; double &gt; &amp;initial_guess, std::function&lt; double(std::vector&lt; double &gt;)&gt; f, std::function&lt; double(std::vector&lt; double &gt;)&gt; top_bc, std::function&lt; double(std::vector&lt; double &gt;)&gt; right_bc, std::function&lt; double(std::vector&lt; double &gt;)&gt; bottom_bc, std::function&lt; double(std::vector&lt; double &gt;)&gt; left_bc, size_t n, unsigned max_iter=1000, double tol=1e-10, std::function&lt; double(std::vector&lt; double &gt;)&gt; uex=nullptr, double L2_error=-1.0)']]]
 ];

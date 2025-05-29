@@ -75,28 +75,22 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classmuparser_1_1muParserXInterface-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">muparser::muParserXInterface Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>muParserX interface for mathematical expression parsing and evaluation Adapted from muParserInterface inside pacs-examples repository (<a href="https://github.com/pacs-course/pacs-examples.git">https://github.com/pacs-course/pacs-examples.git</a>)  
+<p>muParserX interface for mathematical expression parsing and evaluation  
  <a href="classmuparser_1_1muParserXInterface.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="muparser__interface_8hpp_source.html">muparser_interface.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for muparser::muParserXInterface:</div>
-<div class="dyncontent">
-<div class="center"><img src="classmuparser_1_1muParserXInterface__inherit__graph.png" border="0" usemap="#amuparser_1_1muParserXInterface_inherit__map" alt="Inheritance graph"/></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a59c9661e549b55c4f9a8f42a19542d6c" id="r_a59c9661e549b55c4f9a8f42a19542d6c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmuparser_1_1muParserXInterface.html#a59c9661e549b55c4f9a8f42a19542d6c">muParserXInterface</a> (const unsigned <a class="el" href="classmuparser_1_1muParserXInterface.html#a22ee7ad573d8934b99b94a4e0a4d872f">N</a>=1)</td></tr>
+<tr class="memitem:a59c9661e549b55c4f9a8f42a19542d6c" id="r_a59c9661e549b55c4f9a8f42a19542d6c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmuparser_1_1muParserXInterface.html#a59c9661e549b55c4f9a8f42a19542d6c">muParserXInterface</a> (const unsigned N=1)</td></tr>
 <tr class="separator:a59c9661e549b55c4f9a8f42a19542d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acba6d2957a334f38cf6916554be5d7da" id="r_acba6d2957a334f38cf6916554be5d7da"><td class="memItemLeft" align="right" valign="top"><a id="acba6d2957a334f38cf6916554be5d7da" name="acba6d2957a334f38cf6916554be5d7da"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>muParserXInterface</b> (const string_type expression, const unsigned <a class="el" href="classmuparser_1_1muParserXInterface.html#a22ee7ad573d8934b99b94a4e0a4d872f">N</a>=1)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>muParserXInterface</b> (const string_type expression, const unsigned N=1)</td></tr>
 <tr class="memdesc:acba6d2957a334f38cf6916554be5d7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that takes a string containing muParserX expression. <br /></td></tr>
 <tr class="separator:acba6d2957a334f38cf6916554be5d7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacb3257b134489528b249501ab3e1fb5" id="r_aacb3257b134489528b249501ab3e1fb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmuparser_1_1muParserXInterface.html#aacb3257b134489528b249501ab3e1fb5">muParserXInterface</a> (<a class="el" href="classmuparser_1_1muParserXInterface.html">muParserXInterface</a> const &amp;mpi)</td></tr>
@@ -106,31 +100,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abb8f73bb16d9ae35d55c2f909425f69b" id="r_abb8f73bb16d9ae35d55c2f909425f69b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmuparser_1_1muParserXInterface.html#abb8f73bb16d9ae35d55c2f909425f69b">set_expression</a> (const string_type &amp;e)</td></tr>
 <tr class="memdesc:abb8f73bb16d9ae35d55c2f909425f69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the muparserX expression.  <br /></td></tr>
 <tr class="separator:abb8f73bb16d9ae35d55c2f909425f69b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5485a85c72884a513cd5cb46fdb5ce56" id="r_a5485a85c72884a513cd5cb46fdb5ce56"><td class="memItemLeft" align="right" valign="top">matrix_type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmuparser_1_1muParserXInterface.html#a5485a85c72884a513cd5cb46fdb5ce56">operator()</a> (const vector_type &amp;x) const</td></tr>
-<tr class="memdesc:a5485a85c72884a513cd5cb46fdb5ce56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function call operator to evaluate the expression.  <br /></td></tr>
-<tr class="separator:a5485a85c72884a513cd5cb46fdb5ce56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a2d489169ffdacf2e360a641f38a685b6" id="r_a2d489169ffdacf2e360a641f38a685b6"><td class="memItemLeft" align="right" valign="top"><a id="a2d489169ffdacf2e360a641f38a685b6" name="a2d489169ffdacf2e360a641f38a685b6"></a>
-string_type&#160;</td><td class="memItemRight" valign="bottom"><b>My_e</b></td></tr>
-<tr class="memdesc:a2d489169ffdacf2e360a641f38a685b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">A copy of the muparserX expression, used for the copy operations. <br /></td></tr>
-<tr class="separator:a2d489169ffdacf2e360a641f38a685b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5bb1153dd9759ea411ab75535a4a689" id="r_ab5bb1153dd9759ea411ab75535a4a689"><td class="memItemLeft" align="right" valign="top"><a id="ab5bb1153dd9759ea411ab75535a4a689" name="ab5bb1153dd9759ea411ab75535a4a689"></a>
-mup::ParserX&#160;</td><td class="memItemRight" valign="bottom"><b>M_parser</b></td></tr>
-<tr class="memdesc:ab5bb1153dd9759ea411ab75535a4a689"><td class="mdescLeft">&#160;</td><td class="mdescRight">The muparseX engine. <br /></td></tr>
-<tr class="separator:ab5bb1153dd9759ea411ab75535a4a689"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a693878ed256fe16436563d643be7d9ba" id="r_a693878ed256fe16436563d643be7d9ba"><td class="memItemLeft" align="right" valign="top"><a id="a693878ed256fe16436563d643be7d9ba" name="a693878ed256fe16436563d643be7d9ba"></a>
-mup::Value&#160;</td><td class="memItemRight" valign="bottom"><b>M_value</b></td></tr>
-<tr class="memdesc:a693878ed256fe16436563d643be7d9ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">The muparserX value used to set the variables in the engine. <br /></td></tr>
-<tr class="separator:a693878ed256fe16436563d643be7d9ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22ee7ad573d8934b99b94a4e0a4d872f" id="r_a22ee7ad573d8934b99b94a4e0a4d872f"><td class="memItemLeft" align="right" valign="top"><a id="a22ee7ad573d8934b99b94a4e0a4d872f" name="a22ee7ad573d8934b99b94a4e0a4d872f"></a>
-unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>N</b></td></tr>
-<tr class="memdesc:a22ee7ad573d8934b99b94a4e0a4d872f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of variables in the expression. <br /></td></tr>
-<tr class="separator:a22ee7ad573d8934b99b94a4e0a4d872f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a955a3fde699f0219cc81677cf99159b9" id="r_a955a3fde699f0219cc81677cf99159b9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmuparser_1_1muParserXInterface.html#a955a3fde699f0219cc81677cf99159b9">operator()</a> (const vector_type &amp;x) const</td></tr>
+<tr class="separator:a955a3fde699f0219cc81677cf99159b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>muParserX interface for mathematical expression parsing and evaluation Adapted from muParserInterface inside pacs-examples repository (<a href="https://github.com/pacs-course/pacs-examples.git">https://github.com/pacs-course/pacs-examples.git</a>) </p>
+<div class="textblock"><p>muParserX interface for mathematical expression parsing and evaluation </p>
+<dl class="section note"><dt>Note</dt><dd>Adapted from muParserInterface inside pacs-examples repository. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://github.com/pacs-course/pacs-examples.git">https://github.com/pacs-course/pacs-examples.git</a>) </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a59c9661e549b55c4f9a8f42a19542d6c" name="a59c9661e549b55c4f9a8f42a19542d6c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a59c9661e549b55c4f9a8f42a19542d6c">&#9670;&#160;</a></span>muParserXInterface() <span class="overload">[1/2]</span></h2>
@@ -195,8 +171,8 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>N</b></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5485a85c72884a513cd5cb46fdb5ce56" name="a5485a85c72884a513cd5cb46fdb5ce56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5485a85c72884a513cd5cb46fdb5ce56">&#9670;&#160;</a></span>operator()()</h2>
+<a id="a955a3fde699f0219cc81677cf99159b9" name="a955a3fde699f0219cc81677cf99159b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a955a3fde699f0219cc81677cf99159b9">&#9670;&#160;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,7 +181,7 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>N</b></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">matrix_type muparser::muParserXInterface::operator() </td>
+          <td class="memname">double muparser::muParserXInterface::operator() </td>
           <td>(</td>
           <td class="paramtype">const vector_type &amp;&#160;</td>
           <td class="paramname"><em>x</em></td><td>)</td>
@@ -218,16 +194,15 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>N</b></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Function call operator to evaluate the expression. </p>
-<p>Takes a vector of input variables, evaluates the expression, and returns the result. Supports both scalar and matrix outputs.</p>
+<p>Evaluate the expression and return the first element of the result.</p>
+<p>The expression is evaluated using the muParserXInterface::operator() method. The result of the expression is taken to be the first element of the returned vector.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>Vector of input variable values. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Vector of evaluated results. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The first element of the result of the expression. </dd></dl>
 
 </div>
 </div>
@@ -257,7 +232,7 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>N</b></td></tr>
 <p>The copy assignment operator</p>
 <p>MuparserX has a particular design, which obliges to define a special copy assignement </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mpi</td><td>the <a class="el" href="classmuparser_1_1muParserXInterface.html" title="muParserX interface for mathematical expression parsing and evaluation Adapted from muParserInterface...">muParserXInterface</a> to be copied The copy constructor </td></tr>
+    <tr><td class="paramname">mpi</td><td>the <a class="el" href="classmuparser_1_1muParserXInterface.html" title="muParserX interface for mathematical expression parsing and evaluation">muParserXInterface</a> to be copied The copy constructor </td></tr>
   </table>
   </dd>
 </dl>
