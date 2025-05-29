@@ -1,9 +1,6 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/bOfolMCC)
 # A matrix–free parallel solver for the Laplace equation
 
-## TBD
-- readme: non-convergin Scharz method
-
 ## Setup and test
 You can run the following command to clone the repository:
 ```bash
