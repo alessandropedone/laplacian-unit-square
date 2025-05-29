@@ -75,6 +75,9 @@ $(function() {
   <div class="headertitle"><div class="title">plot Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Namespace containing utilities for data visualization and plotting of computational results.  
+<a href="namespaceplot.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -108,7 +111,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>scalabilityTest</b> (
 <tr class="separator:a2e845734f86e4d72e05c2efc09b485a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains all plotting and data analysis functionality </p>
+<div class="textblock"><p>Namespace containing utilities for data visualization and plotting of computational results. </p>
+<p>Contains all plotting and data analysis functionality</p>
+<p>This namespace provides a comprehensive set of tools for reading CSV data files, processing numerical results, and generating plots using gnuplot. It is specifically designed to handle performance analysis data including timing measurements, error analysis, and scalability studies for parallel computing applications.</p>
+<p>The namespace includes:</p><ul>
+<li>CSV file reading and parsing capabilities</li>
+<li>Data structures for storing computational results</li>
+<li>Gnuplot script generation and execution</li>
+<li>Automated plot generation for timing analysis and error visualization</li>
+<li>Scalability testing visualization tools</li>
+</ul>
+<p>Key functionality:</p><ul>
+<li>Grid size performance analysis</li>
+<li>Parallel execution time comparison (Serial, OpenMP, MPI, Hybrid)</li>
+<li>L2 error visualization against grid parameters</li>
+<li>Scalability analysis across different numbers of processes</li>
+<li>Automatic generation of publication-quality plots</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>All generated plots are saved in the "test/plots" directory </dd>
+<dd>
+CSV data files are expected to be located in the "test/data" directory </dd>
+<dd>
+Requires gnuplot to be installed for plot generation</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structplot_1_1DataRow.html" title="Data structure to hold a single row of data from the CSV file. This structure is used to store the re...">DataRow</a> for the structure of input data </dd>
+<dd>
+<a class="el" href="classplot_1_1CSVReader.html" title="Class to read data from a CSV file and store it in a vector of DataRow. This class provides functiona...">CSVReader</a> for data file parsing </dd>
+<dd>
+<a class="el" href="classplot_1_1Plotter.html" title="Class to handle plotting of data using gnuplot. This class provides methods to write data to files,...">Plotter</a> for <a class="el" href="namespaceplot.html" title="Namespace containing utilities for data visualization and plotting of computational results.">plot</a> generation utilities </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a5a3f32dc509dbd2a37539bee75a5ec88" name="a5a3f32dc509dbd2a37539bee75a5ec88"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5a3f32dc509dbd2a37539bee75a5ec88">&#9670;&#160;</a></span>gridSizeTest()</h2>

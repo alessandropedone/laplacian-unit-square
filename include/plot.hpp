@@ -37,6 +37,37 @@
 #include <algorithm>
 #include <iomanip>
 
+/**
+ * @namespace plot
+ * @brief Namespace containing utilities for data visualization and plotting of computational results.
+ * 
+ * This namespace provides a comprehensive set of tools for reading CSV data files,
+ * processing numerical results, and generating plots using gnuplot. It is specifically
+ * designed to handle performance analysis data including timing measurements, error
+ * analysis, and scalability studies for parallel computing applications.
+ * 
+ * The namespace includes:
+ * - CSV file reading and parsing capabilities
+ * - Data structures for storing computational results
+ * - Gnuplot script generation and execution
+ * - Automated plot generation for timing analysis and error visualization
+ * - Scalability testing visualization tools
+ * 
+ * Key functionality:
+ * - Grid size performance analysis
+ * - Parallel execution time comparison (Serial, OpenMP, MPI, Hybrid)
+ * - L2 error visualization against grid parameters
+ * - Scalability analysis across different numbers of processes
+ * - Automatic generation of publication-quality plots
+ * 
+ * @note All generated plots are saved in the "test/plots" directory
+ * @note CSV data files are expected to be located in the "test/data" directory
+ * @note Requires gnuplot to be installed for plot generation
+ * 
+ * @see DataRow for the structure of input data
+ * @see CSVReader for data file parsing
+ * @see Plotter for plot generation utilities
+ */
 namespace plot
 {
     namespace fs = std::filesystem;

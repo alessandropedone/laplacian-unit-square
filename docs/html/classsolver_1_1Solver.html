@@ -79,6 +79,11 @@ $(function() {
   <div class="headertitle"><div class="title">solver::Solver Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A numerical solver class for solving 2D Laplace equations using various iterative and direct methods.  
+ <a href="classsolver_1_1Solver.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="solver_8hpp_source.html">solver.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -151,7 +156,26 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:abbcc88ebda577ad17e592882c630aeb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the solver  <br /></td></tr>
 <tr class="separator:abbcc88ebda577ad17e592882c630aeb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A numerical solver class for solving 2D Laplace equations using various iterative and direct methods. </p>
+<p>This class provides multiple implementation approaches for solving the 2D Laplace equation:</p><ul>
+<li>Serial Jacobi iteration</li>
+<li>OpenMP parallel Jacobi iteration</li>
+<li>MPI parallel Jacobi iteration</li>
+<li>Hybrid MPI+OpenMP Jacobi iteration</li>
+<li>Direct MPI solver using Schwarz domain decomposition</li>
+</ul>
+<p>The solver operates on a square grid of size n×n and supports:</p><ul>
+<li>Custom boundary conditions on all four sides</li>
+<li>Custom right-hand side forcing functions</li>
+<li>Convergence checking with configurable tolerance</li>
+<li>Error computation when exact solution is known</li>
+<li><p class="startli">VTK output for visualization</p>
+<p class="startli">The class uses function objects to define boundary conditions, forcing terms, and exact solutions, providing flexibility in problem specification. All parallel implementations use appropriate synchronization mechanisms to ensure correctness and convergence checking.</p>
+</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Grid coordinates are normalized to [0,1]×[0,1] domain. Function arguments are passed as std::vector&lt;double&gt; containing {x, y} coordinates. </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a21988b29554b79df74bff361c0ae688a" name="a21988b29554b79df74bff361c0ae688a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a21988b29554b79df74bff361c0ae688a">&#9670;&#160;</a></span>Solver()</h2>
 

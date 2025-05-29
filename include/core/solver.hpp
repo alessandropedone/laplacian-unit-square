@@ -49,6 +49,32 @@
  */
 namespace solver
 {
+    /**
+     * @class Solver
+     * @brief A numerical solver class for solving 2D Laplace equations using various iterative and direct methods.
+     * 
+     * This class provides multiple implementation approaches for solving the 2D Laplace equation:
+     * - Serial Jacobi iteration
+     * - OpenMP parallel Jacobi iteration
+     * - MPI parallel Jacobi iteration
+     * - Hybrid MPI+OpenMP Jacobi iteration
+     * - Direct MPI solver using Schwarz domain decomposition
+     * 
+     * The solver operates on a square grid of size n×n and supports:
+     * - Custom boundary conditions on all four sides
+     * - Custom right-hand side forcing functions
+     * - Convergence checking with configurable tolerance
+     * - Error computation when exact solution is known
+     * - VTK output for visualization
+     * 
+     * @details The class uses function objects to define boundary conditions, forcing terms,
+     *          and exact solutions, providing flexibility in problem specification.
+     *          All parallel implementations use appropriate synchronization mechanisms
+     *          to ensure correctness and convergence checking.
+     * 
+     * @note Grid coordinates are normalized to [0,1]×[0,1] domain.
+     *       Function arguments are passed as std::vector<double> containing {x, y} coordinates.
+     */
     class Solver
     {
     public:
