@@ -1,0 +1,13 @@
+CPU Info:
+model name	: AMD Ryzen 7 7730U with Radeon Graphics
+cpu cores	: 8
+Logical processors: 16
+
+Cache Sizes:
+L1d Cache: 32K
+L1i Cache: 32K
+L2 Cache:  512K
+L3 Cache:  16384K
+
+RAM Info:
+MemTotal:        7792976 kB
