@@ -1,10 +1,9 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/bOfolMCC)
 # A matrix–free parallel solver for the Laplace equation
 
 ## Setup and test
 You can run the following command to clone the repository:
 ```bash
-git clone --recurse-submodules git@github.com:PACS-24-25/challenge3-male.git
+git clone --recurse-submodules git@github.com:alessandropedone/laplacian-unit-square.git
 ```
 Then to compile and run all the tests you can execute:
 ```bash
@@ -20,8 +19,7 @@ sudo apt-get install libmuparserx-dev
 
 ## Structure of the repository
 ```bash
-challenge3-male
-├── Challenge24-25-3.pdf
+laplacian-unit-square
 ├── LICENSE
 ├── Makefile
 ├── README.md
