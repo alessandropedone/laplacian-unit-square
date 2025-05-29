@@ -96,8 +96,7 @@ We chose to avoid using template programming since it would more complicated put
 
 ### Salability test
 We performed a small scalability test with 1, 2 and 4 processors. \
-The results can be obtained by running the command specified in the first section (timings are printed in the terminal). \
-In `test/data` folder you can find `.csv` files with saved timings from the last execution of the test and some saved solution in `.vtk` format. The results we obtained from running the test on our machine are already included in the repository. To view them, simply clone the repository without running the test again on yuor machine.
+The results can be obtained by running the command specified in the first section (timings are printed in the terminal).
 
 ### Grid size variation
 We also made the grid size vary between 8 and 64, and we avoided going beyond this threshold because the execution took too long and results can be already observed with this choice of grid sizes.
@@ -118,6 +117,9 @@ There are two possibilities to run the code:
     ```
 
 ## Results
+
+In `test/data` folder you can find `.csv` files with saved timings from the last execution of the test and some saved solution in `.vtk` format. The results we obtained from running the test on our machine are already included in the repository. To view them, simply clone the repository without running the test again on yuor machine.
+
 In `test/plot` you can find 5 plots in `.png` format, which are generated using gnuplot from `.csv` in `test/data` folder, of the following quantities:
 - L2 error (one plot with n and one with h),
 - timings of the case with two processors, stored in `results_2.csv` (one plot with n and one with h),
