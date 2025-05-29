@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['plot_0',['plot',['../namespaceplot.html',1,'']]]
+  ['muparser_0',['muparser',['../namespacemuparser.html',1,'']]]
 ];

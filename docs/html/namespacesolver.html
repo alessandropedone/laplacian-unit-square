@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Laplce equation in the unit square: /home/ale/challenge3-male/include/simulation_parameters.hpp File Reference</title>
+<title>Laplce equation in the unit square: solver Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,64 +67,97 @@ $(function() {
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">simulation_parameters.hpp File Reference</div></div>
+  <div class="headertitle"><div class="title">solver Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Header file containing simulation parameters structure and string broadcasting utility for MPI-based Poisson equation solver.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string&gt;</code><br />
-<code>#include &lt;mpi.h&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for simulation_parameters.hpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="simulation__parameters_8hpp__incl.png" border="0" usemap="#a_2home_2ale_2challenge3-male_2include_2simulation__parameters_8hpp" alt=""/></div>
-</div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="simulation__parameters_8hpp__dep__incl.png" border="0" usemap="#a_2home_2ale_2challenge3-male_2include_2simulation__parameters_8hppdep" alt=""/></div>
-</div>
-</div>
-<p><a href="simulation__parameters_8hpp_source.html">Go to the source code of this file.</a></p>
+<p>Namespace containing classes and functions for solving partial differential equations.  
+<a href="namespacesolver.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsolver_1_1SimulationParameters.html">solver::SimulationParameters</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsolver_1_1SimulationParameters.html">SimulationParameters</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simulation parameters structure for holding configuration values.  <a href="structsolver_1_1SimulationParameters.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacesolver" id="r_namespacesolver"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesolver.html">solver</a></td></tr>
-<tr class="memdesc:namespacesolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace containing classes and functions for solving partial differential equations. <br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsolver_1_1Solver.html">Solver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac3eec20be1c413fe4a7e2929ecdab4b3" id="r_ac3eec20be1c413fe4a7e2929ecdab4b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesolver.html#ac3eec20be1c413fe4a7e2929ecdab4b3">solver::broadcast_string</a> (std::string &amp;str, int root, MPI_Comm comm)</td></tr>
+<tr class="memitem:ac3eec20be1c413fe4a7e2929ecdab4b3" id="r_ac3eec20be1c413fe4a7e2929ecdab4b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesolver.html#ac3eec20be1c413fe4a7e2929ecdab4b3">broadcast_string</a> (std::string &amp;str, int root, MPI_Comm comm)</td></tr>
 <tr class="memdesc:ac3eec20be1c413fe4a7e2929ecdab4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast a string across all MPI processes.  <br /></td></tr>
 <tr class="separator:ac3eec20be1c413fe4a7e2929ecdab4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Header file containing simulation parameters structure and string broadcasting utility for MPI-based Poisson equation solver. </p>
-<p>This file defines the SimulationParameters structure that holds all configuration values needed for solving the Poisson equation, including boundary conditions, solver parameters, and mathematical functions. It also provides MPI broadcasting capabilities to distribute these parameters across all processes in a parallel computation environment.</p>
-<p>The parameters include:</p><ul>
-<li>Right-hand side function and exact solution (as muParserX expressions)</li>
-<li>Boundary conditions for all four edges of the computational domain</li>
-<li>Numerical solver settings (tolerance and maximum iterations) </li>
+<div class="textblock"><p>Namespace containing classes and functions for solving partial differential equations. </p>
+<p>Contains utilities and data structures for distributed numerical simulations.</p>
+<p>This namespace provides implementations for solving the Laplace equation using various numerical methods and parallelization strategies. It includes serial and parallel implementations using OpenMP, MPI, and hybrid approaches.</p>
+<p>The main class <a class="el" href="classsolver_1_1Solver.html">Solver</a> provides multiple solution methods:</p><ul>
+<li>Serial Jacobi iteration</li>
+<li>OpenMP parallelized Jacobi iteration</li>
+<li>MPI parallelized Jacobi iteration</li>
+<li>Hybrid MPI+OpenMP Jacobi iteration</li>
+<li>Direct solution using domain decomposition (Schwarz method)</li>
 </ul>
-</div></div><!-- contents -->
+<p>The solver supports:</p><ul>
+<li>Custom boundary conditions on all four sides</li>
+<li>User-defined right-hand side functions</li>
+<li>Error computation against exact solutions</li>
+<li>VTK output for visualization</li>
+<li>Configurable convergence criteria</li>
+</ul>
+<p>This namespace provides MPI-based broadcasting functionality and parameter management for parallel Poisson equation solvers. It includes utilities for distributing simulation configuration across multiple processes in a distributed computing environment. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ac3eec20be1c413fe4a7e2929ecdab4b3" name="ac3eec20be1c413fe4a7e2929ecdab4b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3eec20be1c413fe4a7e2929ecdab4b3">&#9670;&#160;</a></span>broadcast_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void solver::broadcast_string </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>root</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">MPI_Comm&#160;</td>
+          <td class="paramname"><em>comm</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Broadcast a string across all MPI processes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>The string to broadcast. </td></tr>
+    <tr><td class="paramname">root</td><td>The rank of the root process that provides the string. </td></tr>
+    <tr><td class="paramname">comm</td><td>The MPI communicator to use for broadcasting. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8

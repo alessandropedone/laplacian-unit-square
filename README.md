@@ -2,9 +2,7 @@
 # A matrix–free parallel solver for the Laplace equation
 
 ## TBD
-- review documentation and comments
-- readme
-    - non-convergin Scharz method
+- readme: non-convergin Scharz method
 
 ## Setup and test
 You can run the following command to clone the repository:

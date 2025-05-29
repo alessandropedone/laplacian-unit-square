@@ -73,7 +73,7 @@ int main(int argc, char **argv)
         }
     }
 
-    SimulationParameters params;
+    solver::SimulationParameters params;
 
     if (use_datafile)
     {
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 
         // Possibility to read the parameters from a file but the test runs a lot slower
         // because of the overhead of muparserx interface.
-        Solver solver;
+        solver::Solver solver;
         constexpr auto pi = std::numbers::pi;
         if (use_datafile)
         {

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Laplce equation in the unit square: /home/ale/challenge3-male/src/solver.cpp File Reference</title>
+<title>Laplce equation in the unit square: muparser Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,45 +67,38 @@ $(function() {
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
-  <div class="headertitle"><div class="title">solver.cpp File Reference</div></div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
+  <div class="headertitle"><div class="title">muparser Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>This file contains the implementation of the Solver class.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
-<code>#include &lt;iomanip&gt;</code><br />
-<code>#include &lt;omp.h&gt;</code><br />
-<code>#include &lt;mpi.h&gt;</code><br />
-<code>#include &lt;Eigen/Sparse&gt;</code><br />
-<code>#include &lt;Eigen/IterativeLinearSolvers&gt;</code><br />
-<code>#include &quot;<a class="el" href="solver_8hpp_source.html">solver.hpp</a>&quot;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for solver.cpp:</div>
-<div class="dyncontent">
-<div class="center"><img src="solver_8cpp__incl.png" border="0" usemap="#a_2home_2ale_2challenge3-male_2src_2solver_8cpp" alt=""/></div>
-</div>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacesolver" id="r_namespacesolver"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesolver.html">solver</a></td></tr>
-<tr class="memdesc:namespacesolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace containing classes and functions for solving partial differential equations. <br /></td></tr>
+<p>Namespace containing the muParserX interface for mathematical expression parsing and evaluation.  
+<a href="namespacemuparser.html#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmuparser_1_1muParserXInterface.html">muParserXInterface</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">muParserX interface for mathematical expression parsing and evaluation  <a href="classmuparser_1_1muParserXInterface.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:adce71f351f09659729eeb0abb395400e" id="r_adce71f351f09659729eeb0abb395400e"><td class="memItemLeft" align="right" valign="top"><a id="adce71f351f09659729eeb0abb395400e" name="adce71f351f09659729eeb0abb395400e"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>vector_type</b> = std::vector&lt; double &gt;</td></tr>
+<tr class="separator:adce71f351f09659729eeb0abb395400e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acef3ac7d97ce6e0a6289dac381ea7105" id="r_acef3ac7d97ce6e0a6289dac381ea7105"><td class="memItemLeft" align="right" valign="top"><a id="acef3ac7d97ce6e0a6289dac381ea7105" name="acef3ac7d97ce6e0a6289dac381ea7105"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>string_type</b> = std::string</td></tr>
+<tr class="separator:acef3ac7d97ce6e0a6289dac381ea7105"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This file contains the implementation of the Solver class. </p>
-<p>The class implements an iterative solver for a given equation.</p>
-<p>The class provides methods to set the boundary conditions, initial guess, exact solution, and right-hand side of the equation. It also includes a method to print the computed solution. </p>
+<div class="textblock"><p>Namespace containing the muParserX interface for mathematical expression parsing and evaluation. </p>
+<p>This namespace provides a C++ wrapper around the muParserX library, offering convenient type aliases and a comprehensive interface class for parsing and evaluating mathematical expressions. The interface supports vector operations and provides robust error handling for expression evaluation.</p>
+<dl class="section note"><dt>Note</dt><dd>The implementation is adapted from muParserInterface in the pacs-examples repository </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://github.com/pacs-course/pacs-examples.git">https://github.com/pacs-course/pacs-examples.git</a> </dd></dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

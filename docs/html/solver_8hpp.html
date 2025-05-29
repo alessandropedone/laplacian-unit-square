@@ -74,12 +74,13 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle"><div class="title">solver.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Header file for the <a class="el" href="classSolver.html">Solver</a> class that implements various numerical methods for solving the Laplace equation.  
+<p>Header file for the Solver class that implements various numerical methods for solving the Laplace equation.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -101,12 +102,18 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSolver.html">Solver</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsolver_1_1Solver.html">solver::Solver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacesolver" id="r_namespacesolver"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesolver.html">solver</a></td></tr>
+<tr class="memdesc:namespacesolver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace containing classes and functions for solving partial differential equations. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Header file for the <a class="el" href="classSolver.html">Solver</a> class that implements various numerical methods for solving the Laplace equation. </p>
-<p>This header defines the <a class="el" href="classSolver.html">Solver</a> class which provides multiple implementations for solving the Laplace equation using different parallelization strategies including serial execution, OpenMP, MPI, and hybrid MPI+OpenMP approaches. The class also supports direct solving methods using Eigen's sparse matrix decomposition.</p>
+<div class="textblock"><p>Header file for the Solver class that implements various numerical methods for solving the Laplace equation. </p>
+<p>This header defines the Solver class which provides multiple implementations for solving the Laplace equation using different parallelization strategies including serial execution, OpenMP, MPI, and hybrid MPI+OpenMP approaches. The class also supports direct solving methods using Eigen's sparse matrix decomposition.</p>
 <p>The solver supports:</p><ul>
 <li>Jacobi iterative method with various parallelization strategies</li>
 <li>Direct solving using Schwarz domain decomposition</li>

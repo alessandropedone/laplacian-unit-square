@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7esolver_0',['~Solver',['../classSolver.html#ab23caa636c09a8260bd57acce6253452',1,'Solver']]]
+  ['_7esolver_0',['~Solver',['../classsolver_1_1Solver.html#af1c4703a0a97eb569438a55d44827393',1,'solver::Solver']]]
 ];

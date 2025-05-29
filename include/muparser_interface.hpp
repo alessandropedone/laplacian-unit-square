@@ -36,6 +36,19 @@
 #include <map>
 #include <mpParser.h>
 
+
+/**
+ * @namespace muparser
+ * @brief Namespace containing the muParserX interface for mathematical expression parsing and evaluation
+ * 
+ * This namespace provides a C++ wrapper around the muParserX library, offering
+ * convenient type aliases and a comprehensive interface class for parsing and
+ * evaluating mathematical expressions. The interface supports vector operations
+ * and provides robust error handling for expression evaluation.
+ * 
+ * @note The implementation is adapted from muParserInterface in the pacs-examples repository
+ * @see https://github.com/pacs-course/pacs-examples.git
+ */
 namespace muparser
 {
     using vector_type = std::vector<double>;

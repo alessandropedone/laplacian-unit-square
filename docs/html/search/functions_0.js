@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['broadcast_0',['broadcast',['../structSimulationParameters.html#a3a2a6c0a45b23b57ce3c932eb4ccfd5f',1,'SimulationParameters']]],
-  ['broadcast_5fstring_1',['broadcast_string',['../simulation__parameters_8hpp.html#a7cf44d16d8f3f391aed61f315ff6d0b2',1,'simulation_parameters.hpp']]]
+  ['broadcast_0',['broadcast',['../structsolver_1_1SimulationParameters.html#a0272c999cf25056434f82553c4548369',1,'solver::SimulationParameters']]],
+  ['broadcast_5fstring_1',['broadcast_string',['../namespacesolver.html#ac3eec20be1c413fe4a7e2929ecdab4b3',1,'solver']]]
 ];
