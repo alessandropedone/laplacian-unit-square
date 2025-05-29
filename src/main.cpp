@@ -114,9 +114,11 @@ int main(int argc, char **argv)
 
     for (int n : ns)
     {
-        /*
+
         // Possibility to read the parameters from a file but the test runs a lot slower
         // because of the overhead of muparserx interface.
+        Solver solver;
+        constexpr auto pi = std::numbers::pi;
         if (use_datafile)
         {
             // Create muParserX interfaces
@@ -126,41 +128,31 @@ int main(int argc, char **argv)
             muparser::muParserXScalarInterface right_bc(params.bc_right_str, 2);
             muparser::muParserXScalarInterface bottom_bc(params.bc_bottom_str, 2);
             muparser::muParserXScalarInterface left_bc(params.bc_left_str, 2);
+            solver.set_bc(top_bc, right_bc, bottom_bc, left_bc);       // Set boundary conditions
+            solver.set_initial_guess(std::vector<double>(n * n, 0.0)); // Initial guess
+            solver.set_f(f);                                           // Set right-hand side function
+            solver.set_uex(uex);                                       // Set exact solution function
+            solver.set_n(n);                                           // Set grid size
+            solver.set_max_iter(params.max_iter);                      // Set maximum iterations
+            solver.set_tol(params.tol);                                // Set tolerance for convergence
+        }
+        else
+        {
 
-            JacobiSolver solver(
-                std::vector<double>(n * n, 0.0), // initial guess
-                f,                               // rhs
-                top_bc,                          // top boundary condition
-                right_bc,                        // right boundary condition
-                bottom_bc,                       // bottom boundary condition
-                left_bc,                         // left boundary condition
-                n,                               // grid size
-                params.max_iter,                 // max iterations
-                params.tol,                      // tolerance
-                uex                              // exact solution
-            );
-        } */
-
-        constexpr auto pi = std::numbers::pi;
-
-        Solver solver(
-            std::vector<double>(n * n, 0.0), // initial guess
-            [=](std::vector<double> x)
-            { return 8 * pi * pi * sin(2 * pi * x[0]) * sin(2 * pi * x[1]); }, // rhs
-            [=](std::vector<double> x)
-            { return 0.0; }, // top boundary condition
-            [=](std::vector<double> x)
-            { return 0.0; }, // right boundary condition
-            [=](std::vector<double> x)
-            { return 0.0; }, // bottom boundary condition
-            [=](std::vector<double> x)
-            { return 0.0; }, // left boundary condition
-            n,               // grid size
-            30000,           // max iterations
-            1e-15,           // tolerance
-            [=](std::vector<double> x)
-            { return sin(2 * pi * x[0]) * sin(2 * pi * x[1]); } // exact solution
-        );
+            solver.set_bc([=](std::vector<double> x)
+                          { return 0.0; }, [=](std::vector<double> x)
+                          { return 0.0; }, [=](std::vector<double> x)
+                          { return 0.0; }, [=](std::vector<double> x)
+                          { return 0.0; });                            // Set boundary conditions
+            solver.set_initial_guess(std::vector<double>(n * n, 0.0)); // Initial guess
+            solver.set_f([=](std::vector<double> x)
+                         { return 8 * pi * pi * sin(2 * pi * x[0]) * sin(2 * pi * x[1]); }); // Set right-hand side function
+            solver.set_uex([=](std::vector<double> x)
+                           { return sin(2 * pi * x[0]) * sin(2 * pi * x[1]); }); // Set exact solution function
+            solver.set_n(n);                                                     // Set grid size
+            solver.set_max_iter(30000);                                          // Set maximum iterations
+            solver.set_tol(1e-15);                                               // Set tolerance for convergence
+        }
 
         double serial_time = 0.0, omp_time = 0.0, mpi_time = 0.0, hybrid_time = 0.0, direct_time = 0.0;
         double serial_l2 = 0.0;
@@ -268,9 +260,9 @@ int main(int argc, char **argv)
 
     if (size == 4 && rank == 0)
     {
-        std::cout << "==========================================" << std::endl;
-        std::cout << "=== Plotting results for " << size << " processors. ===" << std::endl;
-        std::cout << "==========================================" << std::endl;
+        std::cout << "========================" << std::endl;
+        std::cout << "=== Plotting results ===" << std::endl;
+        std::cout << "========================" << std::endl;
         plot::plot();
     }
 

@@ -113,6 +113,9 @@ There are two possibilities to run the code:
     mpirun -np j ./main
     ```
 2. if you run the same command but with `--use-datafile` flag the tests run with the data specified within `data.txt` (be careful: the code runs slower because of the overhead of the interface).
+    ```bash
+    mpirun -np j ./main --use-datafile
+    ```
 
 ## Results
 In `test/plot` you can find 5 plots in `.png` format, which are generated using gnuplot from `.csv` in `test/data` folder, of the following quantities:

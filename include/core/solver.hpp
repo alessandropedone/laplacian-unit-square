@@ -18,7 +18,8 @@
 class Solver
 {
 public:
-    Solver() = delete;
+    /// @brief default constructor
+    Solver() = default;
 
     /// @brief constructor
     /// @param uex exact solution of the equation

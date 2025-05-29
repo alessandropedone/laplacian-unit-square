@@ -60,6 +60,16 @@
         "complex": "cpp",
         "cstring": "cpp",
         "list": "cpp",
-        "getpot": "cpp"
+        "getpot": "cpp",
+        "condition_variable": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp",
+        "hash_map": "cpp",
+        "future": "cpp",
+        "mutex": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "valarray": "cpp"
     }
 }
